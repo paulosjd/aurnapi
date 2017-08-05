@@ -133,7 +133,8 @@ site_list = [
     'York Fishergate'
 ]
 
-for site in site_list:
+#for site in site_list:
+site = site_list[0]
     # if soup.find .type() == float and datetime == most recent data
     value = soup.find(....)
     # else:
