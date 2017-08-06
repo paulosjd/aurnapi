@@ -144,6 +144,18 @@ site = site_list[0]
 data_dict = {site:value for site, value in site_list}
 
 
+import requests
+import bs4
+page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
+soup = bs4.BeautifulSoup(page, 'lxml')
+Edinburgh_link = soup.find_all('a',string='Edinburgh St Leonards')[0]
+#>>>Edinburgh_link.text
+#'Edinburgh St Leonards'
+Edinburgh_row = Edinburgh_link.findParent('td').findParent('tr')
+Edinburgh_columns = Edinburgh_row.findAll('td')
+Edinburgh_columns[2].text
+#cell for hourly mean NO2 for
+
 """
 
 'Edinburgh St Leonards'
