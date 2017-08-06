@@ -157,7 +157,8 @@ Edinburgh_columns = Edinburgh_row.findAll('td')
 Edinburgh_columns[2].text
 #cell for hourly mean NO2 for
 dt = Edinburgh_columns[6].text
-datetime.strptime(dt , '%d/%m/%Y%H:%M:%S')
+time = datetime.strptime(dt , '%d/%m/%Y%H:%M:%S')
+last_hour = (datetime.now().replace(microsecond=0,second=0,minute=0))
 
 """
 
