@@ -160,6 +160,10 @@ dt = Edinburgh_columns[6].text
 time = datetime.strptime(dt , '%d/%m/%Y%H:%M:%S')
 last_hour = (datetime.now().replace(microsecond=0,second=0,minute=0))
 
+
+for site in site_list:
+    if site:
+        print (soup.find_all('a',string=site)[0].text)
 """
 
 'Edinburgh St Leonards'
