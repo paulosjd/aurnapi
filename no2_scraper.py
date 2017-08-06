@@ -156,6 +156,8 @@ Edinburgh_row = Edinburgh_link.findParent('td').findParent('tr')
 Edinburgh_columns = Edinburgh_row.findAll('td')
 Edinburgh_columns[2].text
 #cell for hourly mean NO2 for
+dt = Edinburgh_columns[6].text
+datetime.strptime(dt , '%d/%m/%Y%H:%M:%S')
 
 """
 
