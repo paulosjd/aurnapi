@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 
 url = 'https://uk-air.defra.gov.uk/latest/currentlevels'
@@ -7,7 +8,6 @@ url = 'https://uk-air.defra.gov.uk/latest/currentlevels'
 defra_page = requests.get(url)
 soup = BeautifulSoup(defra_page, 'html.parser')
 
-#if latest value .... else ''
 site_list = [
 'Auchencorth Moss',
 'Edinburgh St Leonards',
@@ -89,3 +89,9 @@ for site in site_list:
     site_link = soup.find_all('a',string=site)[0]
     site_row = site_link.findParent('td').findParent('tr')
     latest_times = site_row.findAll('td')[6].text
+ 
+#running 24hour mean pm2.5:
+site_row.findAll('td')[4].text
+
+#running 24hour mean pm10:
+site_row.findAll('td')[5].text
