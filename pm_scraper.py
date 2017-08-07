@@ -76,3 +76,16 @@ site_list = [
 'York Bootham',
 'York Fishergate'
 ]
+
+page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
+soup = bs4.BeautifulSoup(page, 'lxml')
+time = datetime.strptime(dt , '%d/%m/%Y%H:%M:%S')
+last_hour = (datetime.now().replace(microsecond=0,second=0,minute=0))
+
+for site in site_list:
+    print (soup.find_all('a',string=site)[0].text)
+ 
+for site in site_list:
+    site_link = soup.find_all('a',string=site)[0]
+    site_row = site_link.findParent('td').findParent('tr')
+    latest_times = site_row.findAll('td')[6].text
