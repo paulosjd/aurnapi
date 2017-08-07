@@ -2,8 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-#execute hourly using CRON
-
 
 url = 'https://uk-air.defra.gov.uk/latest/currentlevels'
 
@@ -42,7 +40,7 @@ site_list = [
     'London Westminster',
     'Fort William',
     'Inverness',
-    'Middlesborough',
+    'Middlesbrough',
     'Newcastle Centre',
     'Stockton-on-Tees Eaglescliffe',
     'Sunderland Silksworth',
@@ -62,7 +60,7 @@ site_list = [
     'Manchester Sharston',
     'Preston',
     'Salford Eccles',
-    'Shaw Compton Way',
+    'Shaw Crompton Way',
     'St Helens Linkway',
     'Warrington',
     'Widnes Milton Road',
@@ -86,7 +84,7 @@ site_list = [
     'Reading London Road',
     'Reading New Town',
     'Rochester Stoke',
-    'Southamptom A33',
+    'Southampton A33',
     'Southampton Centre',
     'Worthing A27 Roadside',
     'Cardiff Centre',
