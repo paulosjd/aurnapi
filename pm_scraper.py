@@ -1,14 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 
-#execute daily using CRON  - daily running 24 hour means
-
 
 url = 'https://uk-air.defra.gov.uk/latest/currentlevels'
 
 defra_page = requests.get(url)
 soup = BeautifulSoup(defra_page, 'html.parser')
-
 
 #if latest value .... else ''
 site_list = [
@@ -30,7 +27,7 @@ site_list = [
 'London Bloomsbury',
 'London Marylebone Road',
 'London N. Kensington',
-'Middlesborough',
+'Middlesbrough',
 'Newcastle Centre',
 'Stockton-on-Tees Eaglescliffe',
 'Sunderland Silksworth',
@@ -61,11 +58,11 @@ site_list = [
 'Cardiff Centre',
 'Chepstow A48',
 'Port Talbot Margam',
-'Barnstaple',
+'Barnstaple A39',
 "Bristol St Paul's",
 'Plymouth Centre',
 'Birmingham A4540 Roadside',
-'Coventry Binley Road',
+'Coventry Binley Road.',
 'Leamington Spa',
 'Leamington Spa Rugby Road',
 'Stoke-on-Trent A50 Roadside',
@@ -79,38 +76,3 @@ site_list = [
 'York Bootham',
 'York Fishergate'
 ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
