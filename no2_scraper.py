@@ -145,6 +145,8 @@ for site in site_list:
     time_string = site_column[6].text
     site_name = site_column[0].text
     no2_value = {site:site_column[2].text}
+    #if 'condition':
+        #data_dict.update(no2_value)
 
 
 for site in site_list:
