@@ -144,14 +144,12 @@ for site in site_list:
     site_column = site_row.findAll('td')
     time_string = site_column[6].text
     site_name = site_column[0].text
-    no2_value = {site:site_column[2].text}
+    no2_value = {site:site_column[2].text} #.split(' ')[0]
     #if 'condition':
         #data_dict.update(no2_value)
 
-
 for site in site_list:
-    print (soup.find_all('a',string=site)[0].text)
-    
+    print (soup.find_all('a',string=site)[0].text)  
    
 for site in site_list:
     #site_link = soup.find_all('a',string=site)[0]
@@ -162,4 +160,3 @@ for site in site_list:
     #site_link = soup.find_all('a',string=site)[0]
     #site_row = site_link.findParent('td').findParent('tr')
     time = site_row[6].text
-
