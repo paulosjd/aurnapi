@@ -139,8 +139,8 @@ site = site_list[0]
     # else:
         #empty string for that timepoint
 
-data_dict = {site:value for site, value in site_list}
-
+no2_value = ''
+data_dict = {site:no2_value for site in site_list}
 
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
 soup = bs4.BeautifulSoup(page, 'lxml')
