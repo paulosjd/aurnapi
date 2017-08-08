@@ -132,20 +132,19 @@ site_list = [
     'York Fishergate'
 ]
 
-#for site in site_list:
-site = site_list[0]
-    # if soup.find .type() == float and datetime == most recent data
-        #most recent no2 value
-    # else:
-        #empty string for that timepoint
-
-no2_value = ''
-data_dict = {site:no2_value for site in site_list}
-
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
 soup = bs4.BeautifulSoup(page, 'lxml')
 
+no2_value = ''
+data_dict = {site:no2_value for site in site_list}
 last_hour = (datetime.now().replace(microsecond=0,second=0,minute=0))
+for site in site_list:
+    site_link = soup.find_all('a',string=site)[0]
+    site_row = site_link.findParent('td').findParent('tr')
+    site_column = site_row.findAll('td')
+    time_string = site_column[6].text
+    site_name = site_column[0].text
+    no2_value = {site:site_column[2].text}
 
 
 for site in site_list:
