@@ -136,7 +136,7 @@ page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers=
 soup = bs4.BeautifulSoup(page, 'lxml')
 
 no2_value = ''
-data_dict = {site:no2_value for site in site_list}
+no2_dict = {site:no2_value for site in site_list}
 last_hour = (datetime.now().replace(microsecond=0,second=0,minute=0))
 for site in site_list:
     site_link = soup.find_all('a',string=site)[0]
@@ -144,7 +144,7 @@ for site in site_list:
     site_column = site_row.findAll('td')
     time_string = site_column[6].text
     site_name = site_column[0].text
-    no2_value = {site:site_column[2].text.replace('\xa0',' ').split(' ')[0]} #.split(' ')[0]
+    no2_value = site_column[2].text.replace('\xa0',' ').split(' ')[0]
     #if 'condition':
         #data_dict.update(no2_value)
 
