@@ -147,7 +147,7 @@ for site in site_list:
     if no2_value == 'n/a':  #and not meet condition (recently updated)
         no2_value = ''
     no2_key_value = {site:no2_value}
-    no2_dict.update(no2_key_value)
+    no2_dict.update(no2_key_value)  #could remove above line by using keywords in update()??
 
 for site in site_list:
     print (soup.find_all('a',string=site)[0].text)  
