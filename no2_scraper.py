@@ -143,10 +143,11 @@ for site in site_list:
     site_row = site_link.findParent('td').findParent('tr')
     site_column = site_row.findAll('td')
     time_string = site_column[6].text
-    site_name = site_column[0].text
     no2_value = site_column[2].text.replace('\xa0',' ').split(' ')[0]
-    #if 'condition':
-        #data_dict.update(no2_value)
+    if no2_value == 'n/a':  #and not meet condition (recently updated)
+        no2_value = ''
+    no2_key_value = {site:no2_value}
+    no2_dict.update(no2_key_value)
 
 for site in site_list:
     print (soup.find_all('a',string=site)[0].text)  
