@@ -1,7 +1,10 @@
 from flask import Flask
-import pymysql
+import MySQLdb
 
 app = Flask(__name__)
+
+db = MySQLdb.connect("localhost", "root", "yourDbPassWord", "DBname")
+
 
 
 if __name__ == "__main__":
