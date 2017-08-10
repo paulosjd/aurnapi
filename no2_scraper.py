@@ -146,8 +146,7 @@ for site in site_list:
     no2_value = site_column[2].text.replace('\xa0',' ').split(' ')[0]
     if no2_value == 'n/a':  #and not meet condition (recently updated)
         no2_value = ''
-    no2_key_value = {site:no2_value}
-    no2_dict.update(no2_key_value)  #could remove above line by using keywords in update()??
+    no2_dict.update({site:no2_value})  
 
 for site in site_list:
     print (soup.find_all('a',string=site)[0].text)  
