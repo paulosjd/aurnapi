@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
+
+#execute daily using CRON  - daily running 24 hour means
 
 
 url = 'https://uk-air.defra.gov.uk/latest/currentlevels'
@@ -8,6 +9,8 @@ url = 'https://uk-air.defra.gov.uk/latest/currentlevels'
 defra_page = requests.get(url)
 soup = BeautifulSoup(defra_page, 'html.parser')
 
+
+#if latest value .... else ''
 site_list = [
 'Auchencorth Moss',
 'Edinburgh St Leonards',
@@ -53,7 +56,7 @@ site_list = [
 'Reading London Road',
 'Reading New Town',
 'Rochester Stoke',
-'Southamptom A33',
+'Southampton A33',
 'Southampton Centre',
 'Cardiff Centre',
 'Chepstow A48',
@@ -77,21 +80,37 @@ site_list = [
 'York Fishergate'
 ]
 
-page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
-soup = bs4.BeautifulSoup(page, 'lxml')
-time = datetime.strptime(dt , '%d/%m/%Y%H:%M:%S')
-last_hour = (datetime.now().replace(microsecond=0,second=0,minute=0))
 
-for site in site_list:
-    print (soup.find_all('a',string=site)[0].text)
- 
-for site in site_list:
-    site_link = soup.find_all('a',string=site)[0]
-    site_row = site_link.findParent('td').findParent('tr')
-    latest_times = site_row.findAll('td')[6].text
- 
-#running 24hour mean pm2.5:
-site_row.findAll('td')[4].text
 
-#running 24hour mean pm10:
-site_row.findAll('td')[5].text
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
