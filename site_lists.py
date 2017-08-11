@@ -122,7 +122,6 @@ no2_site_list = [
     'York Fishergate'
 ]
 
-
 pm_site_list = [
     'Auchencorth Moss',
     'Edinburgh St Leonards',
@@ -191,5 +190,3 @@ pm_site_list = [
     'York Bootham',
     'York Fishergate'
 ]
-
-
