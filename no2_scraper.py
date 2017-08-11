@@ -4,13 +4,6 @@ from datetime import datetime
 
 #execute hourly using CRON
 
-
-url = 'https://uk-air.defra.gov.uk/latest/currentlevels'
-
-defra_page = requests.get(url)
-soup = BeautifulSoup(defra_page, 'html.parser')
-
-
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
 soup = BeautifulSoup(page, 'lxml')
 no2_value = ''
