@@ -1,42 +1,35 @@
 from flask import Flask
 from peewee import *
+import sqlite3
 from no2_scraper import no2_dict
 #from pm_scraper import pm_dict
+from sqlalchemy import Column, Float, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine
+
+Base = declarative_base()
 
 app = Flask(__name__)
 
-db = SqliteDatabase('aurn-api.db')
+
+class No2Data(Base):
+    __tablename__ = 'NO2Data'
+
+    site = Column(String(100), primary_key=True)
+    no2 = Column(Float(10), default='')
+    time = Column(String(50), default='')
 
 
-class No2Data(Model):
-    site = CharField()
-    no2 = FloatField()
-    time = CharField()
+class PmData(Base):
+    __tablename__ = 'PMData'
 
-    class Meta:
-        database = db
-
-
-class PmData(Model):
-    site = CharField()
-    pm10 = FloatField()
-    pm25 = FloatField()
-    time = CharField()
-
-    class Meta:
-        database = db
+    site = Column(String(100), primary_key = True)
+    pm10 = Column(Float(10), default='')
+    pm25 = Column(Float(10), default='')
+    time = Column(String(50), default='')
 
 
-def initialize():
-    """creates table and entry if they don't exist"""
-
-    db.connect()
-    db.create_tables([No2Data, PmData], safe=True)
-
-
-def add_data():
-    No2Data.create(**no2_dict)
-    #PmData.create(pm_dict)
+engine = create_engine('sqlite:///aurn-api.db')
 
 
 if __name__ == '__main__':
