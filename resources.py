@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Float, String
-from sqlalchemy.ext.declarative import declarative_base
+from database import Base
 
 
 class Sites(db.Model):
