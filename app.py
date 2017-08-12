@@ -1,8 +1,37 @@
-from yourapplication.database import db_session
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db_session.remove()
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+db = SQLAlchemy(app)
+
+
+class Sites(db.Model):
+    __tablename__ = 'sites'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True)
+    url = db.Column(db.String(250))
+
+    def __init__(self, name=None, url=None):
+        self.name = name
+        self.url = url
+
+class Data(db.Model):
+    __tablename__ = 'data'
+    id = db.Column(db.Integer, primary_key=True)
+    site = db.Column(db.String(100), db.ForeignKey('sites.name'))
+    no2 = Column(Float(10))
+    pm10 = Column(Float(10))
+    pm25 = Column(Float(10))
+    time = Column(String(50))
+
+    def __init__(self, site=None, no2=None, pm10=None, pm25=None, time=None):
+        self.site = site
+        self.no2 = no2
+        self.pm10 = pm10
+        self.pm25 = pm25
+        self.time = time
 
 
 
