@@ -15,7 +15,8 @@ engine = create_engine('sqlite:///aurn-api.db')
 
 if __name__ == '__main__':
     initialize()
-    add_data()
+add_data()
+
 
 """
 db = MySQLdb.connect(host="localhost",

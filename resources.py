@@ -20,4 +20,3 @@ class PmData(Base):
     pm10 = Column(Float(10), default='')
     pm25 = Column(Float(10), default='')
     time = Column(String(50), default='')
-
