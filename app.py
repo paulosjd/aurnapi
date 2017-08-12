@@ -22,14 +22,17 @@ class Data(db.Model):
     __tablename__ = 'data'
     id = db.Column(db.Integer, primary_key=True)
     site = db.Column(db.String(100), db.ForeignKey('sites.name'))
-    no2 = Column(Float(10), default='')
-    pm10 = Column(Float(10), default='')
-    pm25 = Column(Float(10), default='')
-    time = Column(String(50), default='')
+    no2 = Column(Float(10))
+    pm10 = Column(Float(10))
+    pm25 = Column(Float(10))
+    time = Column(String(50))
 
-    def __init__(self, name=None, url=None):
-        self.name = name
-        self.url = url
+    def __init__(self, site=None, no2=None, pm10=None, pm25=None, time=None):
+        self.site = site
+        self.no2 = no2
+        self.pm10 = pm10
+        self.pm25 = pm25
+        self.time = time
 
 
 """
