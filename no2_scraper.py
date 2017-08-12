@@ -5,6 +5,7 @@ from site_lists import no2_site_list
 
 #execute hourly using CRON
 
+
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
 soup = BeautifulSoup(page, 'lxml')
 no2_value = ''
@@ -19,6 +20,8 @@ for site in no2_site_list:
     if no2_value == 'n/a':
         no2_value = ''
     no2_dict.update({site: no2_value})
+
+print(no2_dict)
 
 
 
@@ -38,11 +41,11 @@ time = datetime.strptime(dt , '%d/%m/%Y%H:%M:%S')
 last_hour = (datetime.now().replace(microsecond=0,second=0,minute=0))
 #datetime.strptime(mystring, "%d/%m/%Y%H:%M:%S")
 
-for site in site_list:
+for site in no2_site_list:
     print (soup.find_all('a',string=site)[0].text)
 
-#for site in site_list:
-site = site_list[0]
+#for site in no2_site_list:
+site = no2_site_list[0]
 # if soup.find .type() == float and datetime == most recent data
 value = soup.find(....)
 # else:
