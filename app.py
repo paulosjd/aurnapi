@@ -2,20 +2,11 @@ from flask import Flask
 import sqlite3
 from no2_scraper import no2_dict
 #from pm_scraper import pm_dict
-
-from sqlalchemy import create_engine
-
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-
-
-
-engine = create_engine('sqlite:///aurn-api.db')
-
-
-if __name__ == '__main__':
-    initialize()
-add_data()
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+db = SQLAlchemy(app)
 
 
 """
