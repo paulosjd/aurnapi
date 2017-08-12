@@ -1,12 +1,21 @@
-from flask import Flask
-import sqlite3
-from no2_scraper import no2_dict
-#from pm_scraper import pm_dict
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/aurn-api.db'
-db = SQLAlchemy(app)
+engine = create_engine('sqlite:////tmp/aurn-api.db', convert_unicode=True)
+db_session = scoped_session(sessionmaker(autocommit=False,
+                                         autoflush=False,
+                                         bind=engine))
+Base = declarative_base()
+Base.query = db_session.query_property()
+
+def init_db():
+    # import all modules here that might define models so that
+    # they will be registered properly on the metadata.  Otherwise
+    # you will have to import them first before calling init_db()
+    import yourapplication.models
+    Base.metadata.create_all(bind=engine)
+
 
 class Sites(db.Model):
     __tablename__ = 'sites'
