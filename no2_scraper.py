@@ -7,9 +7,10 @@ from site_lists import all_sites
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
 soup = BeautifulSoup(page, 'lxml')
 
+ins = {'no2': no2_value}
 no2_value = ''
-data_dict = {site: {'no2': no2_value} for site in site_list}
-site = 'London Harlington'
+data_dict = {site: ins for site in site_list}
+
 site_column[2].text.replace('\xa0', ' ').split(' ')[0]
 
 for site in all_sites:
@@ -23,15 +24,11 @@ for site in all_sites:
     so2_value = site_column[3].text.replace('\xa0', ' ').split(' ')[0]
     pm25_value = site_column[4].text.replace('\xa0', ' ').split(' ')[0]
     pm10_value = site_column[5].text.replace('\xa0', ' ').split(' ')[0]
-    value_list = [o3_value, no2_value, so2_value, pm25_value, pm10_value]
+    if no2_value == 'n/a':
+        no2_value = ''
+    ins.update({'no2': no2_value})
 
-hourly_data_dict = {site: {'no2': no2_value} for site in all_sites}
-
-# if no2_value == 'n/a':
-#   no2_value = ''
-# hourly_data_dict.update({site:no2_value})
-
-hourly_data_dict
+data_dict
 """my_dictionary = dict(map(lambda (k,v): (k, f(v)), my_dictionary.iteritems()))"""
 
 }
