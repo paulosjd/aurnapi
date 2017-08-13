@@ -12,7 +12,7 @@ data_dict = {site: {'no2': no2_value} for site in site_list}
 site = 'London Harlington'
 site_column[2].text.replace('\xa0', ' ').split(' ')[0]
 
-for site in site_list:
+for site in all_sites:
     site_link = soup.find_all('a', string=site)[0]
     site_row = site_link.findParent('td').findParent('tr')
     site_column = site_row.findAll('td')
@@ -25,21 +25,16 @@ for site in site_list:
     pm10_value = site_column[5].text.replace('\xa0', ' ').split(' ')[0]
     value_list = [o3_value, no2_value, so2_value, pm25_value, pm10_value]
 
-    if no2_value == 'n/a':
-        no2_value = ''
-    data_dict.update({site: no2_value})
+hourly_data_dict = {site: {'no2': no2_value} for site in all_sites}
 
-data_dict
+# if no2_value == 'n/a':
+#   no2_value = ''
+# hourly_data_dict.update({site:no2_value})
 
-no2_dict = {site_name:no2_value for site in all_sites}
+hourly_data_dict
+"""my_dictionary = dict(map(lambda (k,v): (k, f(v)), my_dictionary.iteritems()))"""
 
-no2_dict = {(site for site in all_sites): {'o3'=no2_value,'no2'=no2_value,
-                        'no2': no2_value,
-                        'no2': no2_value,
-                        'no2': no2_value,
-                        'time': time
-
-                        }
+}
 
 
     #for value in value_list:
