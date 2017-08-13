@@ -3,9 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
-
 
 class Sites(db.Model):
     __tablename__ = 'sites'
@@ -21,10 +21,10 @@ class Data(db.Model):
     __tablename__ = 'data'
     id = db.Column(db.Integer, primary_key=True)
     site = db.Column(db.String(100), db.ForeignKey('sites.name'))
-    no2 = Column(Float(10))
-    pm10 = Column(Float(10))
-    pm25 = Column(Float(10))
-    time = Column(String(50))
+    no2 = db.Column(db.Float(10))
+    pm10 = db.Column(db.Float(10))
+    pm25 = db.Column(db.Float(10))
+    time = db.Column(db.String(50))
 
     def __init__(self, site=None, no2=None, pm10=None, pm25=None, time=None):
         self.site = site
@@ -33,7 +33,7 @@ class Data(db.Model):
         self.pm25 = pm25
         self.time = time
 
-
+db.create_all()
 
 """
 db = MySQLdb.connect(host="localhost",
