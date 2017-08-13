@@ -1,17 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
-from site_lists import no2_site_list
-
+from site_lists import all_sites
 
 
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
 soup = BeautifulSoup(page, 'lxml')
 
-
-no2_dict = {site_name:{'no2': no2_value}}, time
-
-for site in site_list:
+for site in all_sites:
     site_link = soup.find_all('a',string=site)[0]:
     site_row = site_link.findParent('td').findParent('tr')
     site_column = site_row.findAll('td')
@@ -26,6 +22,7 @@ for site in site_list:
     if no2_value == 'n/a' or 'n/m':   # or datetime condition
         no2_value = ''
 
+no2_dict = {site_name: {'no2': no2_value}}, time
     #for value in value_list:
     #if value == 'n/a' or 'n/m':  # or datetime condition
     #    value = ''
