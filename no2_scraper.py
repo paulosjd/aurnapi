@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from site_lists import no2_site_list
 
-#execute hourly using CRON
 
 
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
@@ -12,13 +11,14 @@ soup = BeautifulSoup(page, 'lxml')
 
 no2_dict = {site_name:{'no2': no2_value}}, time
 
-for site in no2_site_list}site_link = soup.find_all('a',string=site)[0]:
+for site in site_list:
+    site_link = soup.find_all('a',string=site)[0]:
     site_row = site_link.findParent('td').findParent('tr')
     site_column = site_row.findAll('td')
     time = site_column[6].text
     site_name = site_column[0].text
     no2_value = site_column[2].text.replace('\xa0', ' ').split(' ')[0]
-    if no2_value == 'n/a':
+    if no2_value == 'n/a' or 'n/m':
         no2_value = ''
 
 

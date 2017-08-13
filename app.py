@@ -1,11 +1,13 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from resources import Sites, Data
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
+
 
 class Sites(db.Model):
     __tablename__ = 'sites'
@@ -34,6 +36,7 @@ class Data(db.Model):
         self.time = time
 
 db.create_all()
+db.session.add(admin)
 
 """
 db = MySQLdb.connect(host="localhost",
