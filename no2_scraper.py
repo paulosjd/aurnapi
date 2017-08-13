@@ -17,10 +17,14 @@ for site in site_list:
     site_column = site_row.findAll('td')
     time = site_column[6].text
     site_name = site_column[0].text
+    o3_value = site_column[1].text.replace('\xa0', ' ').split(' ')[0]
     no2_value = site_column[2].text.replace('\xa0', ' ').split(' ')[0]
+    so2_value = site_column[3].text.replace('\xa0', ' ').split(' ')[0]
+    pm25_value = site_column[4].text.replace('\xa0', ' ').split(' ')[0]
+    pm10_value = site_column[5].text.replace('\xa0', ' ').split(' ')[0]
     if no2_value == 'n/a' or 'n/m':
-        no2_value = ''
-    if
+        no2_value = '''n/a' or 'n/m':
+    #if 'e.g. no2_value == ''n/a' or 'n/m':
 
 
 print(no2_dict)
