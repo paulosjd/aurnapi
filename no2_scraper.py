@@ -22,11 +22,25 @@ for site in site_list:
     so2_value = site_column[3].text.replace('\xa0', ' ').split(' ')[0]
     pm25_value = site_column[4].text.replace('\xa0', ' ').split(' ')[0]
     pm10_value = site_column[5].text.replace('\xa0', ' ').split(' ')[0]
-    if no2_value == 'n/a' or 'n/m':
-        no2_value = '''n/a' or 'n/m':
-    #if 'e.g. no2_value == ''n/a' or 'n/m':
+    value_list = [o3_value, no2_value, so2_value, pm25_value, pm10_value]
+    if no2_value == 'n/a' or 'n/m':   # or datetime condition
+        no2_value = ''
+
+    #for value in value_list:
+    #if value == 'n/a' or 'n/m':  # or datetime condition
+    #    value = ''
 
 
+
+
+"""    #if 'e.g. no2_value == ''n/a' or 'n/m':
+
+from datetime import datetime
+
+mystring = "05/08/201714:00:00"
+dt_mystring = datetime.strptime(mystring, "%d/%m/%Y%H:%M:%S")
+
+print dt_mystring.replace(microsecond=0,second=0,minute=0) == datetime.now().replace(microsecond=0,second=0,minute=0)eplace(microsecond=0,second=0,minute=0
 print(no2_dict)
 
 
