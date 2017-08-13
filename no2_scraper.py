@@ -20,6 +20,7 @@ for site in site_list:
     no2_value = site_column[2].text.replace('\xa0', ' ').split(' ')[0]
     if no2_value == 'n/a' or 'n/m':
         no2_value = ''
+    if
 
 
 print(no2_dict)

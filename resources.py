@@ -16,7 +16,9 @@ class Data(db.Model):
     __tablename__ = 'data'
     id = db.Column(db.Integer, primary_key=True)
     site = db.Column(db.String(100), db.ForeignKey('sites.name'))
+    o3 = Column(Float(10))
     no2 = Column(Float(10))
+    so2 = Column(Float(10))
     pm10 = Column(Float(10))
     pm25 = Column(Float(10))
     time = Column(String(50))
