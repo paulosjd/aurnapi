@@ -7,22 +7,33 @@ from site_lists import all_sites
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
 soup = BeautifulSoup(page, 'lxml')
 
-for site in all_sites:
-    site_link = soup.find_all('a',string=site)[0]:
-    site_row = site_link.findParent('td').findParent('tr')
-    site_column = site_row.findAll('td')
-    time = site_column[6].text
-    site_name = site_column[0].text
-    o3_value = site_column[1].text.replace('\xa0', ' ').split(' ')[0]
-    no2_value = site_column[2].text.replace('\xa0', ' ').split(' ')[0]
-    so2_value = site_column[3].text.replace('\xa0', ' ').split(' ')[0]
-    pm25_value = site_column[4].text.replace('\xa0', ' ').split(' ')[0]
-    pm10_value = site_column[5].text.replace('\xa0', ' ').split(' ')[0]
-    value_list = [o3_value, no2_value, so2_value, pm25_value, pm10_value]
-    if no2_value == 'n/a' or 'n/m':   # or datetime condition
-        no2_value = ''
 
-no2_dict = {site_name: {'no2': no2_value}}, time
+site_link = soup.find_all('a',string=site)[0]:
+site_row = site_link.findParent('td').findParent('tr')
+site_column = site_row.findAll('td')
+time = site_column[6].text
+site_name = site_column[0].text
+o3_value = site_column[1].text.replace('\xa0', ' ').split(' ')[0]
+no2_value = site_column[2].text.replace('\xa0', ' ').split(' ')[0]
+so2_value = site_column[3].text.replace('\xa0', ' ').split(' ')[0]
+pm25_value = site_column[4].text.replace('\xa0', ' ').split(' ')[0]
+pm10_value = site_column[5].text.replace('\xa0', ' ').split(' ')[0]
+value_list = [o3_value, no2_value, so2_value, pm25_value, pm10_value]
+if no2_value == 'n/a' or 'n/m':   # or datetime condition
+    no2_value = ''
+
+
+no2_dict = {site_name:no2_value for site in all_sites}
+
+no2_dict = {(site for site in all_sites): {'o3'=no2_value,'no2'=no2_value,
+                        'no2': no2_value,
+                        'no2': no2_value,
+                        'no2': no2_value,
+                        'time': time
+
+                        }
+
+
     #for value in value_list:
     #if value == 'n/a' or 'n/m':  # or datetime condition
     #    value = ''
