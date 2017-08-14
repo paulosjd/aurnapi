@@ -74,9 +74,7 @@ for site in all_sites:
         # check that values match that hour
         if datetime.strptime(time, "%d/%m/%Y%H:%M:%S") != datetime.now().replace(microsecond=0, second=0, minute=0) \
                 != datetime.now().replace(microsecond=0, second=0, minute=0):
-            value = 'n/a'  # will give n/a where n/m
-    # just add or to the above conditional assignment
-    for value in values:
+        value = 'n/a'  # will give n/a where n/m
         if value == 'n/m':
             value = 'n/a'
 
