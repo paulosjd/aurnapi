@@ -1,5 +1,7 @@
-from sqlalchemy import Column, Float, String
-from database import Base
+from flask_sqlalchemy import SQLAlchemy
+
+
+db = SQLAlchemy(app)
 
 
 class Sites(db.Model):
