@@ -44,15 +44,11 @@ class Data(db.Model):
         self.pm10 = pm10
         self.time = time
 
-      
-db.create_all()
 
-#import scraper/tool?
 for site in all_sites:
     site_entry = Sites(site, url, )
     db.session.add(site_entry)
 
-#import scraper/tool?
 for site in all_sites:
     page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
     soup = BeautifulSoup(page, 'lxml')
@@ -74,7 +70,7 @@ for site in all_sites:
         # check that values match that hour
         if datetime.strptime(time, "%d/%m/%Y%H:%M:%S") != datetime.now().replace(microsecond=0, second=0, minute=0) \
                 != datetime.now().replace(microsecond=0, second=0, minute=0):
-        value = 'n/a'  # will give n/a where n/m
+        value = 'n/a'  
         if value == 'n/m':
             value = 'n/a'
 
@@ -82,6 +78,8 @@ for site in all_sites:
     site_data_entry = Data(*values)
     db.session.add(site_info_entry)
     db.session.add(site_data_entry)
+
+db.session.commit()
 
 """
 db = MySQLdb.connect(host="localhost",
