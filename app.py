@@ -43,7 +43,47 @@ class Data(db.Model):
         self.pm25 = pm25
         self.pm10 = pm10
         self.time = time
+
       
+db.create_all()
+
+#import scraper/tool?
+for site in all_sites:
+    site_entry = Sites(site, url, )
+    db.session.add(site_entry)
+
+#import scraper/tool?
+for site in all_sites:
+    page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
+    soup = BeautifulSoup(page, 'lxml')
+
+    site_link = soup.find_all('a', string=site)[0]
+    site_row = site_link.findParent('td').findParent('tr')
+    site_column = site_row.findAll('td')
+
+    time = site_column[6].text
+    # site_name = site_column[0].text
+    o3_value = site_column[1].text.replace('\xa0', ' ').split(' ')[0]
+    no2_value = site_column[2].text.replace('\xa0', ' ').split(' ')[0]
+    so2_value = site_column[3].text.replace('\xa0', ' ').split(' ')[0]
+    pm25_value = site_column[4].text.replace('\xa0', ' ').split(' ')[0]
+    pm10_value = site_column[5].text.replace('\xa0', ' ').split(' ')[0]
+
+    values = [o3_value, no2_value, so2_value, pm25_value, pm10_value]
+    for value in values:
+        # check that values match that hour
+        if datetime.strptime(time, "%d/%m/%Y%H:%M:%S") != datetime.now().replace(microsecond=0, second=0, minute=0) \
+                != datetime.now().replace(microsecond=0, second=0, minute=0):
+            value = 'n/a'  # will give n/a where n/m
+    # just add or to the above conditional assignment
+    for value in values:
+        if value == 'n/m':
+            value = 'n/a'
+
+    site_info_entry = Sites(name, url, lat, long)
+    site_data_entry = Data(*values)
+    db.session.add(site_info_entry)
+    db.session.add(site_data_entry)
 
 """
 db = MySQLdb.connect(host="localhost",
