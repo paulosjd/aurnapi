@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from resources import Sites, Data
 from site_lists import all_sites
 from datetime import datetime
+from no2_scraper import data_dict, info_dict
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -13,12 +14,12 @@ db = SQLAlchemy(app)
 class Sites(db.Model):
     __tablename__ = 'sites'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True)
+    name = db.Column(db.String(100))
     url = db.Column(db.String(250))
-    lat = Column(String(30))
-    long = Column(String(30))
+    lat = db.Column(db.String(30))
+    long = db.Column(db.String(30))
 
-    def __init__(self, name=None, url=None, lat=None, long=None):
+    def __init__(self, name, url, lat, long):
         self.name = name
         self.url = url
         self.lat = lat
@@ -29,14 +30,14 @@ class Data(db.Model):
     __tablename__ = 'data'
     id = db.Column(db.Integer, primary_key=True)
     site = db.Column(db.String(100), db.ForeignKey('sites.name'))
-    o3 = Column(String(10))
-    no2 = Column(String(10))
-    so2 = Column(String(10))
-    pm10 = Column(String(10))
-    pm25 = Column(String(10))
-    time = Column(String(50))
+    o3 = db.Column(db.String(10))
+    no2 = db.Column(db.String(10))
+    so2 = db.Column(db.String(10))
+    pm10 = db.Column(db.String(10))
+    pm25 = db.Column(db.String(10))
+    time = db.Column(db.String(50))
 
-    def __init__(self, site=None, o3=None, no2=None, so2=None, pm10=None, pm25=None, time=None):
+    def __init__(self, site, o3, no2, so2, pm10, pm25, time):
         self.site = site
         self.o3 = o3
         self.no2 = no2
@@ -70,6 +71,11 @@ for site in all_sites:
             value = 'n/a'
         if value == 'n/m':
             value = 'n/a'
+
+    #site_info = info_dict.get(site)
+    #site_data = data_dict.get(site)
+
+
     site_info = [site, url, lat, long]
     site_data = [o3_value, no2_value, so2_value, pm25_value, pm10_value]
 
@@ -81,8 +87,18 @@ for site in all_sites:
 
 db.session.commit()
 
-
 """
+mysites = ['Aberdeen']
+
+
+
+
+site_info_list = [site, url, lat, long]
+site_info_entry = Sites(*site_info_list)
+
+site_data_values = [site, o3_value, no2_value, so2_value, pm25_value, pm10_value, time]
+
+
 
 {'Aberdeen': {'name': 'Aberdeen',
               'url': 'http://www.defra....',
@@ -109,6 +125,18 @@ db = MySQLdb.connect(host="localhost",
                      db="qoz")
 
 cursor = db.cursor()
+
+
+@app.route('/api/v1.0/items', methods=['GET'])
+def get_items():
+    try:
+        cursor.execute("SELECT * FROM items")
+        ...
+
+    except:
+        print "Error: unable to fetch items"
+    return jsonify({"desired: " response})
+
 
 
 if __name__ == "__main__":
