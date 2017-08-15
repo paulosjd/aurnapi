@@ -1,3 +1,5 @@
+from flask_sqlalchemy import sqlalchemy
+
 class Sites(db.Model):
     __tablename__ = 'sites'
     id = db.Column(db.Integer, primary_key=True)
@@ -20,11 +22,11 @@ class Data(db.Model):
     o3 = db.Column(db.String(10))
     no2 = db.Column(db.String(10))
     so2 = db.Column(db.String(10))
-    pm10 = db.Column(db.String(10))
     pm25 = db.Column(db.String(10))
+    pm10 = db.Column(db.String(10))
     time = db.Column(db.String(50))
 
-    def __init__(self, site, o3, no2, so2, pm10, pm25, time):
+    def __init__(self, site, o3, no2, so2, pm25, pm10, time):
         self.site = site
         self.o3 = o3
         self.no2 = no2
