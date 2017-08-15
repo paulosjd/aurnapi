@@ -18,7 +18,7 @@ class Sites(db.Model):
     lat = Column(String(30))
     long = Column(String(30))
 
-    def __init__(self, *args):
+    def __init__(self, name=None, url=None, lat=None, long=None):
         self.name = name
         self.url = url
         self.lat = lat
@@ -36,7 +36,7 @@ class Data(db.Model):
     pm25 = Column(String(10))
     time = Column(String(50))
 
-    def __init__(self, *args):
+    def __init__(self, site=None, o3=None, no2=None, so2=None, pm10=None, pm25=None, time=None):
         self.site = site
         self.o3 = o3
         self.no2 = no2
@@ -45,7 +45,6 @@ class Data(db.Model):
         self.pm10 = pm10
         self.time = time
 
-        
 db.create_all()
 
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
@@ -58,7 +57,8 @@ for site in all_sites:
     url = ''
     lat = ''
     long = ''
-    time = site_column[6].text.replace("2017","2017 " )
+    time_string = site_column[6].text
+    time = time_string[:10] + ' ' + time_string[10:]
     o3_value = site_column[1].text.replace('\xa0', ' ').split(' ')[0]
     no2_value = site_column[2].text.replace('\xa0', ' ').split(' ')[0]
     so2_value = site_column[3].text.replace('\xa0', ' ').split(' ')[0]
@@ -80,3 +80,38 @@ for site in all_sites:
     db.session.add(site_data_entry)
 
 db.session.commit()
+
+
+"""
+
+{'Aberdeen': {'name': 'Aberdeen',
+              'url': 'http://www.defra....',
+              'lat': '43.2353',
+              'long': '8',
+              'SO2': 'n/m',
+              'Time': '06/08/201710:00:00'},
+
+
+{'Aberdeen': {'NO2': '16',
+              'O3': 'n/m',
+              'PM10': '10',
+              'PM2.5': '8',
+              'SO2': 'n/m',
+              'Time': '06/08/201710:00:00'},
+
+
+
+
+db = MySQLdb.connect(host="localhost",
+                     port=3306,
+                     user="foo",
+                     passwd="bar",
+                     db="qoz")
+
+cursor = db.cursor()
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0', port=8080, passthrough_errors=True)
+
+"""
