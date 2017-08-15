@@ -1,18 +1,12 @@
-from flask_sqlalchemy import SQLAlchemy
-
-
-db = SQLAlchemy(app)
-
-
 class Sites(db.Model):
     __tablename__ = 'sites'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True)
+    name = db.Column(db.String(100))
     url = db.Column(db.String(250))
-    lat = Column(String(30))
-    long = Column(String(30))
+    lat = db.Column(db.String(30))
+    long = db.Column(db.String(30))
 
-    def __init__(self, name=None, url=None, lat=None, long=None):
+    def __init__(self, name, url, lat, long):
         self.name = name
         self.url = url
         self.lat = lat
@@ -23,14 +17,14 @@ class Data(db.Model):
     __tablename__ = 'data'
     id = db.Column(db.Integer, primary_key=True)
     site = db.Column(db.String(100), db.ForeignKey('sites.name'))
-    o3 = Column(String(10))
-    no2 = Column(String(10))
-    so2 = Column(String(10))
-    pm10 = Column(String(10))
-    pm25 = Column(String(10))
-    time = Column(String(50))
+    o3 = db.Column(db.String(10))
+    no2 = db.Column(db.String(10))
+    so2 = db.Column(db.String(10))
+    pm10 = db.Column(db.String(10))
+    pm25 = db.Column(db.String(10))
+    time = db.Column(db.String(50))
 
-    def __init__(self, site=None, o3=None, no2=None, so2=None, pm10=None, pm25=None, time=None):
+    def __init__(self, site, o3, no2, so2, pm10, pm25, time):
         self.site = site
         self.o3 = o3
         self.no2 = no2
