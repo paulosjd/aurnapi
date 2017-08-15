@@ -18,7 +18,7 @@ class Sites(db.Model):
     lat = Column(String(30))
     long = Column(String(30))
 
-    def __init__(self, name=None, url=None, lat=None, long=None):
+    def __init__(self, *args):
         self.name = name
         self.url = url
         self.lat = lat
@@ -36,7 +36,7 @@ class Data(db.Model):
     pm25 = Column(String(10))
     time = Column(String(50))
 
-    def __init__(self, site=None, o3=None, no2=None, so2=None, pm10=None, pm25=None, time=None):
+    def __init__(self, *args):
         self.site = site
         self.o3 = o3
         self.no2 = no2
@@ -45,6 +45,7 @@ class Data(db.Model):
         self.pm10 = pm10
         self.time = time
 
+        
 db.create_all()
 
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
@@ -57,7 +58,6 @@ for site in all_sites:
     url = ''
     lat = ''
     long = ''
-    #use regex to change "2017" to "20[0-9][0-9]"
     time = site_column[6].text.replace("2017","2017 " )
     o3_value = site_column[1].text.replace('\xa0', ' ').split(' ')[0]
     no2_value = site_column[2].text.replace('\xa0', ' ').split(' ')[0]
@@ -80,55 +80,3 @@ for site in all_sites:
     db.session.add(site_data_entry)
 
 db.session.commit()
-
-"""
-site_info_list = [site, url, lat, long]
-site_info_entry = Sites(*site_info_list)
-
-site_data_values = [site, o3_value, no2_value, so2_value, pm25_value, pm10_value, time]
-
-
-
-{'Aberdeen': {'name': 'Aberdeen',
-              'url': 'http://www.defra....',
-              'lat': '43.2353',
-              'long': '8',
-              'SO2': 'n/m',
-              'Time': '06/08/201710:00:00'},
-
-
-{'Aberdeen': {'NO2': '16',
-              'O3': 'n/m',
-              'PM10': '10',
-              'PM2.5': '8',
-              'SO2': 'n/m',
-              'Time': '06/08/201710:00:00'},
-
-
-
-
-db = MySQLdb.connect(host="localhost",
-                     port=3306,
-                     user="foo",
-                     passwd="bar",
-                     db="qoz")
-
-cursor = db.cursor()
-
-
-@app.route('/api/v1.0/items', methods=['GET'])
-def get_items():
-    try:
-        cursor.execute("SELECT * FROM items")
-        ...
-
-    except:
-        print "Error: unable to fetch items"
-    return jsonify({"desired: " response})
-
-
-
-if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=8080, passthrough_errors=True)
-
-"""
