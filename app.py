@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from resources import Sites, Data
-
+from site_lists import all_sites
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -44,44 +45,68 @@ class Data(db.Model):
         self.pm10 = pm10
         self.time = time
 
+db.create_all()
 
+page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
+soup = BeautifulSoup(page, 'lxml')
+#can have all valuews e.g site, url, lat, long, o3_value etc importe from resources? Or even just a list of values which can unpack in the constuctor e.g. site values
 for site in all_sites:
-    site_entry = Sites(site, url, )
-    db.session.add(site_entry)
-
-for site in all_sites:
-    page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
-    soup = BeautifulSoup(page, 'lxml')
-
     site_link = soup.find_all('a', string=site)[0]
     site_row = site_link.findParent('td').findParent('tr')
     site_column = site_row.findAll('td')
-
-    time = site_column[6].text
-    # site_name = site_column[0].text
+    url = ''
+    lat = ''
+    long = ''
+    #use regex to change "2017" to "20[0-9][0-9]"
+    time = site_column[6].text.replace("2017","2017 " )
     o3_value = site_column[1].text.replace('\xa0', ' ').split(' ')[0]
     no2_value = site_column[2].text.replace('\xa0', ' ').split(' ')[0]
     so2_value = site_column[3].text.replace('\xa0', ' ').split(' ')[0]
     pm25_value = site_column[4].text.replace('\xa0', ' ').split(' ')[0]
     pm10_value = site_column[5].text.replace('\xa0', ' ').split(' ')[0]
-
-    values = [o3_value, no2_value, so2_value, pm25_value, pm10_value]
-    for value in values:
-        # check that values match that hour
-        if datetime.strptime(time, "%d/%m/%Y%H:%M:%S") != datetime.now().replace(microsecond=0, second=0, minute=0) \
+    for value in site_values:
+        if datetime.strptime(time, "%d/%m/%Y %H:%M:%S") != datetime.now().replace(microsecond=0, second=0, minute=0) \
                 != datetime.now().replace(microsecond=0, second=0, minute=0):
-        value = 'n/a'  
+            value = 'n/a'
         if value == 'n/m':
             value = 'n/a'
+    site_info = [site, url, lat, long]
+    site_data = [o3_value, no2_value, so2_value, pm25_value, pm10_value]
 
-    site_info_entry = Sites(name, url, lat, long)
-    site_data_entry = Data(*values)
+    site_info_entry = Sites(*site_info)
+    site_data_entry = Data(*site_data)
+
     db.session.add(site_info_entry)
     db.session.add(site_data_entry)
 
 db.session.commit()
 
 """
+site_info_list = [site, url, lat, long]
+site_info_entry = Sites(*site_info_list)
+
+site_data_values = [site, o3_value, no2_value, so2_value, pm25_value, pm10_value, time]
+
+
+
+{'Aberdeen': {'name': 'Aberdeen',
+              'url': 'http://www.defra....',
+              'lat': '43.2353',
+              'long': '8',
+              'SO2': 'n/m',
+              'Time': '06/08/201710:00:00'},
+
+
+{'Aberdeen': {'NO2': '16',
+              'O3': 'n/m',
+              'PM10': '10',
+              'PM2.5': '8',
+              'SO2': 'n/m',
+              'Time': '06/08/201710:00:00'},
+
+
+
+
 db = MySQLdb.connect(host="localhost",
                      port=3306,
                      user="foo",
