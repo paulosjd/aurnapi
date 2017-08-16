@@ -11,7 +11,6 @@ pm10_value = {'Aberdeen': '43', 'Oxford': '17'}
 
 
 def get_data_lists(site):
-    name = site
     url = url_data.get(site)
     lat = latitude.get(site)
     long = longitude.get(site)
@@ -22,6 +21,6 @@ def get_data_lists(site):
     pm25 = pm25_value.get(site)
     pm10 = pm10_value.get(site)
     site_info = [name, url, lat, long]
-    site_data = [time, o3, no2, no2, so2, pm25, pm10]
+    site_data = [site, o3, no2, so2, pm25, pm10, time]
     return site_info, site_data
 
