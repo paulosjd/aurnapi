@@ -1,14 +1,10 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from resources import Sites, Data
-from site_lists import all_sites
+from site_metadata import site_list, site_url_dictionary
 from datetime import datetime
 from no2_scraper import data_dict, info_dict
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-db = SQLAlchemy(app)
 
 
 class Sites(db.Model):
@@ -51,11 +47,11 @@ db.create_all()
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
 soup = BeautifulSoup(page, 'lxml')
 #can have all valuews e.g site, url, lat, long, o3_value etc importe from resources? Or even just a list of values which can unpack in the constuctor e.g. site values
-for site in all_sites:
+for site in site_list:
     site_link = soup.find_all('a', string=site)[0]
     site_row = site_link.findParent('td').findParent('tr')
     site_column = site_row.findAll('td')
-    url = ''
+    url = site_url_dictionary.get(site)
     lat = ''
     long = ''
     time_string = site_column[6].text
@@ -65,6 +61,7 @@ for site in all_sites:
     so2_value = site_column[3].text.replace('\xa0', ' ').split(' ')[0]
     pm25_value = site_column[4].text.replace('\xa0', ' ').split(' ')[0]
     pm10_value = site_column[5].text.replace('\xa0', ' ').split(' ')[0]
+    site_values = [o3_value, no2_value, so2_value, pm25_value, pm10_value]
     for value in site_values:
         if datetime.strptime(time, "%d/%m/%Y %H:%M:%S") != datetime.now().replace(microsecond=0, second=0, minute=0) \
                 != datetime.now().replace(microsecond=0, second=0, minute=0):
