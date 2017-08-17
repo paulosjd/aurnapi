@@ -1,5 +1,12 @@
-from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from test_scraper import get_data_lists
+from datetime import datetime
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+db = SQLAlchemy(app)
 
 
 class Sites(db.Model):
@@ -24,8 +31,8 @@ class Data(db.Model):
     o3 = db.Column(db.String(10))
     no2 = db.Column(db.String(10))
     so2 = db.Column(db.String(10))
-    pm25 = db.Column(db.String(10))
     pm10 = db.Column(db.String(10))
+    pm25 = db.Column(db.String(10))
     time = db.Column(db.String(50))
 
     def __init__(self, site, o3, no2, so2, pm25, pm10, time):
@@ -36,3 +43,17 @@ class Data(db.Model):
         self.pm25 = pm25
         self.pm10 = pm10
         self.time = time
+
+db.create_all()
+
+mysites = ['Aberdeen', 'Oxford']
+
+for site in mysites:
+    get_data_lists(site)
+    site_info_entry = Sites(*get_data_lists(site)[0])
+    site_data_entry = Data(*get_data_lists(site)[1])
+    db.session.add(site_info_entry)
+    db.session.add(site_data_entry)
+
+db.session.commit()
+print(Data.query.get(1).time)
