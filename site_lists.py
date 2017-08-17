@@ -1,3 +1,4 @@
+site_geo = {}
 
 site_url_dictionary = {'Aberdeen': 'https://uk-air.defra.gov.uk/networks/site-info?site_id=ABD',
      'Aberdeen Union Street Roadside': 'https://uk-air.defra.gov.uk/networks/site-info?site_id=ABD7',
