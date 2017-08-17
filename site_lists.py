@@ -1,6 +1,17 @@
+
+
+def get_info(site):
+    url = site_urls.get(site)
+    lat = site_geo.get(site)
+    long = site_geo.get(site)
+    return [site, url, lat, long]
+
+#MAKE LAT AND LONG DICT      site_page = requests.get('https://uk-air.defra.gov.uk/networks/site-info?site_id={}'.format(site_code),
+                             #headers={'User-Agent': 'Not blank'})
+
 site_geo = {}
 
-site_url_dictionary = {'Aberdeen': 'https://uk-air.defra.gov.uk/networks/site-info?site_id=ABD',
+site_urls = {'Aberdeen': 'https://uk-air.defra.gov.uk/networks/site-info?site_id=ABD',
      'Aberdeen Union Street Roadside': 'https://uk-air.defra.gov.uk/networks/site-info?site_id=ABD7',
      'Aberdeen Wellington Road': 'https://uk-air.defra.gov.uk/networks/site-info?site_id=ABD8',
      'Armagh Roadside': 'https://uk-air.defra.gov.uk/networks/site-info?site_id=ARM6',
