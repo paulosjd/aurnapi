@@ -1,11 +1,12 @@
+from collections import __main__
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from bs4 import BeautifulSoup
 from site_metadata import site_list, get_info
-from scraper_ref import get_data
+from format_data import get_data
+import requests
 
-
-#NEED TO DO PIP INSTALL REQUESTS
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -13,9 +14,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 
 db = SQLAlchemy(app)
-
-#data_dict = dict(zip(all_sites, ['' for a in all_sites]))
-#info_dict = dict(zip(all_sites, ['' for a in all_sites]))
 
 
 class Sites(db.Model):
@@ -53,6 +51,7 @@ class Data(db.Model):
         self.pm10 = pm10
         self.time = time
 
+
 db.create_all()
 
 
@@ -63,9 +62,16 @@ for site in site_list:   # only want to run once, not every time with data by CR
 
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
 soup = BeautifulSoup(page, 'lxml')
+
 for site in site_list:
-    site_data = Data(*get_data(site, soup))
+    site_link = soup.find_all('a', string=site)[0]
+    row = site_link.findParent('td').findParent('tr').findAll('td')
+    site_data = Data(*get_data(site, row))
     db.session.add(site_data)
 
 db.session.commit()
+
+
+if __name__ == '__main__':
+    '__main__'
 
