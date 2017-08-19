@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from bs4 import BeautifulSoup
 from site_metadata import site_list, get_info
-from get_data import hourly_data
+from get_data import hourly_data, format_data
 import requests
 
 
@@ -62,7 +62,7 @@ soup = BeautifulSoup(page, 'lxml')
 for site in site_list:
     site_link = soup.find_all('a', string=site)[0]
     row = site_link.findParent('td').findParent('tr').findAll('td')
-    site_data = Data(*hourly_data(site, row))
+    site_data = Data(*format_data(hourly_data(site, row)))
     db.session.add(site_data)
 
 db.session.commit()
