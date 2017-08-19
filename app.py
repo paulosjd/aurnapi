@@ -61,7 +61,8 @@ soup = BeautifulSoup(page, 'lxml')
 
 for site in site_list:
     site_link = soup.find_all('a', string=site)[0]
-    site_data = Data(*hourly_data(site, site_link))
+    row = site_link.findParent('td').findParent('tr').findAll('td')
+    site_data = Data(*hourly_data(site, row))
     db.session.add(site_data)
 
 db.session.commit()

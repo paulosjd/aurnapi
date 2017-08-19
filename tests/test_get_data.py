@@ -2,8 +2,8 @@ from get_data import hourly_data
 from bs4 import BeautifulSoup
 from unittest import TestCase
 
-site_link markdown1 = ''''''
-site_link markdown2 = """
+site_link_markdown1 = ''''''
+site_link_markdown2 = """
 mock_data =
 [<td><a href="../networks/site-info?site_id=ABD">Aberdeen</a><br/>
  <a class="smalltext" href="https://uk-air.defra.gov.uk/assets/graphs/ABD_weekly_m.png">Timeseries Graph</a></td>,
@@ -16,7 +16,7 @@ mock_data =
  </td>,
  <td>14/08/2017<br/>16:00:00</td>]
  """
-site_link markdown3 = """
+site_link_markdown3 = """
 mock_data =
 [<td><a href="../networks/site-info?site_id=ABD">Aberdeen</a><br/>
  <a class="smalltext" href="https://uk-air.defra.gov.uk/assets/graphs/ABD_weekly_m.png">Timeseries Graph</a></td>,

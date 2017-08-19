@@ -2,8 +2,7 @@ from datetime import datetime
 from site_metadata import site_geo, site_urls
 
 
-def hourly_data(site, site_link):
-    row = site_link.findParent('td').findParent('tr').findAll('td')
+def hourly_data(row):
     o3 = row[1].text.replace('\xa0', ' ').split(' ')[0]
     no2 = row[2].text.replace('\xa0', ' ').split(' ')[0]
     so2 = row[3].text.replace('\xa0', ' ').split(' ')[0]
