@@ -49,7 +49,7 @@ class TestGetData(TestCase):
 
     #test that sites with non-up-to-date measurements are handled
     def test_format_data_3(self):
-        self.expected_format output = [''] * 5 + [datetime.strftime((datetime.now().replace(
+        self.expected_output = [''] * 5 + [datetime.strftime((datetime.now().replace(
             microsecond=0, second=0, minute=0)),"%d/%m/%Y %H:%M:%S")]
         self.assertEqual(format_data(self.expected_get_data_output), self.expected_output)
 
@@ -58,7 +58,8 @@ class TestGetData(TestCase):
 row_soup = BeautifulSoup('''[<td><a href="../networks/site-info?site_id=ABD">Aberdeen</a><br/>
  <a class="smalltext" href="https://uk-air.defra.gov.uk/assets/graphs/ABD_weekly_m.png">Timeseries Graph</a></td>,
  <td class="center"><span class="bg_low2 bold">39 (2 Low)</span></td>,
- <td class="center"><span class="bg_low1 bold">18 (1 Low)</span></td>,
+ <td class="center"><span class="bg_lo
+ w1 bold">18 (1 Low)</span></td>,
  <td class="center"><span title="Not Measured">n/m</span></td>,
  <td class="center"><span class="bg_low1 bold">6 (1 Low)</span></td>,
  <td class="center"><span class="bg_low1 bold">12 (1 Low)
