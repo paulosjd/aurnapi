@@ -9,11 +9,8 @@ def hourly_data(row):
     pm25 = row[4].text.replace('\xa0', ' ').split(' ')[0]
     pm10 = row[5].text.replace('\xa0', ' ').split(' ')[0]
     time = row[6].text[:10] + ' ' + row[6].text[10:]
-    air = [o3, no2, so2, pm25, pm10, time]
-    return ['n/a' for value in air[0:4] if datetime.strptime(air[5], "%d/%m/%Y %H:%M:%S") != datetime.now().replace(
-        microsecond=0, second=0, minute=0) and value != 'n/m']
+    return [o3, no2, so2, pm25, pm10, time]
 
-    #return [site, *air]
 
 def get_info(site):
     url = site_urls.get(site)
@@ -23,7 +20,15 @@ def get_info(site):
 
 
 
-"""for value in site_values:
+= datetime.now().replace(microsecond=0, second=0, minute=0) and value != 'n/m'
+
+
+"""
+
+    return ['n/a' for value in air[0:4] if datetime.strptime(air[5], "%d/%m/%Y %H:%M:%S") != datetime.now().replace(
+        microsecond=0, second=0, minute=0) and value != 'n/m']
+
+for value in site_values:
     if datetime.strptime(time, "%d/%m/%Y %H:%M:%S") != datetime.now().replace(microsecond=0, second=0, minute=0):
 
     else:

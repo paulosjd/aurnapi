@@ -36,20 +36,23 @@ mock_data =
 
 class TestGetData(TestCase):
 
-    def test_get_data(self):
-        self.hourly_data = BeautifulSoup(data_row, 'html')
-        self.make_list =
-        self.expected_list = ['Aberdeen', '39', '18', 'n/m', '6', '12', '19/08/2017 09:00:00']
-        self.assertEqual(self.hourly_data, self.expected_list)
+    def setUp(self):
+        self.expected_get_data_output = ['Aberdeen', '39', '18', 'n/m', '6', '12', '19/08/2017 09:00:00']
 
-    def test_format_data(self):
-        self.expected_list=
+    def test_hourly_data(self):
+        self.html_input = BeautifulSoup(data_row, 'html')
+        self.assertEqual(hourly_data(self.html_input), self.expected_get_data_output)
+
+    def test_format_data_1(self):
+        self.ignore_time = []
+        self.expected_output = ['Aberdeen', '39', '18', 'n/a', '6', '12', '19/08/2017 09:00:00']
         self.assertEqual()
 
-    def test_hourly_data_markdown3(self):
-        self.expected_list= ['Aberdeen', '', '', 'n/m', '', '', datetime.now().replace(
-        microsecond=0, second=0, minute=0)]
-         self.assertEqual()
+    def test_format_data_2(self):
+        self.data_list = ['Aberdeen', '39', '18', 'n/m', '6', '12', '19/08/2017 09:00:00']
+        self.
+        self.expected_output = ['Aberdeen', '39', '18', 'n/m', '6', '12', '19/08/2017 09:00:00']
+        self.assertEqual()
 
 
 
