@@ -12,6 +12,17 @@ def hourly_data(row):
     return [o3, no2, so2, pm25, pm10, time]
 
 
+def format_data(hourly_data_output):
+    if hourly_data_output[5] != datetime.strftime((datetime.now().replace(microsecond=0, second=0, minute=0)),
+                                                  "%d/%m/%Y %H:%M:%S"):
+        hourly_data_output[0:5] = 'n/a'
+        hourly_data_output[5] = datetime.strftime((datetime.now().replace(microsecond=0, second=0, minute=0)),
+                                                  "%d/%m/%Y %H:%M:%S")
+        return hourly_data_output
+    else:
+        return hourly_data_output
+
+
 def get_info(site):
     url = site_urls.get(site)
     lat = site_geo.get(site)[0]
@@ -20,13 +31,11 @@ def get_info(site):
 
 
 
-= datetime.now().replace(microsecond=0, second=0, minute=0) and value != 'n/m'
-
 
 """
-
     return ['n/a' for value in air[0:4] if datetime.strptime(air[5], "%d/%m/%Y %H:%M:%S") != datetime.now().replace(
         microsecond=0, second=0, minute=0) and value != 'n/m']
+
 
 for value in site_values:
     if datetime.strptime(time, "%d/%m/%Y %H:%M:%S") != datetime.now().replace(microsecond=0, second=0, minute=0):

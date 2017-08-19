@@ -32,7 +32,7 @@ class Sites(db.Model):
 class Data(db.Model):
     __tablename__ = 'data'
     id = db.Column('id', db.Integer, primary_key=True)
-    site = db.Column('site', db.String(100), db.ForeignKey('sites.name'))
+    site_name = db.Column('site', db.String(100), db.ForeignKey('sites.name'))
     o3 = db.Column('ozone', db.String(10))
     no2 = db.Column('no2', db.String(10))
     so2 = db.Column('so2', db.String(10))
@@ -40,8 +40,8 @@ class Data(db.Model):
     pm10 = db.Column('pm10', db.String(10))
     time = db.Column('time', db.String(50))
 
-    def __init__(self, site: object, o3: object, no2: object, so2: object, pm25: object, pm10: object, time: object) -> object:
-        self.site = site
+    def __init__(self, site_name, o3, no2, so2, pm25, pm10, time):
+        self.site_name = site_name
         self.o3 = o3
         self.no2 = no2
         self.so2 = so2
