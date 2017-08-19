@@ -16,11 +16,11 @@ db = SQLAlchemy(app)
 
 class Sites(db.Model):
     __tablename__ = 'sites'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    url = db.Column(db.String(250))
-    lat = db.Column(db.String(30))
-    long = db.Column(db.String(30))
+    id = db.Column('id', db.Integer, primary_key=True)
+    name = db.Column('name', db.String(100))
+    url = db.Column('url', db.String(250))
+    lat = db.Column('latitude', db.String(30))
+    long = db.Column('longitude', db.String(30))
 
     def __init__(self, name, url, lat, long):
         self.name = name
@@ -31,14 +31,14 @@ class Sites(db.Model):
 
 class Data(db.Model):
     __tablename__ = 'data'
-    id = db.Column(db.Integer, primary_key=True)
-    site = db.Column(db.String(100), db.ForeignKey('sites.name'))
-    o3 = db.Column(db.String(10))
-    no2 = db.Column(db.String(10))
-    so2 = db.Column(db.String(10))
-    pm25 = db.Column(db.String(10))
-    pm10 = db.Column(db.String(10))
-    time = db.Column(db.String(50))
+    id = db.Column('id', db.Integer, primary_key=True)
+    site = db.Column('site', db.String(100), db.ForeignKey('sites.name'))
+    o3 = db.Column('ozone', db.String(10))
+    no2 = db.Column('no2', db.String(10))
+    so2 = db.Column('so2', db.String(10))
+    pm25 = db.Column('pm25', db.String(10))
+    pm10 = db.Column('pm10', db.String(10))
+    time = db.Column('time', db.String(50))
 
     def __init__(self, site: object, o3: object, no2: object, so2: object, pm25: object, pm10: object, time: object) -> object:
         self.site = site
