@@ -37,21 +37,18 @@ mock_data =
 class TestGetData(TestCase):
 
     def setUp(self):
-        self.expected_get_data_output = ['Aberdeen', '39', '18', 'n/m', '6', '12', '19/08/2017 09:00:00']
+        self.expected_get_data_output = ['39', '18', 'n/m', '6', '12', '19/08/2017 09:00:00']
 
     def test_hourly_data(self):
         self.html_input = BeautifulSoup(data_row, 'html')
         self.assertEqual(hourly_data(self.html_input), self.expected_get_data_output)
 
-    #test using latest hourly measurements
+    #test that correct most up-to-date values are unaltered
     def test_format_data_1(self):
-        self.expected_get_data_output[5] = datetime.strftime((datetime.now().replace(microsecond=0, second=0, minute=0))
-                                             ,"%d/%m/%Y %H:%M:%S")
-        self.expected_output = ['39', '18', 'n/a', '6', '12', '19/08/2017 09:00:00']
-        self.assertEqual(format_data(self.input_list_with_current_hour), self.input_list_with_current_hour)
+        self.assertEqual(format_data(self.expected_get_data_output), self.expected_get_data_output)
 
     #test that sites with non-up-to-date measurements are handled
-    def test_format_data_2(self):
+    def test_format_data_3(self):
         self.data_list = ['39', '18', 'n/m', '6', '12', '19/08/2017 09:00:00']
         self.expected_output_1 = ['', '', '', '', '', '', '']
         self.expected_output_2 = ['', '', '', '', '', '', '']
