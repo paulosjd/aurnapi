@@ -43,16 +43,15 @@ class TestGetData(TestCase):
         self.html_input = BeautifulSoup(data_row, 'html')
         self.assertEqual(hourly_data(self.html_input), self.expected_get_data_output)
 
-    #test that correct most up-to-date values are unaltered
+    #test that list is returned unaltered assuming that time is up-to-date
     def test_format_data_1(self):
         self.assertEqual(format_data(self.expected_get_data_output), self.expected_get_data_output)
 
     #test that sites with non-up-to-date measurements are handled
     def test_format_data_3(self):
-        self.data_list = ['39', '18', 'n/m', '6', '12', '19/08/2017 09:00:00']
-        self.expected_output_1 = ['', '', '', '', '', '', '']
-        self.expected_output_2 = ['', '', '', '', '', '', '']
-        self.assertEqual()
+        self.expected_format output = [''] * 5 + [datetime.strftime((datetime.now().replace(
+            microsecond=0, second=0, minute=0)),"%d/%m/%Y %H:%M:%S")]
+        self.assertEqual(format_data(self.expected_get_data_output), self.expected_output)
 
 
 
