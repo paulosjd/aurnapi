@@ -15,7 +15,6 @@ def hourly_data(row):
 
     #return [site, *air]
 
-
 def get_info(site):
     url = site_urls.get(site)
     lat = site_geo.get(site)[0]
