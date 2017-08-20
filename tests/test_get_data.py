@@ -1,7 +1,6 @@
 from get_data import hourly_data, format_data
 from bs4 import BeautifulSoup
-from unittest import TestCase
-import nose
+import unittest
 from datetime import datetime
 
 data_row = """
@@ -18,12 +17,12 @@ data_row = """
  """
 
 
-class TestGetData(TestCase):
+class TestGetData(unittest.TestCase):
     def setUp(self):
         self.expected_get_data_output = ['39', '18', 'n/m', '6', '12', '19/08/2017 09:00:00']
 
     def test_hourly_data(self):
-        self.html_input = BeautifulSoup(data_row, 'html')
+        self.html_input = BeautifulSoup(data_row, 'parser.lxml')
         self.assertEqual(hourly_data(self.html_input), self.expected_get_data_output)
 
     # test that list is returned unaltered assuming that time is up-to-date
@@ -32,13 +31,13 @@ class TestGetData(TestCase):
 
     # test that sites with non-up-to-date measurements are handled
     def test_format_data_2(self):
+        # noinspection PyTypeChecker,PyArgumentList
         self.expected_output = [''] * 5 + [datetime.strftime((datetime.now().replace(
             microsecond=0, second=0, minute=0)), "%d/%m/%Y %H:%M:%S")]
         self.assertEqual(format_data(self.expected_get_data_output), self.expected_output)
 
-
 if __name__ == '__main__':
-    '__main__'
+    unittest.main()
 
 """
 mock_data =
