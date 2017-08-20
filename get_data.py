@@ -47,12 +47,20 @@ page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers=
 soup = BeautifulSoup(page, 'lxml')
 #print(hourly_data(soup, 'Aberdeen'))
 #print(format_data(hourly_data(soup, 'Aberdeen')))
-print(hourly_data(soup, 'Aberdeen')[5]) = 
 
+foo = hourly_data(soup, 'Aberdeen')[0:5] + ['05/08/2017 14:00:00']
+print(format_data(foo))
 """
+
 >>>print(hourly_data(soup, 'Aberdeen'))
 ['46', '1', 'n/m', '3', '6', '20/08/2017 10:00:00']
+
 >>>print(format_data(hourly_data(soup, 'Aberdeen')))
 ['46', '1', 'n/m', '3', '6', '20/08/2017 10:00:00']
 
+>>>foo = hourly_data(soup, 'Aberdeen')[0:5] + ['05/08/2017 14:00:00']
+>>>print(foo)
+['46', '1', 'n/m', '3', '6', '05/08/2017 14:00:00']
+>>>print(format_data(foo))
+['', '', '', '', '', '20/08/2017 11:00:00']
 """
