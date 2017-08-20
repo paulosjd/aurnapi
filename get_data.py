@@ -1,6 +1,8 @@
 from datetime import datetime
 from site_metadata import site_geo, site_urls
 from bs4 import BeautifulSoup
+import requests
+
 
 row = """[<td><a href="../networks/site-info?site_id=ABD">Aberdeen</a><br/>
  <a class="smalltext" href="https://uk-air.defra.gov.uk/assets/graphs/ABD_weekly_m.png">Timeseries Graph</a></td>,
@@ -13,7 +15,9 @@ row = """[<td><a href="../networks/site-info?site_id=ABD">Aberdeen</a><br/>
  </td>,
  <td>19/08/2017<br/>17:00:00</td>]"""
 
-def hourly_data(row):
+def hourly_data(soup, site):
+    site_link = soup.find_all('a', string=site)[0]
+    row = site_link.findParent('td').findParent('tr').findAll('td')
     o3 = row[1].text.replace('\xa0', ' ').split(' ')[0]
     no2 = row[2].text.replace('\xa0', ' ').split(' ')[0]
     so2 = row[3].text.replace('\xa0', ' ').split(' ')[0]
@@ -39,15 +43,7 @@ def get_info(site):
     return [site, url, lat, long]
 
 
-print(type(BeautifulSoup(row, 'lxml')))
+page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
+soup = BeautifulSoup(page, 'lxml')
+print(hourly_data(soup, 'Aberdeen'))
 
-"""
-    return ['n/a' for value in air[0:4] if datetime.strptime(air[5], "%d/%m/%Y %H:%M:%S") != datetime.now().replace(
-        microsecond=0, second=0, minute=0) and value != 'n/m']
-
-
-for value in site_values:
-    if datetime.strptime(time, "%d/%m/%Y %H:%M:%S") != datetime.now().replace(microsecond=0, second=0, minute=0):
-
-    else:
-        value.replace('n/m', 'n/a')"""

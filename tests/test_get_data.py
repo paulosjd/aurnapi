@@ -1,4 +1,4 @@
-from app import hourly_data, format_data
+from get_data import hourly_data, format_data
 from bs4 import BeautifulSoup
 import unittest
 from datetime import datetime
