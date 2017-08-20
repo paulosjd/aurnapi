@@ -7,6 +7,9 @@
     <orderEntry type="jdk" jdkName="Python 3.5.2 virtualenv at C:\Users\Paul\Desktop\aurn-venv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PackageRequirementsSettings">
+    <option name="requirementsPath" value="d" />
+  </component>
   <component name="TestRunnerService">
     <option name="projectConfiguration" value="Nosetests" />
     <option name="PROJECT_TEST_RUNNER" value="Nosetests" />

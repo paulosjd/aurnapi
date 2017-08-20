@@ -14,11 +14,9 @@ def hourly_data(row):
 
 def format_data(hourly_data_output):
     if hourly_data_output[5] != datetime.strftime((datetime.now().replace(microsecond=0, second=0, minute=0)),
-                                                  "%d/%m/%Y %H:%M:%S"):
-        hourly_data_output[0:5] = 'n/a'
-        hourly_data_output[5] = datetime.strftime((datetime.now().replace(microsecond=0, second=0, minute=0)),
-                                                  "%d/%m/%Y %H:%M:%S")
-        return hourly_data_output
+                                                   "%d/%m/%Y %H:%M:%S"):
+        return [''] * 5 + [datetime.strftime((datetime.now().replace(
+                                                            microsecond=0, second=0, minute=0)), "%d/%m/%Y %H:%M:%S")]
     else:
         return hourly_data_output
 
