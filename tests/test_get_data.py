@@ -2,19 +2,20 @@ from get_data import hourly_data, format_data
 from bs4 import BeautifulSoup
 import unittest
 from datetime import datetime
+"""
 
-data_row = """
-[<td><a href="../networks/site-info?site_id=ABD">Aberdeen</a><br/>
- <a class="smalltext" href="https://uk-air.defra.gov.uk/assets/graphs/ABD_weekly_m.png">Timeseries Graph</a></td>,
- <td class="center"><span class="bg_low2 bold">40 (2 Low)</span></td>,
- <td class="center"><span class="bg_low1 bold">10 (1 Low)</span></td>,
- <td class="center"><span title="Not Measured">n/m</span></td>,
- <td class="center"><span class="bg_low1 bold">2 (1 Low)</span></td>,
- <td class="center"><span class="bg_low1 bold">6 (1 Low)
- </span>
- </td>,
- <td>19/08/2017<br/>09:00:00</td>]
- """
+>>>print(hourly_data(soup, 'Aberdeen'))
+['46', '1', 'n/m', '3', '6', '20/08/2017 10:00:00']
+
+>>>print(format_data(hourly_data(soup, 'Aberdeen')))
+['46', '1', 'n/m', '3', '6', '20/08/2017 10:00:00']
+
+>>>foo = hourly_data(soup, 'Aberdeen')[0:5] + ['05/08/2017 14:00:00']
+>>>print(foo)
+['46', '1', 'n/m', '3', '6', '05/08/2017 14:00:00']
+>>>print(format_data(foo))
+['', '', '', '', '', '20/08/2017 11:00:00']
+"""
 
 
 class TestGetData(unittest.TestCase):
