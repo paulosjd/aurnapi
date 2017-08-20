@@ -22,7 +22,7 @@ class TestGetData(unittest.TestCase):
         self.expected_get_data_output = ['39', '18', 'n/m', '6', '12', '19/08/2017 09:00:00']
 
     def test_hourly_data(self):
-        self.html_input = BeautifulSoup(data_row, 'parser.lxml')
+        self.html_input = BeautifulSoup(data_row, 'lxml')
         self.assertEqual(hourly_data(self.html_input), self.expected_get_data_output)
 
     # test that list is returned unaltered assuming that time is up-to-date
