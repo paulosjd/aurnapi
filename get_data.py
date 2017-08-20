@@ -45,5 +45,14 @@ def get_info(site):
 
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
 soup = BeautifulSoup(page, 'lxml')
-print(hourly_data(soup, 'Aberdeen'))
+#print(hourly_data(soup, 'Aberdeen'))
+#print(format_data(hourly_data(soup, 'Aberdeen')))
+print(hourly_data(soup, 'Aberdeen')[5]) = 
 
+"""
+>>>print(hourly_data(soup, 'Aberdeen'))
+['46', '1', 'n/m', '3', '6', '20/08/2017 10:00:00']
+>>>print(format_data(hourly_data(soup, 'Aberdeen')))
+['46', '1', 'n/m', '3', '6', '20/08/2017 10:00:00']
+
+"""
