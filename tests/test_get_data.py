@@ -9,26 +9,22 @@ class TestGetData(unittest.TestCase):
 
     def setUp(self):
         self.page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels',
-                            headers={'User-Agent': 'Not blank'}).content
-        self.soup = BeautifulSoup(self.page, 'lxml')
-
-    def test_hourly_data_1(self):
-        ####test that is list containing 6 strings with last item being date time string/match expected format
-        self.output = hourly_data(self.soup, 'Aberdeen')
-        ###self.assert......(hourly_data(self.soup, 'Aberdeen'), )
-        ####self.assertIs([str*6]
-
-        # test that list item [5] regex date time string matches
-    def test_hourly_data_2(self):
-        self.page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels',
                                  headers={'User-Agent': 'Not blank'}).content
         self.soup = BeautifulSoup(self.page, 'lxml')
+        self.hourly_data_output = hourly_data(self.soup, 'Aberdeen')
+
+    def test_hourly_data_1(self):
+        self.list_item_types = [type(a) for a in self.hourly_data_output]
+        self.assertEquals(self.list_item_types, [str] * 6)
+
+        # test that last list item [5] is a datetime string with the correct format
+    def test_hourly_data_2(self):
         self.output = hourly_data(self.soup, 'Aberdeen')
         ####test that is list item [5] regex date time string matches
         ###self.assert......(hourly_data(self.soup, 'Aberdeen'), )
-        self.assertRegexpMatches
+        #self.assert
 
-        # test that list is returned unaltered assuming that time is up-to-date
+        # test that list is returned unaltered if time is up-to-date
     def test_format_data_1(self):
         self.get_data_output_1 = ['46', '1', 'n/m', '3', '6'] + [datetime.strftime((datetime.now().replace(
             microsecond=0, second=0, minute=0)), "%d/%m/%Y %H:%M:%S")]
