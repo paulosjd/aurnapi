@@ -32,7 +32,6 @@ class Sites(db.Model):
 class Data(db.Model):
     __tablename__ = 'data'
     id = db.Column('id', db.Integer, primary_key=True)
-    site_name = db.Column('site', db.String(100), db.ForeignKey('sites.name'))
     o3 = db.Column('ozone', db.String(10))
     no2 = db.Column('no2', db.String(10))
     so2 = db.Column('so2', db.String(10))
@@ -41,7 +40,6 @@ class Data(db.Model):
     time = db.Column('time', db.String(50))
 
     def __init__(self, site_name, o3, no2, so2, pm25, pm10, time):
-        self.site_name = site_name
         self.o3 = o3
         self.no2 = no2
         self.so2 = so2
@@ -52,9 +50,9 @@ class Data(db.Model):
 
 db.create_all()
 
-for site in site_list:   # only want to run once, not every time with data by CRON
-    site_info = Sites(*get_info(site))
-    db.session.add(site_info)
+#for site in site_list:   # only want to run once, not every time with data by CRON
+ #   site_info = Sites(*get_info(site))
+  #  db.session.add(site_info)
 
 page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
 soup = BeautifulSoup(page, 'lxml')
