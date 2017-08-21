@@ -6,8 +6,6 @@ def get_info(site):
     long = site_geo.get(site)[1]
     return [site, url, lat, long]
 
-#MAKE LAT AND LONG DICT      site_page = requests.get('https://uk-air.defra.gov.uk/networks/site-info?site_id={}'.format(site_code),
-                             #headers={'User-Agent': 'Not blank'})
 
 site_geo = {
      'Aberdeen': ['57.157360, -2.094278'],

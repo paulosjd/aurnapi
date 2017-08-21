@@ -39,7 +39,7 @@ class Data(db.Model):
     pm10 = db.Column('pm10', db.String(10))
     time = db.Column('time', db.String(50))
 
-    def __init__(self, site_name, o3, no2, so2, pm25, pm10, time):
+    def __init__(self, o3, no2, so2, pm25, pm10, time):
         self.o3 = o3
         self.no2 = no2
         self.so2 = so2
