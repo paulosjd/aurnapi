@@ -4,8 +4,7 @@ from bs4 import BeautifulSoup
 from site_metadata import site_list, get_info
 from get_data import hourly_data, format_data
 import requests
-from site_metadata import site_geo, site_urls
-from datetime import datetime
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
