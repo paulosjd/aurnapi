@@ -5,6 +5,8 @@ from site_metadata import site_list, get_info
 from get_data import hourly_data, format_data
 import requests
 
+#look at model factories http://flask.pocoo.org/docs/0.12/patterns/appfactories/#factories-extensions
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
