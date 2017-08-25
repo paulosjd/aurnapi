@@ -6,6 +6,7 @@ from get_data import hourly_data, format_data
 import requests
 
 #look at model factories http://flask.pocoo.org/docs/0.12/patterns/appfactories/#factories-extensions
+#use flask microblug example
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
