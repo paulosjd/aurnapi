@@ -1,16 +1,15 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from bs4 import BeautifulSoup
 from site_metadata import site_list, get_info
 from get_data import hourly_data, format_data
 import requests
 
-#look at model factories http://flask.pocoo.org/docs/0.12/patterns/appfactories/#factories-extensions
-#use flask microblug example
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
 db = SQLAlchemy(app)
 
 
@@ -84,5 +83,13 @@ db.session.commit()
 #pet = Data.query.filter_by(pm25='4').all()
 #print(pet[1].pm10)
 
-if __name__ == '__main__':
-    '__main__'
+@app.route('/not-found')
+def not_found():
+    return jsonify()
+
+if __name__ == "__main__":
+    "__main__"
+    # app.run(debug=True, host='0.0.0.0', port=8080, passthrough_errors=True)
+
+
+
