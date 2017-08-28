@@ -1,21 +1,20 @@
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from bs4 import BeautifulSoup
-from data_collector.site_metadata import site_list, get_info
-from data_collector.get_data import hourly_data, format_data
+from .site_metadata import site_list, get_info
+from .get_data import hourly_data, format_data
 import requests
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config.from_object('config')
 
 db = SQLAlchemy(app)
 
 
-from data_collector.models import Sites, Data
 
 
+db.create_all()
 
 for site in site_list:   # only want to run once, not every time with data by CRON
     site_info = Sites(*get_info(site))
@@ -53,8 +52,8 @@ db.session.commit()
 def not_found():
     return jsonify()
 
-#if __name__ == "__main__":
- #   "__main__"
+if __name__ == "__main__":
+    "__main__"
     # app.run(debug=True, host='0.0.0.0', port=8080, passthrough_errors=True)
 
 

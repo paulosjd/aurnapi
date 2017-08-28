@@ -1,4 +1,4 @@
-from data_collector import db
+from shared import db
 
 class Sites(db.Model):
     __tablename__ = 'sites'
