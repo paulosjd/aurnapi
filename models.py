@@ -1,4 +1,6 @@
-from shared import db
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 class Sites(db.Model):
     __tablename__ = 'sites'
