@@ -1,10 +1,9 @@
 from flask import Flask, jsonify
 from models import db, Sites, Data
 from bs4 import BeautifulSoup
-from site_metadata import site_list, get_info
+from site_metadata import site_list
 from get_data import hourly_data, format_data
 import requests
-
 
 
 app = Flask(__name__)
@@ -13,48 +12,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db.init_app(app)
 
-with app.app_context():
-    db.create_all()
+def populate():
+    with app.app_context():
+        page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
+        soup = BeautifulSoup(page, 'lxml')
+        for site in site_list:
+            site_data = Data(*format_data(hourly_data(soup, site)))
+            db.session.add(site_data)
+        db.session.commit()
 
-    for site in site_list:   # only want to run once, not every time with data by CRON
-        site_info = Sites(*get_info(site))
-        db.session.add(site_info)
-
-    page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}).content
-    soup = BeautifulSoup(page, 'lxml')
-
-    for site in site_list:
-        site_data = Data(*format_data(hourly_data(soup, site)))
-        db.session.add(site_data)
-
-    db.session.commit()
-
-#first = Data.query.first()
-#print(dir(first))
-#print(first.o3)
-#print(first.time)
-
-#mids = Data.query.get(8)
-#print(dir(mids))
-#print(mids.pm10)
-
-#pet = Data.query.filter_by(pm25='4').all()
-#print(len(pet))
-#3
-
-#pet = Data.query.filter_by(pm25='4').all()
-#print(dir(pet[1]))
-
-#pet = Data.query.filter_by(pm25='4').all()
-#print(pet[1].pm10)
-
-@app.route('/not-found')
+@app.route('/foo')
 def not_found():
-    return jsonify()
+    return jsonify({'foo': 45})
 
 if __name__ == "__main__":
-    "__main__"
-    # app.run(debug=True, host='0.0.0.0', port=8080, passthrough_errors=True)
-
-
-
+    app.run(debug=True, host='0.0.0.0', port=8080, passthrough_errors=True)
