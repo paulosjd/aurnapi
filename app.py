@@ -7,9 +7,7 @@ import requests
 
 
 app = Flask(__name__)
-#app.config.from_pyfile('config.py')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config.from_pyfile('config.py')
 
 db.init_app(app)
 
