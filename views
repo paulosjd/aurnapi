@@ -1,4 +1,6 @@
-
+@app.route('/foo')
+def not_found():
+    return jsonify({'foo': 45})
 
 
 """
