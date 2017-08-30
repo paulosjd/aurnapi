@@ -12,3 +12,11 @@ db.init_app(app)
 def site_list():
     site_table = Sites.query.all()
     return jsonify({a.name: a.id for a in site_table})
+    
+@app.route('/site-geo')
+def site_geo():
+    site_geo = Sites.query.all()
+    return jsonify({a.name: a.lat + ", " + a.long for a in site_geo})
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0', port=8080, passthrough_errors=True)
