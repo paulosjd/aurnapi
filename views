@@ -1,8 +1,14 @@
 from flask import Flask, jsonify
 from app import db
+from models import Sites
 
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 db.init_app(app)
 
+
+@app.route('/site-list')
+def site_list():
+    site_table = Sites.query.all()
+    return jsonify({a.name: a.id for a in site_table})
