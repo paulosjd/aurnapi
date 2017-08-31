@@ -4,7 +4,7 @@ from models import Sites
 
 
 app = Flask(__name__)
-app.config.from_pyfile('config.py')
+app.config.from_pyfile('app/config.py')
 db.init_app(app)
 
 
