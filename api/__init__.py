@@ -1,6 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+
+##look at application factories
+
 db = SQLAlchemy()
 
 app = Flask(__name__)
