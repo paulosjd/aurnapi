@@ -124,15 +124,6 @@ site_geo = {
     'York Fishergate': ['53.951889', '-1.075861']
 }
 
-
-def get_info(site):
-    url = site_urls.get(site)
-    environ = site_types.get(site)
-    lat = site_geo.get(site)[0]
-    long = site_geo.get(site)[1]
-    return [site, url, lat, long]
-
-
 site_urls = {'Aberdeen': 'https://uk-air.defra.gov.uk/networks/site-info?site_id=ABD',
              'Aberdeen Union Street Roadside': 'https://uk-air.defra.gov.uk/networks/site-info?site_id=ABD7',
              'Aberdeen Wellington Road': 'https://uk-air.defra.gov.uk/networks/site-info?site_id=ABD8',
@@ -418,7 +409,7 @@ site_list = [
     'York Fishergate'
 ]
 
-site_types = {
+environs = {
     "Aberdeen": 'urban-traffic',
     'Aberdeen Union Street Roadside': 'urban-traffic',
     'Aberdeen Wellington Road': 'urban-traffic',
@@ -542,3 +533,11 @@ site_types = {
     'Yarner Wood': 'urban-traffic',
     'York Bootham': 'urban-traffic',
     'York Fishergate': 'urban-traffic'}
+
+
+def get_info(site):
+    url = site_urls.get(site)
+    environ = environs.get(site)
+    lat = site_geo.get(site)[0]
+    long = site_geo.get(site)[1]
+    return [site, url, environ, lat, long]
