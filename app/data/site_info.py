@@ -536,8 +536,8 @@ environs = {
 
 
 def get_info(site):
-    url = site_urls.get(site)
     environ = environs.get(site)
+    url = site_urls.get(site)
     lat = site_geo.get(site)[0]
     long = site_geo.get(site)[1]
     return [site, environ, url, lat, long]
