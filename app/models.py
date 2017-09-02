@@ -13,7 +13,7 @@ class Sites(db.Model):
     lat = db.Column('latitude', db.String(50))
     long = db.Column('longitude', db.String(50))
 
-    def __init__(self, name, environ, url, lat, long):
+    def __init__(self, environ, name, url, lat, long):
         self.name = name
         self.environ = environ
         self.url = url
