@@ -1,8 +1,6 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from .models import db
 
-
-db = SQLAlchemy()
 
 
 def create_app():

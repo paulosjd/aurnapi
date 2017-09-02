@@ -1,16 +1,21 @@
-from app import db
+from flask_sqlalchemy import SQLAlchemy
+
+
+db = SQLAlchemy()
 
 
 class Sites(db.Model):
     __tablename__ = 'sites'
-    id = db.Column('id', db.Integer, primary_key=True)
-    name = db.Column('name', db.String(100))
-    url = db.Column('url', db.String(250))
-    lat = db.Column('latitude', db.String(30))
-    long = db.Column('longitude', db.String(30))
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    environ = db.Column(db.String(100))
+    url = db.Column(db.String(250))
+    lat = db.Column('latitude', db.String(50))
+    long = db.Column('longitude', db.String(50))
 
-    def __init__(self, name, url, lat, long):
+    def __init__(self, name, environ, url, lat, long):
         self.name = name
+        self.environ = environ
         self.url = url
         self.lat = lat
         self.long = long

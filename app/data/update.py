@@ -1,9 +1,12 @@
-from app import db
-from app.models import Data, Sites
+from app.models import db, Data, Sites
 from .site_info import site_list, get_info
 from bs4 import BeautifulSoup
 from datetime import datetime
 import requests
+from app import create_app
+
+app = create_app()
+
 
 
 def hourly_data(soup, site):
@@ -38,11 +41,13 @@ def populate():
 
 
 def create_database():
-    db.create_all()
+    with app.app_context():
+        db.init_app(app)
+        db.create_all()
 
-    for site in site_list:  # only want to run once, not every time with data by CRON
-        site_info = Sites(*get_info(site))
-        db.session.add(site_info)
+        for site in site_list:  # only want to run once, not every time with data by CRON
+            site_info = Sites(*get_info(site))
+            db.session.add(site_info)
 
-    db.session.commit()
+        db.session.commit()
 
