@@ -1,4 +1,9 @@
+from app import db
+from app.models import Data, Sites
+from .site_info import site_list, get_info
+from bs4 import BeautifulSoup
 from datetime import datetime
+import requests
 
 
 def hourly_data(soup, site):
@@ -20,3 +25,24 @@ def format_data(hourly_data_output):
                                                             microsecond=0, second=0, minute=0)), "%d/%m/%Y %H:%M:%S")]
     else:
         return hourly_data_output
+
+
+def populate():
+    page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels',
+                        headers={'User-Agent': 'Not blank'}).content
+    soup = BeautifulSoup(page, 'lxml')
+    for site in site_list:
+        site_data = Data(*format_data(hourly_data(soup, site)))
+        db.session.add(site_data)
+    db.session.commit()
+
+
+def create_database():
+    db.create_all()
+
+    for site in site_list:  # only want to run once, not every time with data by CRON
+        site_info = Sites(*get_info(site))
+        db.session.add(site_info)
+
+    db.session.commit()
+

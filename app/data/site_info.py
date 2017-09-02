@@ -1,7 +1,4 @@
 
-
-
-
 site_geo = {
      'Aberdeen': ['57.157360', '-2.094278'],
       'Aberdeen Union Street Roadside': ['57.144555', '-2.106472'],
