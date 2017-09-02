@@ -14,7 +14,7 @@ def site_list(environ=None):
     if environ in site_environs:
         site_table = Sites.query.filter_by(environ).all()
         return jsonify({a.name: a.id for a in site_table})
-    elif site_type == 'site-types':
+    elif environ == 'site-types':
         return jsonify({a.name: a.site_type for a in Sites.query.all()})
     else:
         return jsonify({a.name: a.id for a in Sites.query.all()})
