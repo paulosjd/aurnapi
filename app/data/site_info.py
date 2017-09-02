@@ -540,4 +540,4 @@ def get_info(site):
     environ = environs.get(site)
     lat = site_geo.get(site)[0]
     long = site_geo.get(site)[1]
-    return [site, url, environ, lat, long]
+    return [site, environ, url, lat, long]
