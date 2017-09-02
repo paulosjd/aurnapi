@@ -8,7 +8,6 @@ from app import create_app
 app = create_app()
 
 
-
 def hourly_data(soup, site):
     site_link = soup.find_all('a', string=site)[0]
     row = site_link.findParent('td').findParent('tr').findAll('td')

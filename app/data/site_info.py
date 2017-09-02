@@ -411,13 +411,13 @@ site_list = [
 
 environs = {
     "Aberdeen": 'urban-traffic',
-    'Aberdeen Union Street Roadside': 'urban-traffic',
-    'Aberdeen Wellington Road': 'urban-traffic',
-    'Armagh Roadside': 'urban-traffic',
-    'Aston Hill': 'urban-traffic',
+    'Aberdeen Union Street Roadside': 'urban-industrial',
+    'Aberdeen Wellington Road': 'urban-background',
+    'Armagh Roadside': 'urban-background',
+    'Aston Hill': 'urban-background',
     'Auchencorth Moss': 'urban-traffic',
     'Barnsley Gawber': 'urban-traffic',
-    'Barnstaple A39': 'urban-traffic',
+    'Barnstaple A39': 'urban-industrial',
     'Bath Roadside': 'urban-traffic',
     'Belfast Centre': 'urban-traffic',
     "Belfast Stockman's Lane": 'urban-traffic',
