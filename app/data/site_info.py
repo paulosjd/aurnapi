@@ -534,10 +534,17 @@ environs = {
     'York Bootham': 'urban-traffic',
     'York Fishergate': 'urban-traffic'}
 
+regions = {}
+
+map_urls = {}
 
 def get_info(site):
+    region = regions.get(site)
     environ = environs.get(site)
     url = site_urls.get(site)
+    map_url = https://maps.google.co.uk/?q=51.583950,-3.770822
     lat = site_geo.get(site)[0]
     long = site_geo.get(site)[1]
-    return [site, environ, url, lat, long]
+    return [site, region, environ, url, map_url, lat, long]
+
+#https://maps.google.co.uk?q=57.157360,-2.094278

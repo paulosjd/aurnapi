@@ -40,13 +40,12 @@ def populate():
 
 
 def create_database():
-    with app.app_context():
-        db.init_app(app)
-        db.create_all()
+    #with app.app_context():
+    db.create_all()
 
-        for site in site_list:  # only want to run once, not every time with data by CRON
-            site_info = Sites(*get_info(site))
-            db.session.add(site_info)
+    for site in site_list:  # only want to run once, not every time with data by CRON
+        site_info = Sites(*get_info(site))
+        db.session.add(site_info)
 
-        db.session.commit()
+    db.session.commit()
 

@@ -8,15 +8,19 @@ class Sites(db.Model):
     __tablename__ = 'sites'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
-    environ = db.Column(db.String(100))
+    region = db.Column(db.String(100))
+    environ = db.Column('environment', db.String(100))
     url = db.Column(db.String(250))
+    map_url = db.Column(db.String(250))
     lat = db.Column('latitude', db.String(50))
     long = db.Column('longitude', db.String(50))
 
-    def __init__(self, environ, name, url, lat, long):
+    def __init__(self, name, region, environ, url, map_url, lat, long):
         self.name = name
+        self.region = region
         self.environ = environ
         self.url = url
+        self.map_url = map_url
         self.lat = lat
         self.long = long
 
