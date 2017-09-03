@@ -7,7 +7,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c9fe0903-0bef-420c-afb8-0082f52724ab" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/data/site_info.py" afterPath="$PROJECT_DIR$/app/data/site_info.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/data/update.py" afterPath="$PROJECT_DIR$/app/data/update.py" />
     </list>
     <ignored path="untitled.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -64,8 +63,8 @@
       <file leaf-file-name="site_info.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/data/site_info.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="549" column="48" selection-start-line="549" selection-start-column="48" selection-end-line="549" selection-end-column="48" />
+            <state relative-caret-position="-3549">
+              <caret line="417" column="38" selection-start-line="417" selection-start-column="38" selection-end-line="417" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -152,7 +151,6 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-16" />
-    <option name="y" value="-16" />
     <option name="width" value="3216" />
     <option name="height" value="1732" />
   </component>
@@ -535,7 +533,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-16" y="-16" width="3216" height="1732" extended-state="0" />
+    <frame x="-16" y="0" width="3216" height="1732" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1566688" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -725,8 +723,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/data/site_info.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="549" column="48" selection-start-line="549" selection-start-column="48" selection-end-line="549" selection-end-column="48" />
+        <state relative-caret-position="-3549">
+          <caret line="417" column="38" selection-start-line="417" selection-start-column="38" selection-end-line="417" selection-end-column="38" />
           <folding />
         </state>
       </provider>
