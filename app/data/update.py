@@ -3,9 +3,6 @@ from .site_info import site_list, get_info
 from bs4 import BeautifulSoup
 from datetime import datetime
 import requests
-#from app import create_app
-
-#app = create_app()
 
 
 def hourly_data(soup, site):
