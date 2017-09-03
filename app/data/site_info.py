@@ -1,3 +1,14 @@
+
+def get_info(site):
+    region = regions.get(site)
+    environ = environs.get(site)
+    url = site_urls.get(site)
+    geo = site_geo.get(site)
+    map_url = 'https://maps.google.co.uk/?q=' + ', '.join(geo).replace(' ', '')
+    lat = geo[0]
+    long = geo[1]
+    return [site, region, environ, url, map_url, lat, long]
+
 site_geo = {
     'Aberdeen': ['57.157360', '-2.094278'],
     'Aberdeen Union Street Roadside': ['57.144555', '-2.106472'],
@@ -660,16 +671,3 @@ regions = {
     'York Bootham': 'Yorkshire & Humberside',
     'York Fishergate': 'Yorkshire & Humberside'
            }
-
-
-def get_info(site):
-    region = regions.get(site)
-    environ = environs.get(site)
-    url = site_urls.get(site)
-    geo = site_geo.get(site)
-    map_url = 'https://maps.google.co.uk/?q=' + ', '.join(geo).replace(' ', '')
-    lat = geo[0]
-    long = geo[1]
-    return [site, region, environ, url, map_url, lat, long]
-
-#https://maps.google.co.uk?q=57.157360,-2.094278
