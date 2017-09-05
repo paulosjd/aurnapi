@@ -27,6 +27,8 @@ class Sites(db.Model):
         self.long = long
 
 
+#NEED TO ADD A SITE_CODE ATTRIBUTE TO ENABLE QUERYING IN VIEWS        
+        
 class Data(db.Model):
     __tablename__ = 'data'
     id = db.Column('id', db.Integer, primary_key=True)
