@@ -7,19 +7,24 @@ first_blueprint = Blueprint('first', __name__)
 
 
 @first_blueprint.route('/site-list')
-@first_blueprint.route('/site-list/<site_type>')
-def site_list(environ=None):
+@first_blueprint.route('/site-list/<environ>')
+@first_blueprint.route('/site-list/<region>')
+def site_list(environ=None, region=None):
     site_environs = ['urban-traffic', 'urban-industrial', 'urban-background', 'suburban-background',
-                  'suburban-industrial', 'background-rural']
+                     'suburban-industrial', 'rural-background']
+    regions = ['greater-london', 'south-east', 'east-midlands', 'eastern', 'yorkshire', 'north-east', 'north-west',
+               'west-midlands', 'south-west', 'south-wales', 'northern-ireland', 'north-east-scotland', 'north-wales',
+               'highlands', 'scottish-borders', 'central-scotland']
     if environ in site_environs:
-        site_table = Sites.query.filter_by(environ).all()
-        return jsonify({a.name: a.id for a in site_table})
-    elif environ == 'site-types':
-        return jsonify({a.name: a.site_type for a in Sites.query.all()})
+        return jsonify({a.name: a.site_code for a in Sites.query.filter_by(environ=environ).all()})
+    if environ == 'site-environments':
+        return jsonify({a.name: a.environ for a in Sites.query.all()})
+    if region in regions:
+        return jsonify({a.name: a.site_code for a in Sites.query.filter_by(region=region).all()})
+    if region == 'site-regions':
+        return jsonify({a.name: a.region for a in Sites.query.all()})
     else:
-        return jsonify({a.name: a.id for a in Sites.query.all()})
-
-
+        return jsonify({a.name: a.site_code for a in Sites.query.all()})
 
 
 @first_blueprint.route('/site-geo')
