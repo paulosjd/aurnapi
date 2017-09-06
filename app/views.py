@@ -1,14 +1,13 @@
 from flask import jsonify, Blueprint
-from .models import Sites, Data
+from app.models import Sites
 
 
-first_blueprint = Blueprint('first', __name__)
+sites_info = Blueprint('sites', __name__)
 
 
-
-@first_blueprint.route('/site-list')
-@first_blueprint.route('/site-list/<environ>')
-@first_blueprint.route('/site-list/<region>')
+@sites_info.route('/site-list')
+@sites_info.route('/site-list/<environ>')
+@sites_info.route('/site-list/<region>')
 def site_list(environ=None, region=None):
     site_environs = ['urban-traffic', 'urban-industrial', 'urban-background', 'suburban-background',
                      'suburban-industrial', 'rural-background']
@@ -26,23 +25,16 @@ def site_list(environ=None, region=None):
     else:
         return jsonify({a.name: a.site_code for a in Sites.query.all()})
 
-
-@first_blueprint.route('/site-geo')
+@sites_info.route('/site-geo')
 def site_geo():
     return jsonify({a.name: a.lat + ", " + a.long for a in Sites.query.all()})
 
-@first_blueprint.route('/site-info')
+@sites_info.route('/site-info')
 def site_info():
     site_urls = Sites.query.all()
     return jsonify({a.name: a.url for a in site_urls})
 
-@first_blueprint.route('/<number>')
-def site_data(number):
-    foo = Sites.query.filter_by(id=int(number)).all()
-    return jsonify(foo[0].name)
-
-@first_blueprint.route('/pm10/<number>')
-def site_pm10(number):
-    foo = Data.query.filter_by(id=int(number)).all()
-    return jsonify(foo[0].pm10)
-
+@sites_info.route('/site-maps')
+def site_maps():
+    map_urls = Sites.query.all()
+    return jsonify({a.name: a.map_url for a in map_urls})
