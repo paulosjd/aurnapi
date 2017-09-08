@@ -1,5 +1,5 @@
 from app.models import db, Data, Sites
-from .site_info import site_list, get_info
+from .site_info import site_list, get_info, site_codes
 from bs4 import BeautifulSoup
 from datetime import datetime
 import requests
