@@ -40,7 +40,7 @@ class Data(db.Model):
     pm10 = db.Column('pm10', db.String(10))
     time = db.Column('time', db.String(50))
 
-    def __init__(self, site, o3, no2, so2, pm25, pm10, time):
+    def __init__(self, site_code, o3, no2, so2, pm25, pm10, time):
         self.site = site
         self.o3 = o3
         self.no2 = no2
