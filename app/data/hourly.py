@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import requests
 
-#from python console: import create_app, enter create_app().app_context().push()
 
 def hourly_data(soup, site):
     site_code = site_codes.get(site)

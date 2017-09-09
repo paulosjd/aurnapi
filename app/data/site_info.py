@@ -439,7 +439,6 @@ environs = {
     'York Bootham': 'urban-background',
     'York Fishergate': 'urban-traffic'
         }
-
 regions = {
     'Aberdeen': 'north-east-scotland',
     'Aberdeen Union Street Roadside': 'north-east-scotland',

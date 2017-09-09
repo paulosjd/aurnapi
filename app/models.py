@@ -5,6 +5,7 @@ db = SQLAlchemy()
 
 
 class Sites(db.Model):
+    __tablename__ = 'sites'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     site_code = db.Column(db.String(10))
@@ -26,11 +27,11 @@ class Sites(db.Model):
         self.long = long
 
 
-#NEED TO ADD A SITE_CODE ATTRIBUTE TO ENABLE QUERYING IN VIEWS        
-        
 class Data(db.Model):
+    __tablename__ = 'data'
     id = db.Column('id', db.Integer, primary_key=True)
-    site_code = db.Column(db.String(10))
+    site = db.Column(db.String(100))
+    #site_code = db.Column(db.String(100))
     o3 = db.Column('ozone', db.String(10))
     no2 = db.Column('no2', db.String(10))
     so2 = db.Column('so2', db.String(10))
@@ -39,7 +40,7 @@ class Data(db.Model):
     time = db.Column('time', db.String(50))
 
     def __init__(self, site_code, o3, no2, so2, pm25, pm10, time):
-        self.site = site
+        self.site_code = site_code
         self.o3 = o3
         self.no2 = no2
         self.so2 = so2
