@@ -1,6 +1,5 @@
 from flask import jsonify, Blueprint
 from app.models import Data
-import datetime
 
 
 hourly_data = Blueprint('hourly', __name__)
@@ -18,6 +17,20 @@ def all_data2(name,start):
     start_time = '{}/{}/{} 00:00:00'.format(*date)
     foo = Data.query.filter(Data.site == name, Data.time >= start_time)
     return jsonify({a.time: a.pm10 for a in foo})
+
+
+
+"""
+@hourly_data.route('/<pollutant>/<name>/<start>')
+def all_data3(name,start):
+    #e.g. start = 07-09-2017
+    date = start.split('-')
+    start_time = '{}/{}/{} 00:00:00'.format(*date)
+    foo = Data.query.filter(Data.site == name, Data.time >= start_time)
+    if pollutant ==
+
+    return jsonify({a.time: a.pm10 for a in foo})
+"""
 
 #foo = Data.query.filter(Data.site == name, Data.time >= '07/09/2017 00:00:00')
 
