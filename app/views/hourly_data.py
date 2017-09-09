@@ -11,11 +11,15 @@ def all_data1(name):
     foo = Data.query.filter_by(site=name)
     return jsonify({a.time: a.pm10 for a in foo})
 
-@hourly_data.route('/pm10/<name>/poo')
-def all_data2(name):
-    bar = datetime.datetime.now() - datetime.timedelta(days=5)
-    foo = Data.query.filter(Data.site == name, Data.time >= '01/09/2017 16:00:00')
+@hourly_data.route('/pm10/<name>/<start>')
+def all_data2(name,start):
+    #e.g. start = 07-09-2017
+    date = start.split('-')
+    start_time = '{}/{}/{} 00:00:00'.format(*date)
+    foo = Data.query.filter(Data.site == name, Data.time >= start_time)
     return jsonify({a.time: a.pm10 for a in foo})
+
+#foo = Data.query.filter(Data.site == name, Data.time >= '07/09/2017 00:00:00')
 
 """
 
