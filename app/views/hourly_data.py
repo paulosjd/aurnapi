@@ -6,20 +6,24 @@ import datetime
 hourly_data = Blueprint('hourly', __name__)
 
 
-
-
 @hourly_data.route('/pm10/<name>/')
 def all_data1(name):
     foo = Data.query.filter_by(site=name)
     return jsonify({a.time: a.pm10 for a in foo})
 
+@hourly_data.route('/pm10/<name>/poo')
+def all_data2(name):
+    bar = datetime.datetime.now() - datetime.timedelta(days=5)
+    foo = Data.query.filter(Data.site == name, Data.time >= '01/09/2017 16:00:00')
+    return jsonify({a.time: a.pm10 for a in foo})
+
 """
+
 @hourly_data.route('/pm10/<name>/foo')
 def all_data2(name):
     bar = datetime.datetime.now() - datetime.timedelta(days=5)
     foo = Data.query.filter(Data.site == name, Data.time <= bar)
     return jsonify({a.time: a.pm10 for a in foo})
-"""
 
 @hourly_data.route('/pm10/<name>/foo')
 def all_data2(name):
@@ -28,14 +32,13 @@ def all_data2(name):
     return jsonify({a.time: a.pm10 for a in foo})
 
 
-"""@hourly_data.route('/pm10/<name>/<day>')
+@hourly_data.route('/pm10/<name>/<day>')
 def all_data1(name, day):
     foo = Data.query.filter(Data.site == name, Data.time == day + '/09/2017 16:00:00')
-    return jsonify({a.time: a.pm10 for a in foo})"""
 
 
 
-"""
+
 @hourly_data.route('/pm10/<name>/<int:days>')
 def pm10_data_days(name, days):
     #period = datetime.datetime.now() - datetime.timedelta(days=days)
