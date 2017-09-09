@@ -10,7 +10,7 @@ def all_data1(name):
     foo = Data.query.filter_by(site=name)
     return jsonify({a.time: a.pm10 for a in foo})
 
-@hourly_data.route('/pm10/<name>/<start>')
+@hourly_data.route('/pm10/<name>/<start>/<finish>')
 def all_data2(name,start):
     #e.g. start = 07-09-2017
     date = start.split('-')
