@@ -29,19 +29,19 @@ class Sites(db.Model):
 
 class Data(db.Model):
     __tablename__ = 'data'
-    id = db.Column('id', db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     site = db.Column(db.String(100))
     site_code = db.Column(db.String(100))
-    o3 = db.Column('ozone', db.String(10))
-    no2 = db.Column('no2', db.String(10))
-    so2 = db.Column('so2', db.String(10))
-    pm25 = db.Column('pm25', db.String(10))
-    pm10 = db.Column('pm10', db.String(10))
-    time = db.Column('time', db.String(50))
+    ozone = db.Column(db.String(10))
+    no2 = db.Column(db.String(10))
+    so2 = db.Column(db.String(10))
+    pm25 = db.Column(db.String(10))
+    pm10 = db.Column(db.String(10))
+    time = db.Column(db.String(50))
 
-    def __init__(self, site_code, o3, no2, so2, pm25, pm10, time):
+    def __init__(self, site_code, ozone, no2, so2, pm25, pm10, time):
         self.site_code = site_code
-        self.o3 = o3
+        self.ozone = ozone
         self.no2 = no2
         self.so2 = so2
         self.pm25 = pm25
