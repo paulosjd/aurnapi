@@ -32,10 +32,7 @@ def all_data2(name, start, end):
 @hourly_data.route('/<pollutant>/<name>/')
 def all_data4(pollutant, name):
     foo = Data.query.filter_by(site=name)
-    if pollutant == 'ozone':
-        return jsonify({a.time: a.o3 for a in foo})
-    elif pollutant == 'pm10':
-        return jsonify({a.time: a.pm10 for a in foo})
+    return jsonify({a.time: getattr(a, pollutant) for a in foo})
 
 
 
