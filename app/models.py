@@ -31,7 +31,7 @@ class Data(db.Model):
     __tablename__ = 'data'
     id = db.Column('id', db.Integer, primary_key=True)
     site = db.Column(db.String(100))
-    #site_code = db.Column(db.String(100))
+    site_code = db.Column(db.String(100))
     o3 = db.Column('ozone', db.String(10))
     no2 = db.Column('no2', db.String(10))
     so2 = db.Column('so2', db.String(10))
