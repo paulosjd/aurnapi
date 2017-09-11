@@ -40,7 +40,7 @@ def site_maps():
     return jsonify({a.name: a.map_url for a in map_urls})
 
 @sites_info.route('/<site_code>')
-def site_row(site_code):
+def site_codes(site_code):
     site = Sites.query.filter_by(site_code=site_code).first()
     site_dict = {'site name': site.name, 'region': site.region, 'site environment': site.environ, 'site url': site.url,
               'map url': site. map_url, 'latitude': site.lat, 'longitude': site.long}
