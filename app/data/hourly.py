@@ -1,4 +1,4 @@
-from app.models import db, Data, Sites
+from app.models import db, Data, Site
 from .site_info import site_list, get_info, site_codes
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -41,7 +41,7 @@ def create_database():
     #with app.app_context():
     db.create_all()
     for site in site_list:
-        site_info = Sites(*get_info(site))
+        site_info = Site(*get_info(site))
         db.session.add(site_info)
 
     db.session.commit()
