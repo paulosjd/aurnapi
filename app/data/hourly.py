@@ -6,7 +6,6 @@ import requests
 
 
 def hourly_data(soup, site):
-    site_code = site_codes.get(site)
     site_link = soup.find_all('a', string=site)[0]
     row = site_link.findParent('td').findParent('tr').findAll('td')
     o3 = row[1].text.replace('\xa0', ' ').split(' ')[0]
