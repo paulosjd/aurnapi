@@ -5,7 +5,7 @@ db = SQLAlchemy()
 
 
 class Site(db.Model):
-    __tablename__ = 'site'
+    __tablename__ = 'sites'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True)
     site_code = db.Column(db.String(10) unique=True)
