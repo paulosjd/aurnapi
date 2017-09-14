@@ -4,11 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-class Sites(db.Model):
-    __tablename__ = 'sites'
+class Site(db.Model):
+    __tablename__ = 'site'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    site_code = db.Column(db.String(10))
+    name = db.Column(db.String(100), unique=True)
+    site_code = db.Column(db.String(10) unique=True)
     region = db.Column(db.String(100))
     environ = db.Column('environment', db.String(100))
     url = db.Column(db.String(250))
@@ -30,7 +30,7 @@ class Sites(db.Model):
 class Data(db.Model):
     __tablename__ = 'data'
     id = db.Column(db.Integer, primary_key=True)
-    site_code = db.Column(db.String(100), nullable=False)
+    site_code = db.Column(db.String(100), unique=True, nullable=False)
     ozone = db.Column(db.String(10))
     no2 = db.Column(db.String(10))
     so2 = db.Column(db.String(10))
