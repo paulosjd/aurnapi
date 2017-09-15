@@ -4,17 +4,18 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-class Sites(db.Model):
+class Site(db.Model):
     __tablename__ = 'sites'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    site_code = db.Column(db.String(10))
+    name = db.Column(db.String(100), unique=True)
+    site_code = db.Column(db.String(10), unique=True)
     region = db.Column(db.String(100))
     environ = db.Column('environment', db.String(100))
     url = db.Column(db.String(250))
     map_url = db.Column(db.String(250))
     lat = db.Column('latitude', db.String(50))
     long = db.Column('longitude', db.String(50))
+    data = db.relationship('Data', backref='owner', lazy='dynamic')
 
     def __init__(self, name, site_code, region, environ, url, map_url, lat, long):
         self.name = name
@@ -30,7 +31,7 @@ class Sites(db.Model):
 class Data(db.Model):
     __tablename__ = 'data'
     id = db.Column(db.Integer, primary_key=True)
-    site_code = db.Column(db.String(100))
+    site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), nullable=False)
     ozone = db.Column(db.String(10))
     no2 = db.Column(db.String(10))
     so2 = db.Column(db.String(10))
@@ -38,8 +39,9 @@ class Data(db.Model):
     pm10 = db.Column(db.String(10))
     time = db.Column(db.String(50))
 
-    def __init__(self, site_code, ozone, no2, so2, pm25, pm10, time):
-        self.site_code = site_code
+
+    def __init__(self, ozone, no2, so2, pm25, pm10, time):
+
         self.ozone = ozone
         self.no2 = no2
         self.so2 = so2
