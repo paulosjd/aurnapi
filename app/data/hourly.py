@@ -20,8 +20,9 @@ def hourly_data(soup, site):
 def validate_data(hourly_data_output):
     if hourly_data_output['time'] != datetime.strftime((datetime.now().replace(microsecond=0, second=0, minute=0)),
                                                        "%d/%m/%Y %H:%M:%S"):
-        return ['n/a'] * 5 + [datetime.strftime((datetime.now().replace(
+        na_values = ['n/a'] * 5 + [datetime.strftime((datetime.now().replace(
             microsecond=0, second=0, minute=0)), "%d/%m/%Y %H:%M:%S")]
+        return dict(zip(['ozone', 'no2', 'so2', 'pm25', 'pm10', 'time'], na_values))
     else:
         return hourly_data_output
 
@@ -31,7 +32,7 @@ def update_db():
                         headers={'User-Agent': 'Not blank'}).content
     soup = BeautifulSoup(page, 'lxml')
     for site in Site.query.all():
-        site_data = Data(owner=site, **hourly_data(soup, site))
+        site_data = Data(validate_data(**hourly_data(soup, site)), owner=site)
         db.session.add(site_data)
     db.session.commit()
 
