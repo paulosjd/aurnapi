@@ -31,7 +31,8 @@ def update_db():
     page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels',
                         headers={'User-Agent': 'Not blank'}).content
     soup = BeautifulSoup(page, 'lxml')
-    for site in Site.query.all():
+    sites = [a.name for a in Site.query.all()]
+    for site in sites:
         site_data = Data(validate_data(**hourly_data(soup, site)), owner=site)
         db.session.add(site_data)
     db.session.commit()
@@ -40,6 +41,6 @@ def update_db():
 def create_db():
     db.create_all()
     for site in site_list:
-        site_info = Site(*get_info(site))
+        site_info = Site(**get_info(site))
         db.session.add(site_info)
     db.session.commit()
