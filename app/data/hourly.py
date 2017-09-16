@@ -28,8 +28,8 @@ def validate_data(hourly_data_output):
 
 
 def update_db():
-    page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels',
-                        headers={'User-Agent': 'Not blank'}).content
+    page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels', headers={'User-Agent': 'Not blank'}
+                        ).content
     soup = BeautifulSoup(page, 'lxml')
     sites_list = [a.name for a in Site.query.all()]
     for site in sites_list:
