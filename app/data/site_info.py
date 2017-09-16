@@ -7,7 +7,8 @@ def get_info(site):
     map_url = 'https://maps.google.co.uk/?q=' + ', '.join(geo).replace(' ', '')
     lat = geo[0]
     long = geo[1]
-    return [site, site_code, region, environ, url, map_url, lat, long]
+    return {'name':site, 'site_code':site_code, 'region': region, 'environ':environ, 'url':url, 'map_url':map_url,
+            'lat':lat, 'long':long}
 
 
 site_geo = {

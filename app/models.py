@@ -17,16 +17,6 @@ class Site(db.Model):
     long = db.Column('longitude', db.String(50))
     data = db.relationship('Data', backref='owner', lazy='dynamic')
 
-    def __init__(self, name, site_code, region, environ, url, map_url, lat, long):
-        self.name = name
-        self.site_code = site_code
-        self.region = region
-        self.environ = environ
-        self.url = url
-        self.map_url = map_url
-        self.lat = lat
-        self.long = long
-
 
 class Data(db.Model):
     __tablename__ = 'data'
@@ -38,13 +28,3 @@ class Data(db.Model):
     pm25 = db.Column(db.String(10))
     pm10 = db.Column(db.String(10))
     time = db.Column(db.String(50))
-
-
-    def __init__(self, ozone, no2, so2, pm25, pm10, time):
-
-        self.ozone = ozone
-        self.no2 = no2
-        self.so2 = so2
-        self.pm25 = pm25
-        self.pm10 = pm10
-        self.time = time

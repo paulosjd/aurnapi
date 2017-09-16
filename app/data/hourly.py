@@ -16,13 +16,14 @@ import requests
     time = row[6].text[:10] + ' ' + row[6].text[10:]
     return [o3, no2, so2, pm25, pm10, time]"""
 
-def hourly_data2(site):
+def hourly_data2():
     #site_link = soup.find_all('a', string=site)[0]
     #row = site_link.findParent('td').findParent('tr').findAll('td')
-    code = site_codes.get(site)
-    return ['1','2','3','4', '5', '6']
 
-def format_data(hourly_data_output):
+    return {'ozone': '1', 'no2': '4', 'so2': '21', 'pm25': '12', 'pm10': '11', 'time': '16/09/2017 04:00:00'}
+
+
+def validate_data(hourly_data_output):
     if hourly_data_output[5] != datetime.strftime((datetime.now().replace(microsecond=0, second=0, minute=0)),
                                                   "%d/%m/%Y %H:%M:%S"):
         return ['n/a'] * 5 + [datetime.strftime((datetime.now().replace(
@@ -31,12 +32,9 @@ def format_data(hourly_data_output):
         return hourly_data_output
 
 
-def populate():
-
-    for site in site_list:
-        site_instance = Site(*get_info(site))
-        site_data = Data('1','2','3','4', '5', '4', owner=site_instance)
-        #owner=site_instance and owner=site-instance  -  move to inside hourly_data() ?
+def update_db():
+    for site in Site.query.all():
+        site_data = Data(owner=site, **hourly_data2())
         db.session.add(site_data)
     db.session.commit()
 
@@ -52,7 +50,7 @@ def populate():
         db.session.add(site_data)
     db.session.commit()"""
 
-def create_database():
+def create_db():
     #with app.app_context():
     db.create_all()
     for site in site_list:

@@ -1,8 +1,8 @@
 from flask import jsonify, Blueprint
-from app.models import Sites
+from app.models import Site
 
 
-sites_info = Blueprint('sites', __name__)
+sites_info = Blueprint('Site', __name__)
 
 
 @sites_info.route('/site-list')
@@ -15,33 +15,33 @@ def site_list(environ=None, region=None):
                'west-midlands', 'south-west', 'south-wales', 'northern-ireland', 'north-east-scotland', 'north-wales',
                'highlands', 'scottish-borders', 'central-scotland']
     if environ in site_environs:
-        return jsonify({a.name: a.site_code for a in Sites.query.filter_by(environ=environ).all()})
+        return jsonify({a.name: a.site_code for a in Site.query.filter_by(environ=environ).all()})
     if environ == 'site-environments':
-        return jsonify({a.name: a.environ for a in Sites.query.all()})
+        return jsonify({a.name: a.environ for a in Site.query.all()})
     if region in regions:
-        return jsonify({a.name: a.site_code for a in Sites.query.filter_by(region=region).all()})
+        return jsonify({a.name: a.site_code for a in Site.query.filter_by(region=region).all()})
     if region == 'site-regions':
-        return jsonify({a.name: a.region for a in Sites.query.all()})
+        return jsonify({a.name: a.region for a in Site.query.all()})
     else:
-        return jsonify({a.name: a.site_code for a in Sites.query.all()})
+        return jsonify({a.name: a.site_code for a in Site.query.all()})
 
 @sites_info.route('/site-geo')
 def site_geo():
-    return jsonify({a.name: a.lat + ", " + a.long for a in Sites.query.all()})
+    return jsonify({a.name: a.lat + ", " + a.long for a in Site.query.all()})
 
 @sites_info.route('/site-info')
 def site_info():
-    site_urls = Sites.query.all()
+    site_urls = Site.query.all()
     return jsonify({a.name: a.url for a in site_urls})
 
 @sites_info.route('/site-maps')
 def site_maps():
-    map_urls = Sites.query.all()
+    map_urls = Site.query.all()
     return jsonify({a.name: a.map_url for a in map_urls})
 
 @sites_info.route('/<site_code>')
-def site_codes(site_code):
-    site = Sites.query.filter_by(site_code=site_code).first()
+def site_row(site_code):
+    site = Site.query.filter_by(site_code=site_code).first()
     site_dict = {'site name': site.name, 'region': site.region, 'site environment': site.environ, 'site url': site.url,
               'map url': site. map_url, 'latitude': site.lat, 'longitude': site.long}
     return jsonify(site_dict)
