@@ -1,4 +1,3 @@
-
 def get_info(site):
     site_code = site_codes.get(site)
     region = regions.get(site)
@@ -8,8 +7,8 @@ def get_info(site):
     map_url = 'https://maps.google.co.uk/?q=' + ', '.join(geo).replace(' ', '')
     lat = geo[0]
     long = geo[1]
-    return {'name':site, 'site_code':site_code, 'region': region, 'environ':environ, 'url':url, 'map_url':map_url,
-            'lat':lat, 'long':long}
+    return {'name': site, 'site_code': site_code, 'region': region, 'environ': environ, 'url': url, 'map_url': map_url,
+            'lat': lat, 'long': long}
 
 
 site_geo = {
@@ -440,7 +439,7 @@ environs = {
     'Yarner Wood': 'rural-background',
     'York Bootham': 'urban-background',
     'York Fishergate': 'urban-traffic'
-        }
+}
 regions = {
     'Aberdeen': 'north-east-scotland',
     'Aberdeen Union Street Roadside': 'north-east-scotland',
