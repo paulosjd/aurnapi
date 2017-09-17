@@ -18,8 +18,7 @@ def create_test_app():
     app = Flask(__name__)
     app.config['TESTING'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///testing.db'
-    # Dynamically bind SQLAlchemy to application
     db.init_app(app)
-    app.app_context().push() # this does the binding
+    app.app_context().push()
     return app
 
