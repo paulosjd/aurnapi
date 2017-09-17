@@ -1,7 +1,6 @@
 from flask import jsonify, Blueprint
 from app.models import Site
 
-
 sites_info = Blueprint('Site', __name__)
 
 
@@ -25,23 +24,27 @@ def site_list(environ=None, region=None):
     else:
         return jsonify({a.name: a.site_code for a in Site.query.all()})
 
+
 @sites_info.route('/site-geo')
 def site_geo():
     return jsonify({a.name: a.lat + ", " + a.long for a in Site.query.all()})
+
 
 @sites_info.route('/site-info')
 def site_info():
     site_urls = Site.query.all()
     return jsonify({a.name: a.url for a in site_urls})
 
+
 @sites_info.route('/site-maps')
 def site_maps():
     map_urls = Site.query.all()
     return jsonify({a.name: a.map_url for a in map_urls})
 
+
 @sites_info.route('/<site_code>')
 def site_row(site_code):
     site = Site.query.filter_by(site_code=site_code).first()
     site_dict = {'site name': site.name, 'region': site.region, 'site environment': site.environ, 'site url': site.url,
-              'map url': site. map_url, 'latitude': site.lat, 'longitude': site.long}
+                 'map url': site.map_url, 'latitude': site.lat, 'longitude': site.long}
     return jsonify(site_dict)
