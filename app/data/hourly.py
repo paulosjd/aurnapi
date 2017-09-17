@@ -33,6 +33,7 @@ def update_db():
     soup = BeautifulSoup(page, 'lxml')
     sites_list = [a.name for a in Site.query.all()]
     for site in Site.query.all():
+        
         site_data = Data(owner=site, **hourly_data(soup, site.name))
         db.session.add(site_data)
     db.session.commit()
