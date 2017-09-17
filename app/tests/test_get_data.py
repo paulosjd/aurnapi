@@ -24,14 +24,14 @@ class TestGetData(unittest.TestCase):
 
         # test that list is returned unaltered if time is up-to-date
     def test_format_data_1(self):
-        self.get_data_output_1 = ['ABD', '46', '1', 'n/m', '3', '6'] + [datetime.strftime((datetime.now().replace(
+        self.get_data_output_1 = ['46', '1', 'n/m', '3', '6'] + [datetime.strftime((datetime.now().replace(
             microsecond=0, second=0, minute=0)), "%d/%m/%Y %H:%M:%S")]
-        self.assertEqual(format_data(self.get_data_output_1), self.get_data_output_1)
+        self.assertEqual(validate_data(self.get_data_output_1), self.get_data_output_1)
 
         # test that sites with non-up-to-date measurements are handled correctly
     def test_format_data_2(self):
-        self.get_data_output_2 = ['ABD', '46', '1', 'n/m', '3', '6', '20/08/2017 10:00:00']
-        self.expected_output_2 = ['ABD'] + ['n/a'] * 5 + [datetime.strftime((datetime.now().replace(
+        self.get_data_output_2 = ['46', '1', 'n/m', '3', '6', '20/08/2017 10:00:00']
+        self.expected_output_2 = ['n/a'] * 5 + [datetime.strftime((datetime.now().replace(
             microsecond=0, second=0, minute=0)), "%d/%m/%Y %H:%M:%S")]
         self.assertEqual(format_data(self.get_data_output_2), self.expected_output_2)
 
