@@ -7,6 +7,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c9fe0903-0bef-420c-afb8-0082f52724ab" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/data/hourly.py" afterPath="$PROJECT_DIR$/app/data/hourly.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/database.db" afterPath="$PROJECT_DIR$/app/database.db" />
     </list>
     <ignored path="untitled.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -91,8 +92,8 @@
       <file leaf-file-name="hourly.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/data/hourly.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
+            <state relative-caret-position="561">
+              <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -542,7 +543,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-16" y="0" width="3211" height="1714" extended-state="1" />
+    <frame x="-16" y="0" width="3211" height="1714" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -739,8 +740,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/data/hourly.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
+        <state relative-caret-position="561">
+          <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
