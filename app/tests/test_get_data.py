@@ -1,4 +1,4 @@
-from app.data.hourly import hourly_data, format_data
+from app.data.hourly import hourly_data, validate_data
 from app.data import hourly
 from bs4 import BeautifulSoup
 import requests
@@ -15,11 +15,11 @@ class TestGetData(unittest.TestCase):
         self.hourly_data_output = hourly_data(self.soup, 'Aberdeen')
 
     def test_hourly_data_1(self):
-        self.assertEquals([type(a) for a in self.hourly_data_output], [str] * 7)
+        self.assertEquals([type(a) for a in self.hourly_data_output], [str] * 6)
 
         # test that last list item [5] is a datetime string with the correct format
     def test_hourly_data_2(self):
-        self.to_datetime = datetime.strptime(self.hourly_data_output[6], '%d/%m/%Y %H:%M:%S')
+        self.to_datetime = datetime.strptime(self.hourly_data_output[5], '%d/%m/%Y %H:%M:%S')
         self.assertIsInstance(self.to_datetime, datetime)
 
         # test that list is returned unaltered if time is up-to-date
