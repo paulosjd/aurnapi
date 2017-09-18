@@ -18,10 +18,9 @@ def hourly_data(soup, site):
 
 
 def validate_data(hourly_data_output):
-    if hourly_data_output['time'] != datetime.strftime((datetime.now().replace(microsecond=0, second=0, minute=0)),
-                                                       "%d/%m/%Y %H:%M:%S"):
-        na_values = ['n/a'] * 5 + [datetime.strftime((datetime.now().replace(
-            microsecond=0, second=0, minute=0)), "%d/%m/%Y %H:%M:%S")]
+    recent_dt = datetime.strftime((datetime.now().replace(microsecond=0, second=0, minute=0)), "%d/%m/%Y %H:%M:%S")
+    if hourly_data_output['time'] != recent_dt:
+        na_values = ['n/a'] * 5 + recent_dt
         return dict(zip(['ozone', 'no2', 'so2', 'pm25', 'pm10', 'time'], na_values))
     else:
         return hourly_data_output
