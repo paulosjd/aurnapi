@@ -26,7 +26,6 @@ class Data(db.Model):
     site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), nullable=False)
     ozone = db.Column(db.String(10))
     no2 = db.Column(db.String(10))
-    so2 = db.Column(db.String(10))
     pm25 = db.Column(db.String(10))
     pm10 = db.Column(db.String(10))
     time = db.Column(db.String(50))
