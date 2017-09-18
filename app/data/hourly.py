@@ -16,7 +16,7 @@ def hourly_data(soup, site):
     time = row[6].text[:10] + ' ' + row[6].text[10:]
     return {'ozone': ozone, 'no2': no2, 'so2': so2, 'pm25': pm25, 'pm10': pm10, 'time': time}
 
-
+#ensure that n/a displayed instead of stale data for sites with non up-to-date data
 def validate_data(hourly_data_output):
     recent_dt = datetime.strftime((datetime.now().replace(microsecond=0, second=0, minute=0)), "%d/%m/%Y %H:%M:%S")
     if hourly_data_output['time'] != recent_dt:
