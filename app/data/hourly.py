@@ -11,18 +11,17 @@ def hourly_data(soup, site):
     row = site_link.findParent('td').findParent('tr').findAll('td')
     ozone = row[1].text.replace('\xa0', ' ').split(' ')[0]
     no2 = row[2].text.replace('\xa0', ' ').split(' ')[0]
-    so2 = row[3].text.replace('\xa0', ' ').split(' ')[0]
     pm25 = row[4].text.replace('\xa0', ' ').split(' ')[0]
     pm10 = row[5].text.replace('\xa0', ' ').split(' ')[0]
     time = row[6].text[:10] + ' ' + row[6].text[10:]
-    return {'ozone': ozone, 'no2': no2, 'so2': so2, 'pm25': pm25, 'pm10': pm10, 'time': time}
+    return {'ozone': ozone, 'no2': no2, 'pm25': pm25, 'pm10': pm10, 'time': time}
 
 #ensure that n/a displayed instead of stale data for sites with non up-to-date data
 def validate_data(hourly_data_output):
     recent_dt = datetime.strftime((datetime.now().replace(microsecond=0, second=0, minute=0)), "%d/%m/%Y %H:%M:%S")
     if hourly_data_output['time'] != recent_dt:
         na_values = ['n/a'] * 5 + recent_dt
-        return dict(zip(['ozone', 'no2', 'so2', 'pm25', 'pm10', 'time'], na_values))
+        return dict(zip(['ozone', 'no2', 'pm25', 'pm10', 'time'], na_values))
     else:
         return hourly_data_output
 
