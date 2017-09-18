@@ -4,7 +4,8 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import requests
 
-
+#remove so2 due to lack of avaialable data, also remove from models
+#make lines 12 to 16 DRY
 def hourly_data(soup, site):
     site_link = soup.find_all('a', string=site)[0]
     row = site_link.findParent('td').findParent('tr').findAll('td')
