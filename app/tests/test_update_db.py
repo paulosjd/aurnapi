@@ -14,7 +14,7 @@ class TestGetData(unittest.TestCase):
         self.keys = ['ozone', 'no2', 'so2', 'pm25', 'pm10', 'time']
 
     def test_hourly_data_1(self):
-        self.assertEquals([type(a) for a in self.hourly_data_output.values()], [str] * 6)
+        self.assertEqual([type(a) for a in self.hourly_data_output.values()], [str] * 6)
 
     #test that last list item is a datetime string with the correct format
     def test_hourly_data_2(self):
