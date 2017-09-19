@@ -4,6 +4,8 @@ from app.models import Site
 sites_info = Blueprint('Site', __name__)
 
 
+#todo: endpoints for number and type of datapoints available for each site
+
 @sites_info.route('/site-list')
 @sites_info.route('/site-list/<environ>')
 @sites_info.route('/site-list/<region>')
