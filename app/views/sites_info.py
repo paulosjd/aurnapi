@@ -1,10 +1,8 @@
 from flask import jsonify, Blueprint
-from app.models import Site
+from app.models import Site, Data
 
 sites_info = Blueprint('Site', __name__)
 
-
-#todo: endpoints for number and type of datapoints available for each site
 
 @sites_info.route('/site-list')
 @sites_info.route('/site-list/<environ>')
@@ -50,3 +48,12 @@ def site_row(site_code):
     site_dict = {'site name': site.name, 'region': site.region, 'site environment': site.environ, 'site url': site.url,
                  'map url': site.map_url, 'latitude': site.lat, 'longitude': site.long}
     return jsonify(site_dict)
+
+
+#change pm10 to <poll>
+@sites_info.route('/available_data/<site_code>')
+def available_data(site_code):
+    qs = Site.query.join(Data).filter(Site.site_code == site_code).first()
+
+
+
