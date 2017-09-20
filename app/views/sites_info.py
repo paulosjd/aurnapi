@@ -54,6 +54,12 @@ def site_row(site_code):
 @sites_info.route('/available_data/<site_code>')
 def available_data(site_code):
     qs = Site.query.join(Data).filter(Site.site_code == site_code).first()
-
-
-
+    integer_values = []
+    for a in qs.data:
+        try:
+            integer_values.append({a.time: (int(a.pm10))})
+        except ValueError:
+            continue
+    times = [a.keys() for a in integer_values]
+    return jsonify(times)
+ 
