@@ -16,39 +16,6 @@ def hourly_data(soup, site):
     time = row[6].text[:10] + ' ' + row[6].text[10:]
     return {'ozone': ozone, 'no2': no2, 'so2': so2, 'pm25': pm25, 'pm10': pm10, 'time': time}
 
-##will work if just have     pm10 = row[5].text.split('\xa0')[0] instead??
-
-def hourly_data2(soup, site):
-    site_link = soup.find_all('a', string=site)[0]
-    row = site_link.findParent('td').findParent('tr').findAll('td')
-    time = row[6].text[:10] + ' ' + row[6].text[10:]
-    values = [x.text.replace('\xa0', ' ').split(' ')[0] for x in row[1:5]] + time
-    keys = ['ozone', 'no2', 'so2', 'pm25', 'pm10', 'time']
-    return dict(zip(keys, values))
-
-def hourly_data3(soup, site):
-    site_link = soup.find_all('a', string=site)[0]
-    row = site_link.findParent('td').findParent('tr').findAll('td')
-    ozone = row[1].text.split('\xa0')[0]
-    no2 = row[2].text.split('\xa0')[0]
-    so2 = row[3].text.split('\xa0')[0]
-    pm25 = row[4].text.split('\xa0')[0]
-    pm10 = row[5].text.split('\xa0')[0]
-    time = row[6].text.split('\xa0')[0]
-    return {'ozone': ozone, 'no2': no2, 'so2': so2, 'pm25': pm25, 'pm10': pm10, 'time': time}
-
-
-def hourly_data4(soup, site):
-    site_link = soup.find_all('a', string=site)[0]
-    row = site_link.findParent('td').findParent('tr').findAll('td')
-    ozone = row[1].text.split('\xa0')[0]
-    no2 = row[2].text.split('\xa0')[0]
-    so2 = row[3].text.split('\xa0')[0]
-    pm25 = row[4].text.split('\xa0')[0]
-    pm10 = row[5].text.split('\xa0')[0]
-    time = row[6].text.split('\xa0')[0]
-    return {'ozone': ozone, 'no2': no2, 'so2': so2, 'pm25': pm25, 'pm10': pm10, 'time': time}
-
 
 def validate_data(data_dict):
     hourly_dt = datetime.strftime(datetime.now().replace(microsecond=0, second=0, minute=0), "%d/%m/%Y %H:%M:%S")
