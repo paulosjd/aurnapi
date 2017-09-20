@@ -10,16 +10,29 @@ create_app().app_context().push()
 
 Run.py can be executed as a python file on a local machine, allowing the database specified in config.py to be queried through entering certain endpoints. The endpoints include list of sites and their site code with which to search by, as welll as information relating to the various monitoring sites. Endpoints for air quality data return data which is filtered data according to the specified pollutant and monitoring site, as well as optional start and end dates. 
 
+Install
+-------
+
+Dependencies:
+
+ - Python 3
+
+   - https://www.python.org
+
+ - PIP (Python package manager)
+
+   - https://pypi.python.org/pypi/pip
 
 
 Configure and run the API:
 --------------------------
 
-After downloading project files and populating the database, run the following commands from the project's root directory:
+After downloading project files run the following commands from the project's root directory:
 
     pip install --upgrade pip
 
     pip install -r requirements.txt
+    
+Once a populated database has been obtained and correct settings within app.config.py have been specified, run the following command to run queries using the endpoints specified in the views directory:
 
     python run.py
-
