@@ -50,6 +50,7 @@ def site_row(site_code):
     return jsonify(site_dict)
 
 
+#return [no. of data points, start and end dates]
 #change pm10 to <poll>
 @sites_info.route('/available_data/<site_code>')
 def available_data(site_code):
