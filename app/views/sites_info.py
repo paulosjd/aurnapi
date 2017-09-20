@@ -62,5 +62,5 @@ def available_data(site_code):
         except ValueError:
             continue
     times = [a.keys() for a in integer_values]
-    return jsonify(times)
+    return jsonify([times[0], times[-1]])
  
