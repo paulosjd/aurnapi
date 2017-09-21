@@ -31,17 +31,29 @@ Dependencies:
  - PIP (Python package manager)
 
    - https://pypi.python.org/pypi/pip
-
-
-Configure and run the API:
---------------------------
-
-After downloading project files run the following commands from the project's root directory:
+   
+   
+After cloning the repository, run the following commands from the project's root directory:
 
     pip install --upgrade pip
 
     pip install -r requirements.txt
     
+
+Create and populate database
+----------------------------
+Before running commands in a Python interpreter, the Flask application factory needs to be imported and the application context pushed by running:
+
+    from app import create_app()
+
+    create_app().app_context().push()
+
+
+Create and populate a database using the create_db() and update_db() functions within app/data/hourly.py  
+
+
+Configure and run the API:
+--------------------------
 Once a populated database has been obtained and correct settings within app.config.py have been specified, run the following command to run queries using the endpoints specified in the views directory:
 
     python run.py
