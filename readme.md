@@ -2,7 +2,7 @@ An API for air quality data created for air-aware.com. The project was built usi
 
 Modules in app/data create and populate a database using data obtained by parsing a webpage. This page is updated with air quality measurements on an hourly basis with data for over 120 sites within the UK's automatic monitoring network.
 
-The API allows access to air quality data in JSON format through endpoints including the following (detailed within app.views):
+The API allows access to air quality data in JSON format through endpoints detailed in app.views
 
 Site poll, site 
 /uri/<poll>....
