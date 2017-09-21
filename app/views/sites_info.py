@@ -49,16 +49,18 @@ def site_row(site_code):
                  'map url': site.map_url, 'latitude': site.lat, 'longitude': site.long}
     return jsonify(site_dict)
 
-
-#change pm10 to <poll>
-@sites_info.route('/available_data/<site_code>')
-def available_data(site_code):
+#getattr(a, pollutant) == a.pollutant
+@sites_info.route('/available_data/<pollutant>/<site_code>')
+def available_data(pollutant, site_code):
     qs = Site.query.join(Data).filter(Site.site_code == site_code).first()
     timepoints = []
     for a in qs.data:
         try:
-            if int(a.pm10):
+            if int(getattr(a, pollutant)):
                 timepoints.append(a.time)
         except ValueError:
             continue
-    return jsonify([len(timepoints), timepoints[0], timepoints[-1]])
+    try:
+        return jsonify([str(len(timepoints)), timepoints[0], timepoints[-1]])
+    except IndexError:
+        return jsonify('no data')
