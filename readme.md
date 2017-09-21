@@ -14,6 +14,7 @@ Pollutant data of interest along with the individual monitoring sites must be sp
 /uri/site-list
 /uri/pollutants  codes e.g. 'no2' which refer to the pollutant name and measurement unit e.g. 'nitrogen dioxide, ppm'
 
+ {'number of data points': '235', 'start datetime': '.....', 'start datetime': '.....'}
 
 'ozone': 'ozone, ppm', ',  'no2': 'nitrogen dioxide, ppm', 'pm10    NEED TO MAKE!!
 
