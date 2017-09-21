@@ -50,17 +50,15 @@ def site_row(site_code):
     return jsonify(site_dict)
 
 
-#return [no. of data points, start and end dates]
 #change pm10 to <poll>
 @sites_info.route('/available_data/<site_code>')
 def available_data(site_code):
     qs = Site.query.join(Data).filter(Site.site_code == site_code).first()
-    integer_values = []
+    timepoints = []
     for a in qs.data:
         try:
-            integer_values.append({a.time: (int(a.pm10))})
+            if int(a.pm10):
+                timepoints.append(a.time)
         except ValueError:
             continue
-    times = [a.keys() for a in integer_values]
-    return jsonify([times[0], times[-1]])
- 
+    return jsonify([len(timepoints), timepoints[0], timepoints[-1]])
