@@ -26,3 +26,8 @@ def hourly_data_3(pollutant, name, start, end):
     end_time = '{}/{}/{} 00:00:00'.format(*end_date)
     queryset = Data.query.join(Site).filter(Site.site_code == name, Data.time >= start_time, Data.time <= end_time)
     return jsonify({a.time: getattr(a, pollutant) for a in queryset})
+
+
+@hourly_data.route('/data/pollutants')
+def pollutants():
+    return jsonify({'ozone': 'ozone, ppm', 'no2': 'nitrogen dioxide, ppm', })
