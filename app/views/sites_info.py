@@ -1,16 +1,42 @@
 from flask import jsonify, Blueprint
 from app.models import Site, Data
 
+
 sites_info = Blueprint('Site', __name__)
 
 
-# site-list/urban-traffic RETURNS ALL 123 SITES
-# BUT site-list/urban-traffic/<REGION> DOES NOT
+@sites_info.route('/site-list/')
+def site_list():
+    return jsonify({a.name: a.site_code for a in Site.query.all()})
 
-# concisify the following using getattr()??  --for a.environ and a.region
-# remove the 2 lists??
-#   - instead of e.g. if region in regions:, just have if hasattr(): ?
+@sites_info.route('/site-regions')
+def site_regions():
+    return jsonify(list(set([a.region for a in Site.query.all()])))
 
+@sites_info.route('/site-environments')
+def site_environs():
+    return jsonify(list(set([a.environ for a in Site.query.all()])))
+
+@sites_info.route('/site-environments')
+@sites_info.route('/site-list/<region>')
+def site_list(environ=None, region=None):
+
+site_environs = ['urban-traffic', 'urban-industrial', 'urban-background', 'suburban-background',
+                 'suburban-industrial', 'rural-background']
+regions = ['greater-london', 'south-east', 'east-midlands', 'eastern', 'yorkshire', 'north-east', 'north-west',
+           'west-midlands', 'south-west', 'south-wales', 'northern-ireland', 'north-east-scotland', 'north-wales',
+           'highlands', 'scottish-borders', 'central-scotland']
+try:
+    filt = getattr()
+
+if environ in site_environs:
+    return jsonify({a.name: a.site_code for a in Site.query.filter_by(environ=environ).all()})
+if region in regions:
+    return jsonify({a.name: a.site_code for a in Site.query.filter_by(region=region).all()})
+
+
+
+"""
 @sites_info.route('/site-list/')
 @sites_info.route('/site-list/<environ>')
 @sites_info.route('/site-list/<region>')
@@ -26,7 +52,7 @@ def site_list(environ=None, region=None):
         return jsonify({a.name: a.site_code for a in Site.query.filter_by(region=region).all()})
     else:
         return jsonify({a.name: a.site_code for a in Site.query.all()})
-
+        """
 
 @sites_info.route('/<site_code>')
 def site_row(site_code):
