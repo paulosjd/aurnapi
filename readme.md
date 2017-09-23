@@ -71,7 +71,7 @@ data filtered according to an optional start and end date (in format e.g. 2015-1
 
 **/available-data/{pollutant}/{site code}**
 
-the number of available data points and the date from which they start, for a specified pollutant and monitoring site
+the starting date and number of available data points for a specified pollutant and monitoring site
 
 
 **/site-regions**
@@ -81,6 +81,26 @@ a list of government regions within the AURN monitoring network
 
 **/site-regions/{region}**
 
-a list of names and site codes for all monitoring sites within a region specified by writing as listed in /site-regions (e.g. /site-regions/greater-london)
+a list of names and site codes for all monitoring sites within a region, specified by writing as listed in /site-regions (e.g. /site-regions/greater-london)
 
+**/site-environments/{environment-type}**
+
+a list of names and site codes for all monitoring sites for an environment type, specified by writing as listed in /site-regions (e.g. /site-environments/urban-traffic)
+
+**/site-geo**
+
+geographical coordinates of all sites within the AURN network
+
+**/site-url**
+
+official webpage URL providing individual site information for all sites
+
+
+**/site-maps**
+
+google maps URLs for all sites 
+
+**/site-info/{site code}**
+
+the name, region, environment type, official webpage URL, google maps URL, latitude and longitude for a specified site
 
