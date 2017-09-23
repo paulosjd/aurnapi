@@ -32,8 +32,3 @@ def hourly_data_3(pollutant, name, start, end):
 def pollutants():
     return jsonify({'ozone, µg/m3': 'ozone', 'nitrogen dioxide, µg/m3': 'no2', 'sulfur dioxide, µg/m3': 'so2',
                     'PM2.5 particles, µg/m3': 'pm25', 'PM10 particles, µg/m3': 'pm10'})
-
-
-@hourly_data.errorhandler(404)
-def page_not_found(e):
-    return jsonify(error=404, text=str(e)), 404
