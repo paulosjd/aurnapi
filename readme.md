@@ -2,7 +2,7 @@ An API for air quality data created for air-aware.com. The project was built usi
 
 Modules in app/data create and populate a database using data obtained by parsing a webpage. This page is updated with air quality measurements on an hourly basis with data for over 120 sites within the UK's automatic monitoring network.
 
-The API gives access to the database. It follows REST design principles, providing data in JSON format through endpoints which are detailed at the bottom of this page.
+The API gives access to the database. It follows REST design principles, providing data in JSON format through endpoints detailed at the bottom of this page.
 
 
 Install
@@ -51,7 +51,7 @@ http://localhost:8080
 
 **/site-list**
 
-a list of names and site codes for all 123 monitoring sites (n.b. site codes are case-sensitive)
+a list of names and site codes for all 123 monitoring sites 
 
 
 **/data/pollutants**
@@ -60,7 +60,8 @@ a list of air quality parameters for which data is available, the units they are
 
 **/data/{pollutant}/{site code}**
 
-hourly measurements for a specified pollutant and monitoring site (e.g. /data/pm10/ABD)
+hourly measurements for a specified pollutant and monitoring site, e.g. /data/pm10/ABD
+n.b. pollutants and site codes are case-sensitive
 
 
 **/data/{pollutant}/{site code}/{start date}**
