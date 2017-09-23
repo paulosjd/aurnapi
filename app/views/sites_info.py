@@ -18,6 +18,8 @@ def available_data(pollutant, site_code):
         try:
             if int(getattr(a, pollutant)):
                 times.append(a.time)
+        except AttributeError:
+            continue
         except ValueError:
             continue
     try:
@@ -68,3 +70,5 @@ def site_url():
 def site_maps():
     map_urls = Site.query.all()
     return jsonify({a.name: a.map_url for a in map_urls})
+
+
