@@ -11,7 +11,7 @@ class TestGetData(unittest.TestCase):
         headers={'User-Agent': 'Not blank'}).content
         self.soup = BeautifulSoup(self.page, 'lxml')
         self.hourly_data_output = hourly_data(self.soup, 'Aberdeen')
-        self.keys = ['ozone', 'no2', 'so2', 'pm25', 'pm10', 'time']
+        self.keys = ['ozone', 'NO2', 'SO2', 'PM25', 'PM10', 'time']
 
     def test_hourly_data_1(self):
         self.assertEqual([type(a) for a in self.hourly_data_output.values()], [str] * 6)
