@@ -53,6 +53,7 @@ http://localhost:8080
 
 a list of names and site codes for all 123 monitoring sites (n.b. site codes are case-sensitive)
 
+
 **/data/pollutants**
 
 a list of air quality parameters for which data is available, the units they are measured in, and their ‘url labels’ required for accessing the following the endpoints
@@ -61,18 +62,22 @@ a list of air quality parameters for which data is available, the units they are
 
 hourly measurements for a specified pollutant and monitoring site (e.g. /data/pm10/ABD)
 
+
 **/data/{pollutant}/{site code}/{start date}**
 **/data/{pollutant}/{site code}/{start date}/{end date}**
 
 data filtered according to an optional start and end date (in format e.g. 2015-10-01)
 
+
 **/available-data/{pollutant}/{site code}**
 
 the number of available data points and the date from which they start, for a specified pollutant and monitoring site
 
+
 **/site-regions**
 
 a list of government regions within the AURN monitoring network
+
 
 **/site-regions/{region}**
 
