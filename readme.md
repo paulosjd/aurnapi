@@ -46,7 +46,7 @@ Once a populated database has been obtained and correct settings within app.conf
 API endpoints
 -------------
 
-http://localhost:8080
+Endpoints are relative to the Base URL: http://localhost:8080
 
 
 **/site-list**
