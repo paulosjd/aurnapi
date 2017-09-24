@@ -1,14 +1,12 @@
 An API for air quality data created for air-aware.com (base URL: http://air-aware.com:8083). The project was built using the Flask framework for Python, along with the flask-SQLAlchemy extension. 
 
-Modules in app/data create and populate a database using data obtained by parsing a webpage. This page is updated with air quality measurements on an hourly basis with data for over 120 sites within the UK's automatic monitoring network.
+Modules in app/data create and populate a database using data scraped from a webpage. This page is updated every hour with the latest air quality measurements for over 120 sites in the UK's automatic monitoring network.
 
 The API gives access to the database. It follows REST design principles, providing data in JSON format through endpoints detailed as follows.
 
 
 Install
 -------
-
-Dependencies:
 
  - Python 3
 
@@ -46,7 +44,7 @@ Once a populated database has been obtained and correct settings within app.conf
 API endpoints
 -------------
 
-Endpoints are relative to the Base URL: http://localhost:8080
+Endpoints are relative to the base URL: http://localhost:8080
 
 
 **/site-list**
