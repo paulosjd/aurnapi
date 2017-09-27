@@ -36,15 +36,15 @@ Create and populate a database using the create_db() and update_db() functions w
 
 Configure and run the API
 --------------------------
-Once a populated database has been obtained and correct settings within app.config.py have been specified, run the following command to run queries using the endpoints specified in the views directory:
+Once a populated database has been obtained and correct settings within app.config.py have been specified, run the following command within the project directory to make database queries:
 
-    python run.py
+    python run.py runserver
 
 
 API endpoints
 -------------
 
-Endpoints are relative to the base URL: http://localhost:8080
+Endpoints are relative to the base URL: http://localhost:5000
 
 
 **/site-list**
