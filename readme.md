@@ -58,7 +58,7 @@ a list of air quality parameters for which data is available, the units they are
 
 **/data/{pollutant}/{site code}**
 
-hourly measurements for a specified pollutant and monitoring site, e.g. /data/pm10/ABD
+a list of hourly measurements and associated timepoints for a specified pollutant and monitoring site, e.g. /data/pm10/ABD
 n.b. pollutants and site codes are case-sensitive
 
 
