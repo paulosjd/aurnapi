@@ -1,4 +1,4 @@
-from flask import jsonify, Blueprint, make_response
+from flask import jsonify, Blueprint
 from app.models import Data, Site
 
 hourly_data = Blueprint('hourly', __name__)
