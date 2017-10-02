@@ -12,20 +12,21 @@ def site_list():
 
 @sites_info.route('/available-data/<pollutant>/<site_code>')
 def available_data(pollutant, site_code):
-    qs = Site.query.join(Data).filter(Site.site_code == site_code).first()
-    times = []
-    for a in qs.data:
-        try:
-            if int(getattr(a, pollutant)):
-                times.append(a.time)
-        except AttributeError:
-            continue
-        except ValueError:
-            continue
-    try:
+    qs = Site.query.join(Data).filter(Site.site_code == site_code.upper()).first()
+    if qs:
+        times = []
+        for a in qs.data:
+            #to discount 'n/a' and 'n/m' values
+            try:
+                if int(getattr(a, pollutant.upper())):
+                    times.append(a.time)
+            except AttributeError:
+                continue
+            except ValueError:
+                continue
         return jsonify([str(len(times)), times[0], times[-1]])
-    except IndexError:
-        return jsonify('no data')
+    else:
+        return jsonify(None)
 
 
 @sites_info.route('/site-regions')
@@ -48,11 +49,15 @@ def site_environs(environ=None):
 
 @sites_info.route('/site-info/<site_code>')
 def site_row(site_code):
-    site = Site.query.filter_by(site_code=site_code).first()
-    site_dict = {'site name': site.name, 'region': site.region, 'site environment': site.environ,
+    site = Site.query.filter_by(site_code=site_code.upper()).first()
+    try:
+        site_dict = {'site name': site.name, 'region': site.region, 'site environment': site.environ,
                  'site url': site.url,
                  'map url': site.map_url, 'latitude': site.lat, 'longitude': site.long}
-    return jsonify(site_dict)
+        return jsonify(site_dict)
+    except AttributeError:
+        return jsonify(None)
+
 
 
 @sites_info.route('/site-geo')
@@ -70,5 +75,3 @@ def site_url():
 def site_maps():
     map_urls = Site.query.all()
     return jsonify({a.name: a.map_url for a in map_urls})
-
-
