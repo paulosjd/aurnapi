@@ -25,8 +25,11 @@ def hourly_data_2(pollutant, name, start):
 def hourly_data_3(pollutant, name, start, end):
     start_date = reversed(start.split('-'))
     end_date = reversed(end.split('-'))
-    start_time = '{}/{}/{} 00:00:00'.format(*start_date)
-    end_time = '{}/{}/{} 00:00:00'.format(*end_date)
+    try:
+        start_time = '{}/{}/{} 00:00:00'.format(*start_date)
+        end_time = '{}/{}/{} 00:00:00'.format(*end_date)
+    except IndexError:
+        return jsonify({'data': None})
     queryset = Data.query.join(Site).filter(Site.site_code == name.upper(), Data.time >= start_time, Data.time <= end_time)
     return jsonify({'data': [{'time': a.time, 'value': getattr(a, pollutant, a.PM10)} for a in queryset]})
 
