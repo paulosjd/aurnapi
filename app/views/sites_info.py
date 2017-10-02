@@ -1,7 +1,9 @@
 from flask import jsonify, Blueprint
 from app.models import Site, Data
 
+
 sites_info = Blueprint('Site', __name__)
+
 
 @sites_info.route('/site-list/')
 def site_list():
@@ -11,18 +13,18 @@ def site_list():
 @sites_info.route('/available-data/<pollutant>/<site_code>')
 def available_data(pollutant, site_code):
     qs = Site.query.join(Data).filter(Site.site_code == site_code.upper()).first()
-    if hasattr (qs, pollutant.upper()):
-        times = []
+    times = []
+    if qs:
         for a in qs.data:
-            #to discount 'n/a' and 'n/m' values
-            try:
-                if int(getattr(a, pollutant.upper())):
-                    times.append(a.time)
-            except AttributeError:
-                continue
-            except ValueError:
-                continue
-        return jsonify([str(len(times)), times[0], times[-1]])
+            if hasattr(a, pollutant.upper()):
+                try:
+                    if int(getattr(a, pollutant.upper())):
+                        times.append(a.time)
+                except ValueError:
+                    return jsonify(None)
+                return jsonify([str(len(times)), times[0], times[-1]])
+            else:
+                return jsonify(None)
     else:
         return jsonify(None)
 
@@ -72,5 +74,3 @@ def site_url():
 def site_maps():
     map_urls = Site.query.all()
     return jsonify({a.name: a.map_url for a in map_urls})
-
-
