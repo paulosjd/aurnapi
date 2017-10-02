@@ -1,9 +1,7 @@
 from flask import jsonify, Blueprint
 from app.models import Site, Data
 
-
 sites_info = Blueprint('Site', __name__)
-
 
 @sites_info.route('/site-list/')
 def site_list():
