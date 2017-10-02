@@ -13,7 +13,7 @@ def site_list():
 @sites_info.route('/available-data/<pollutant>/<site_code>')
 def available_data(pollutant, site_code):
     qs = Site.query.join(Data).filter(Site.site_code == site_code.upper()).first()
-    if qs:
+    if hasattr (qs, pollutant.upper()):
         times = []
         for a in qs.data:
             #to discount 'n/a' and 'n/m' values
@@ -59,7 +59,6 @@ def site_row(site_code):
         return jsonify(None)
 
 
-
 @sites_info.route('/site-geo')
 def site_geo():
     return jsonify({a.name: a.lat + ", " + a.long for a in Site.query.all()})
@@ -75,3 +74,5 @@ def site_url():
 def site_maps():
     map_urls = Site.query.all()
     return jsonify({a.name: a.map_url for a in map_urls})
+
+
