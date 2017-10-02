@@ -1,4 +1,4 @@
-An API for air quality data created for air-aware.com. The project was built using the Flask framework for Python, along with the flask-SQLAlchemy extension. 
+An API for accessing air quality data, created for the website www.air-aware.com. The project was built using the Flask framework for Python, along with the flask-SQLAlchemy extension. 
 
 Modules in app/data create and populate a database using data scraped from a webpage. This page is updated every hour with the latest air quality measurements for over 120 sites in the UK's automatic monitoring network.
 
@@ -58,8 +58,7 @@ a list of air quality parameters for which data is available, the units they are
 
 **/data/{pollutant}/{site code}**
 
-a list of hourly measurements and associated timepoints for a specified pollutant and monitoring site, e.g. /data/pm10/ABD
-n.b. pollutants and site codes are case-sensitive
+a list of hourly measurements and associated timepoints for a specified pollutant and monitoring site, e.g. /data/pm10/abd
 
 
 **/data/{pollutant}/{site code}/{start date}**
