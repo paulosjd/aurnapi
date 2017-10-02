@@ -1,4 +1,4 @@
-An API for accessing air quality data, created for the website www.air-aware.com. The project was built using the Flask framework for Python, along with the flask-SQLAlchemy extension. 
+An API for accessing air quality data, created for www.air-aware.com. The project was built using the Flask framework for Python, along with the flask-SQLAlchemy extension. 
 
 Modules in app/data create and populate a database using data scraped from a webpage. This page is updated every hour with the latest air quality measurements for over 120 sites in the UK's automatic monitoring network.
 
@@ -81,13 +81,16 @@ a list of government regions within the AURN monitoring network
 
 a list of names and site codes for all monitoring sites within a region, specified by writing as listed in /site-regions (e.g. /site-regions/greater-london)
 
+
 **/site-environments/{environment-type}**
 
 a list of names and site codes for all monitoring sites for an environment type, specified by writing as listed in /site-regions (e.g. /site-environments/urban-traffic)
 
+
 **/site-geo**
 
 geographical coordinates of all sites within the AURN network
+
 
 **/site-url**
 
@@ -97,6 +100,7 @@ official webpage URL providing individual site information for all sites
 **/site-maps**
 
 google maps URLs for all sites 
+
 
 **/site-info/{site code}**
 
