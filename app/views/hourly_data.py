@@ -10,7 +10,7 @@ parameters = {'o3': 'ozone, µg/m3', 'no2': 'nitrogen dioxide, µg/m3', 'so2': '
 @hourly_data.route('/data/<pollutant>/<name>/')
 def hourly_data_1(pollutant, name):
     queryset = Data.query.join(Site).filter(Site.site_code == name.upper())
-    return jsonify({'data': [{'time': a.time, 'parameter': parameters.get(getattr(a, pollutant.lower())),
+    return jsonify({'data': [{'time': a.time, 'parameter': parameters.get(pollutant.lower()),
                               'value': getattr(a, pollutant.lower(), a.pm10)} for a in queryset]})
 
 
@@ -22,7 +22,7 @@ def hourly_data_2(pollutant, name, start):
     except IndexError:
         return jsonify({'data': None})
     queryset = Data.query.join(Site).filter(Site.site_code == name.upper(), Data.time >= start)
-    return jsonify({'data': [{'time': a.time, 'parameter': parameters.get(getattr(a, pollutant.lower())),
+    return jsonify({'data': [{'time': a.time, 'parameter': parameters.get(pollutant.lower()),
                               'value': getattr(a, pollutant.lower(), a.pm10)} for a in queryset]})
 
 
@@ -36,7 +36,7 @@ def hourly_data_3(pollutant, name, start, end):
     except IndexError:
         return jsonify({'data': None})
     queryset = Data.query.join(Site).filter(Site.site_code == name.upper(), Data.time >= start, Data.time <= end)
-    return jsonify({'data': [{'time': a.time, 'parameter': parameters.get(getattr(a, pollutant.lower())),
+    return jsonify({'data': [{'time': a.time, 'parameter': parameters.get(pollutant.lower()),
                               'value': getattr(a, pollutant.lower(), a.pm10)} for a in queryset]})
 
 
