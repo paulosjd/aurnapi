@@ -16,9 +16,9 @@ def available_data(pollutant, site_code):
     times = []
     if qs:
         for a in qs.data:
-            if hasattr(a, pollutant.upper()):
+            if hasattr(a, pollutant.lower()):
                 try:
-                    if int(getattr(a, pollutant.upper())):
+                    if int(getattr(a, pollutant.lower())):
                         times.append(a.time)
                 except ValueError:
                     return jsonify(None)
@@ -57,6 +57,7 @@ def site_row(site_code):
         return jsonify(site_dict)
     except AttributeError:
         return jsonify(None)
+
 
 
 @sites_info.route('/site-geo')
