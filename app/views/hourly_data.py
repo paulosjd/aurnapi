@@ -1,7 +1,11 @@
 from flask import jsonify, Blueprint
 from app.models import Data, Site
 
+
 hourly_data = Blueprint('hourly', __name__)
+
+parameters = {'ozone': 'ozone, µg/m3', 'NO2': 'nitrogen dioxide, µg/m3', 'SO2': 'sulfur dioxide, µg/m3',
+'PM25': 'PM2.5 particles, µg/m3', 'PM10': 'PM10 particles, µg/m3'}
 
 
 @hourly_data.route('/data/<pollutant>/<name>/')
@@ -18,8 +22,8 @@ def hourly_data_2(pollutant, name, start):
     except IndexError:
         return jsonify({'data': None})
     queryset = Data.query.join(Site).filter(Site.site_code == name.upper(), Data.time >= start)
-    return jsonify({'data': [{'time': a.time, 'value': getattr(a, pollutant.lower(), a.pm10)} for a in queryset]})
-                        #  INCLUDE KEY/VALUE  FOR  PARAMETER
+    return jsonify({'data': [{'time': a.time, 'parameter':   'value': getattr(a, pollutant.lower(), a.pm10)} for a in queryset]})
+
 
 @hourly_data.route('/data/<pollutant>/<name>/<start>/<end>')
 def hourly_data_3(pollutant, name, start, end):
