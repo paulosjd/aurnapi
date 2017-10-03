@@ -42,5 +42,5 @@ def hourly_data_3(pollutant, name, start, end):
 
 @hourly_data.route('/data/pollutants')
 def pollutants():
-    return jsonify({'ozone, µg/m3': 'ozone', 'nitrogen dioxide, µg/m3': 'no2', 'sulfur dioxide, µg/m3': 'so2',
-                    'PM2.5 particles, µg/m3': 'pm25', 'PM10 particles, µg/m3': 'pm10'})
+    return jsonify({b: a for a, b in parameters.items()})
+
