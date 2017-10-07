@@ -3,8 +3,8 @@ from app.models import Data, Site
 
 hourly_data = Blueprint('hourly', __name__)
 
-parameters = {'o3': 'ozone, µg/m3', 'no2': 'nitrogen dioxide, µg/m3', 'so2': 'sulfur dioxide, µg/m3',
-              'pm25': 'PM2.5 particles, µg/m3', 'pm10': 'PM10 particles, µg/m3'}
+parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2': 'sulfur dioxide, µg/m-3',
+              'pm25': 'PM2.5 particles, µg/m-3', 'pm10': 'PM10 particles, µg/m-3'}
 
 
 @hourly_data.route('/data/<pollutant>/<name>/')
