@@ -8,20 +8,20 @@ import requests
 def hourly_data(soup, site):
     site_link = soup.find_all('a', string=site)[0]
     row = site_link.findParent('td').findParent('tr').findAll('td')
-    ozone = row[1].text.replace('\xa0', ' ').split(' ')[0]
-    NO2 = row[2].text.replace('\xa0', ' ').split(' ')[0]
-    SO2 = row[3].text.replace('\xa0', ' ').split(' ')[0]
-    PM25 = row[4].text.replace('\xa0', ' ').split(' ')[0]
-    PM10 = row[5].text.replace('\xa0', ' ').split(' ')[0]
+    o3 = row[1].text.replace('\xa0', ' ').split(' ')[0]
+    no2 = row[2].text.replace('\xa0', ' ').split(' ')[0]
+    so2 = row[3].text.replace('\xa0', ' ').split(' ')[0]
+    pm25 = row[4].text.replace('\xa0', ' ').split(' ')[0]
+    pm10 = row[5].text.replace('\xa0', ' ').split(' ')[0]
     time = row[6].text[:10] + ' ' + row[6].text[10:]
-    return {'ozone': ozone, 'NO2': NO2, 'SO2': SO2, 'PM25': PM25, 'PM10': PM10, 'time': time}
+    return {'o3': o3, 'no2': no2, 'so2': so2, 'pm25': pm25, 'pm10': pm10, 'time': time}
 
 
 def validate_data(data_dict):
     hourly_dt = datetime.strftime(datetime.now().replace(microsecond=0, second=0, minute=0), "%d/%m/%Y %H:%M:%S")
     if data_dict['time'] != hourly_dt:
         na_values = ['n/a'] * 5 + [hourly_dt]
-        return dict(zip(['ozone', 'NO2', 'SO2', 'PM25', 'PM10', 'time'], na_values))
+        return dict(zip(['o3', 'no2', 'so2', 'pm25', 'pm10', 'time'], na_values))
     else:
         return data_dict
 
