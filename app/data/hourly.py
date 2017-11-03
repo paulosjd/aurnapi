@@ -20,7 +20,7 @@ def hourly_data(soup, site):
 
 def validate_data(data_dict):
     loc_dt = pytz.timezone('Europe/London').localize(datetime.now())
-    hourly_dt = datetime.strftime(loc_dt.replace(microsecond=0, second=0, minute=0), "%d/%m/%Y %H:%M:%S")
+    hourly_dt = datetime.strftime(loc_dt.replace(microsecond=0, second=0, minute=0), "%d/%m/%Y %H:%M")
     if data_dict['time'] != hourly_dt:
         na_values = ['n/a'] * 5 + [hourly_dt]
         return dict(zip(['o3', 'no2', 'so2', 'pm25', 'pm10', 'time'], na_values))
