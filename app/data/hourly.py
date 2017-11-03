@@ -3,6 +3,7 @@ from .site_info import site_list, get_info
 from bs4 import BeautifulSoup
 from datetime import datetime
 import requests
+import pytz
 
 
 def hourly_data(soup, site):
@@ -18,7 +19,8 @@ def hourly_data(soup, site):
 
 
 def validate_data(data_dict):
-    hourly_dt = datetime.strftime(datetime.now().replace(microsecond=0, second=0, minute=0), "%d/%m/%Y %H:%M:%S")
+    loc_dt = pytz.timezone('Europe/London').localize(datetime.now())
+    hourly_dt = datetime.strftime(loc_dt.replace(microsecond=0, second=0, minute=0), "%d/%m/%Y %H:%M:%S")
     if data_dict['time'] != hourly_dt:
         na_values = ['n/a'] * 5 + [hourly_dt]
         return dict(zip(['o3', 'no2', 'so2', 'pm25', 'pm10', 'time'], na_values))
