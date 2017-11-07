@@ -45,11 +45,10 @@ def update_db():
     site_names = [a.name for a in ab]
     site_values = [a.pm10 for a in ab]
     if site_values == ['n/a'] * 9:
-        msg = Message("aurn-api multiple 'n/a' values", recipients=['@hotmail.co.uk'])
+        msg = Message("aurn-api multiple 'n/a' values", recipients=['pj_davis@hotmail.co.uk'])
         msg.body = 'Most recent hourly PM10 values for the following sites: {}, have the following values: {}'.format(
              *site_names, *site_values)
         mail.send(msg)
-
     db.session.commit()
 
 
