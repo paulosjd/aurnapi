@@ -1,7 +1,7 @@
 from app.models import db, Data, Site
 from .site_info import site_list, get_info
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 import pytz
 
@@ -19,7 +19,7 @@ def hourly_data(soup, site):
 
 
 def validate_data(data_dict):
-    loc_dt = pytz.timezone('Europe/London').localize(datetime.now())
+    loc_dt = pytz.timezone('Europe/London').localize(datetime.now()) - timedelta(hours=1)
     hourly_dt = datetime.strftime(loc_dt.replace(microsecond=0, second=0, minute=0), "%d/%m/%Y %H:%M")
     if data_dict['time'] != hourly_dt:
         na_values = ['n/a'] * 5 + [hourly_dt]
