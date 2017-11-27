@@ -35,7 +35,9 @@ def update_db():
     for site in Site.query.all():
         data = validate_data(hourly_data(soup, site.name))
         site_data = Data(owner=site, **data)
+        current_data = Current(site=site, **data)
         db.session.add(site_data)
+        db.session.add(current_data)
     db.session.commit()
 
 
@@ -45,9 +47,7 @@ def create_db():
     for site in site_list:
         site_info = Site(**get_info(site))
         db.session.add(site_info)
-    db.session.commit()
     for site in Site.query.all():
-        site_data = Current(site=site, **empty)
-        db.session.add(site_data)
-
-
+        current_data = Current(site=site, **empty)
+        db.session.add(current_data)
+    db.session.commit()
