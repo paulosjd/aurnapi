@@ -8,14 +8,26 @@ parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2':
               'pm25': 'PM2.5 particles, µg/m-3', 'pm10': 'PM10 particles, µg/m-3'}
 
 
-@hourly_data.route('/all')
-def all_data():
-    queryset = Data.query.join(Site)
-    if hasattr(queryset.first(), pollutant.lower()):
-        return jsonify({'site': name.upper(), 'parameter': parameters.get(pollutant.lower()),
-                        'data': [{'time': a.time, 'value': getattr(a, pollutant.lower(), None)} for a in queryset]})
+@hourly_data.route('/recent/all')
+def all_recent_data():
+    all_data = {}
+    site_names = {i[1]: i[0] for i in site_codes.items()}
+    def site_dict(code):
+        site_name = site_names.get(code)
+        d = {}
+        d['info'] = get_info(site_name)
+        d['latest_data'] = 'assign to a dict'
+        return d
+        # {'site_code': {'info': 'assign to a dict', 'latest_data': 'assign to a dict'}}
+    codes = [site_codes.get(b) for b in site_list]
+    for a in codes:
+        all_data[a] = site_dict(a)
+    return jsonify(all_data)
+    if True:
+        pass
     else:
         return jsonify({'message': 'no data'})
+   
 
 
 @hourly_data.route('/<pollutant>/<name>/')
