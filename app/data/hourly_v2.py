@@ -36,10 +36,7 @@ def update_db():
         data = validate_data(hourly_data(soup, site.name))
         site_data = Data(owner=site, **data)
         db.session.add(site_data)
-        #admin = User.query.filter_by(username == 'admin').update(dict(email='my_new_email@example.com')))
-        #db.session.commit()
-        current_data = Current.query.filter_by(site_id=site.id).first()
-        db.session.add(current_data)
+        Current.query.filter_by(site_id=site.id).update(data)
     db.session.commit()
 
 
@@ -53,4 +50,3 @@ def create_db():
         current_data = Current(site=site, **empty)
         db.session.add(current_data)
     db.session.commit()
-
