@@ -8,26 +8,24 @@ parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2':
               'pm25': 'PM2.5 particles, µg/m-3', 'pm10': 'PM10 particles, µg/m-3'}
 
 
-@hourly_data.route('/recent/all')
+@hourly_data.route('/recent/all-sites')
 def all_recent_data():
     all_data = {}
     site_names = {i[1]: i[0] for i in site_codes.items()}
-    def site_dict(code):
-        site_name = site_names.get(code)
-        d = {}
-        d['info'] = get_info(site_name)
-        d['latest_data'] = 'assign to a dict'
-        return d
-        # {'site_code': {'info': 'assign to a dict', 'latest_data': 'assign to a dict'}}
+    def get_site_data(site_code):
+        data = Current.query.join(Site).filter(Site.site_code == site_code).first()
+        return {'o3': data.o3, 'no2': data.no2, 'so2': data.so2, 'pm25': data.pm25, 'pm10': data.pm10, 'time':data.time}
+    def make_dict(site_code):
+        site_name = site_names.get(site_code)
+        site_dict = {}
+        site_dict['info'] = get_info(site_name)
+        site_dict['latest_data'] = get_site_data(site_code)
+        return site_dict
     codes = [site_codes.get(b) for b in site_list]
     for a in codes:
-        all_data[a] = site_dict(a)
+        all_data[a] = make_dict(a)
     return jsonify(all_data)
-    if True:
-        pass
-    else:
-        return jsonify({'message': 'no data'})
-   
+    #catch exceptions e.g. no site name
 
 
 @hourly_data.route('/<pollutant>/<name>/')
