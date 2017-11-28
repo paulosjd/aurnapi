@@ -1,5 +1,6 @@
 from flask import jsonify, Blueprint
-from app.models import Data, Site
+from app.models import Data, Site, Current
+from app.data.site_info import site_codes, get_info, site_list
 
 
 hourly_data = Blueprint('hourly', __name__, url_prefix='/data')
@@ -11,15 +12,15 @@ parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2':
 @hourly_data.route('/recent/all-sites')
 def all_recent_data():
     all_data = {}
-    site_names = {i[1]: i[0] for i in site_codes.items()}
-    def get_site_data(site_code):
-        data = Current.query.join(Site).filter(Site.site_code == site_code).first()
-        return {'o3': data.o3, 'no2': data.no2, 'so2': data.so2, 'pm25': data.pm25, 'pm10': data.pm10, 'time':data.time}
+    def get_current(site_code):
+        current = Current.query.join(Site).filter(Site.site_code == site_code).first()
+        return {'o3': current.o3, 'no2': current.no2, 'so2': current.so2, 'pm25': current.pm25, 'pm10': current.pm10}
     def make_dict(site_code):
+        site_names = {i[1]: i[0] for i in site_codes.items()}
         site_name = site_names.get(site_code)
         site_dict = {}
         site_dict['info'] = get_info(site_name)
-        site_dict['latest_data'] = get_site_data(site_code)
+        site_dict['latest_data'] = get_current(site_code)
         return site_dict
     codes = [site_codes.get(b) for b in site_list]
     for a in codes:
