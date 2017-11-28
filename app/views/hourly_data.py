@@ -19,7 +19,9 @@ def all_recent_data():
         site_names = {i[1]: i[0] for i in site_codes.items()}
         site_name = site_names.get(site_code)
         site_dict = {}
-        site_dict['info'] = get_info(site_name)
+        site_info = get_info(site_name)
+        del site_info['site_code']
+        site_dict['info'] = site_info
         site_dict['latest_data'] = get_current(site_code)
         return site_dict
     codes = [site_codes.get(b) for b in site_list]
