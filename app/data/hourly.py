@@ -1,7 +1,7 @@
-from app.models import db, Data, Site
+from app.models import db, Data, Site, Current
 from .site_info import site_list, get_info
 from bs4 import BeautifulSoup
-from datetime import datetime, timedelta
+from datetime import datetime
 import requests
 import pytz
 
@@ -19,7 +19,7 @@ def hourly_data(soup, site):
 
 
 def validate_data(data_dict):
-    loc_dt = pytz.timezone('Europe/London').localize(datetime.now()) - timedelta(hours=1)
+    loc_dt = pytz.timezone('Europe/London').localize(datetime.now())
     hourly_dt = datetime.strftime(loc_dt.replace(microsecond=0, second=0, minute=0), "%d/%m/%Y %H:%M")
     if data_dict['time'] != hourly_dt:
         na_values = ['n/a'] * 5 + [hourly_dt]
@@ -36,12 +36,17 @@ def update_db():
         data = validate_data(hourly_data(soup, site.name))
         site_data = Data(owner=site, **data)
         db.session.add(site_data)
+        Current.query.filter_by(site_id=site.id).update(data)
     db.session.commit()
 
 
 def create_db():
     db.create_all()
+    empty = {'o3': '', 'no2': '', 'so2': '', 'pm25': '', 'pm10': '', 'time': ''}
     for site in site_list:
         site_info = Site(**get_info(site))
         db.session.add(site_info)
+    for site in Site.query.all():
+        current_data = Current(site=site, **empty)
+        db.session.add(current_data)
     db.session.commit()
