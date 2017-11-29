@@ -56,22 +56,6 @@ def hourly_data_2(pollutant, name, start):
         return jsonify({'message': 'no data'})
 
 
-@hourly_data.route('<pollutant>/<name>/<start>/<end>')
-def hourly_data_3(pollutant, name, start, end):
-    start = reversed(start.split('-'))
-    end = reversed(end.split('-'))
-    try:
-        start = '{}/{}/{} 00:00:00'.format(*start)
-        end = '{}/{}/{} 00:00:00'.format(*end)
-    except IndexError:
-        return jsonify({'message': 'no data'})
-    queryset = Data.query.join(Site).filter(Site.site_code == name.upper(), Data.time >= start, Data.time <= end)
-    if hasattr(queryset.first(), pollutant.lower()):
-        return jsonify({'site': name.upper(), 'parameter': parameters.get(pollutant.lower()),
-                        'data': [{'time': a.time, 'value': getattr(a, pollutant.lower(), None)} for a in queryset]})
-    else:
-        return jsonify({'message': 'no data'})
-
 
 @hourly_data.route('/pollutants')
 def pollutants():
