@@ -20,6 +20,9 @@ def make_site_dict(site_code, current_data_dict):
     return site_dict
 
 
+# filter all-sites by either     site_code = db.Column(db.String(10), unique=True)
+                        # or         region = db.Column(db.String(100))
+
 @current_data.route('/all-sites')
 def all_recent_data():
     all_data = {}
