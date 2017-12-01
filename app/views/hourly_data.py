@@ -17,7 +17,7 @@ def hourly_data_1(pollutant, name):
     else:
         return jsonify({'message': 'no data'})
 
-
+#To do: change start date to number of previous days from current day, using query.order-by_Data.id.desc()).limit(x))
 @hourly_data.route('/<pollutant>/<name>/<start>/')
 def hourly_data_2(pollutant, name, start):
     date = reversed(start.split('-'))
