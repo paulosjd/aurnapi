@@ -32,4 +32,4 @@ def all_recent_data():
     return jsonify(all_data)
     #catch exceptions e.g. no site name
 
-
+# create as above but filter by region/type
