@@ -1,6 +1,6 @@
 from flask import jsonify, Blueprint
 from app.models import Data, Site
-
+from datetime import datetime
 
 hourly_data = Blueprint('hourly_data', __name__, url_prefix='/data')
 
@@ -17,21 +17,15 @@ def hourly_data_1(pollutant, name):
     else:
         return jsonify({'message': 'no data'})
 
-#To do: change start date to number of previous days from current day, using query.order-by_Data.id.desc()).limit(x))
-@hourly_data.route('/<pollutant>/<name>/<start>/')
-def hourly_data_2(pollutant, name, start):
-    date = reversed(start.split('-'))
-    try:
-        start = '{}/{}/{} 00:00:00'.format(*date)
-    except IndexError:
-        return jsonify({'message': 'no data'})
-    queryset = Data.query.join(Site).filter(Site.site_code == name.upper(), Data.time >= start)
+
+@hourly_data.route('/<pollutant>/<name>/<days>')
+def hourly_data_2(pollutant, name, days):
+    queryset = Data.query.join(Site).filter(Site.site_code == name.upper()).order_by(Data.id.desc()).limit(days)
     if hasattr(queryset.first(), pollutant.lower()):
         return jsonify({'site': name.upper(), 'parameter': parameters.get(pollutant.lower()),
                         'data': [{'time': a.time, 'value': getattr(a, pollutant.lower(), None)} for a in queryset]})
     else:
         return jsonify({'message': 'no data'})
-
 
 
 @hourly_data.route('/pollutants')

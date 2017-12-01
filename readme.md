@@ -35,24 +35,31 @@ API endpoints
 -------------
 
 Endpoints are relative to the base URL: http://localhost:5000
+URLs are not case-sensitive
 
 
 **/site-list**
 
-a list of names and site codes for all 123 monitoring sites 
+'site code' labels used in api endpoints with the associated site name for each monitoring site
 
 
 **/data/pollutants**
 
-a list of air quality parameters for which data is available, the units they are measured in, and their ‘url labels’ required for accessing the following the endpoints
-
+'pollutant' labels used in api endpoints with full names and units they are measured in
 **/data/{pollutant}/{site code}**
 
-a list of hourly measurements and associated timepoints for a specified pollutant and monitoring site, e.g. /data/pm10/abd
+hourly measurements and associated timepoints for a specified pollutant and monitoring site, e.g. /data/pm10/abd
 
 
 **/data/{pollutant}/{site code}/{start date}**
-data filtered according to an optional start and end date (in format e.g. 2015-10-01)
+**/data/{pollutant}/{site code}/{start date}/{end date}**
+
+data filtered according to an optional start date (in format e.g. 2015-10-01)
+
+
+**/available-data/{pollutant}/{site code}**
+
+the starting date and number of available data points for a specified pollutant and monitoring site
 
 
 **/site-regions**
