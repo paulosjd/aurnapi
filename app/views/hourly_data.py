@@ -8,15 +8,6 @@ parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2':
               'pm25': 'PM2.5 particles, µg/m-3', 'pm10': 'PM10 particles, µg/m-3'}
 
 
-def try_parsing_date(text):
-    for fmt in ('%d/%m/%Y %H:%M:%S', '%d/%m/%Y %H:%M'):
-        try:
-            return datetime.strptime(text, fmt)
-        except ValueError:
-            pass
-    raise ValueError('no valid date format found')
-
-
 @hourly_data.route('/<pollutant>/<name>/')
 def hourly_data_1(pollutant, name):
     queryset = Data.query.join(Site).filter(Site.site_code == name.upper())
@@ -27,20 +18,14 @@ def hourly_data_1(pollutant, name):
         return jsonify({'message': 'no data'})
 
 
-@hourly_data.route('/<pollutant>/<name>/<start>/')
-def hourly_data_2(pollutant, name, start):
-    date = reversed(start.split('-'))
-    try:
-        start = '{}/{}/{} 00:00:00'.format(*date)
-    except IndexError:
-        return jsonify({'message': 'no data'})
-    queryset = Data.query.join(Site).filter(Site.site_code == name.upper(), Data.time >= start)
+@hourly_data.route('/<pollutant>/<name>/<days>')
+def hourly_data_2(pollutant, name, days):
+    queryset = Data.query.join(Site).filter(Site.site_code == name.upper()).order_by(Data.id.desc()).limit(days)
     if hasattr(queryset.first(), pollutant.lower()):
         return jsonify({'site': name.upper(), 'parameter': parameters.get(pollutant.lower()),
                         'data': [{'time': a.time, 'value': getattr(a, pollutant.lower(), None)} for a in queryset]})
     else:
         return jsonify({'message': 'no data'})
-
 
 
 @hourly_data.route('/pollutants')
