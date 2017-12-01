@@ -10,25 +10,6 @@ def site_list():
     return jsonify({a.name: a.site_code for a in Site.query.all()})
 
 
-@sites_info.route('/available-data/<pollutant>/<site_code>')
-def available_data(pollutant, site_code):
-    qs = Site.query.join(Data).filter(Site.site_code == site_code.upper()).first()
-    times = []
-    if qs:
-        for a in qs.data:
-            if hasattr(a, pollutant.lower()):
-                try:
-                    if int(getattr(a, pollutant.lower())):
-                        times.append(a.time)
-                except ValueError:
-                    return jsonify(None)
-                return jsonify([str(len(times)), times[0], times[-1]])
-            else:
-                return jsonify(None)
-    else:
-        return jsonify(None)
-
-
 @sites_info.route('/site-regions')
 @sites_info.route('/site-regions/<region>')
 def site_regions(region=None):
