@@ -52,14 +52,7 @@ a list of hourly measurements and associated timepoints for a specified pollutan
 
 
 **/data/{pollutant}/{site code}/{start date}**
-**/data/{pollutant}/{site code}/{start date}/{end date}**
-
 data filtered according to an optional start and end date (in format e.g. 2015-10-01)
-
-
-**/available-data/{pollutant}/{site code}**
-
-the starting date and number of available data points for a specified pollutant and monitoring site
 
 
 **/site-regions**
