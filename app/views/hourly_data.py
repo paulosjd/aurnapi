@@ -11,7 +11,7 @@ parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2':
 
 @hourly_data.route('/<name>/<days>/')
 def hourly_data_1(name, days):
-    qs = Data.query.join(Site).filter(Site.site_code == name.upper()).order_by(Data.id.desc()).limit(days * 24)
+    qs = Data.query.join(Site).filter(Site.site_code == name.upper()).order_by(Data.id.desc()).limit(days*24)
     if qs:
         return {'ozone': qs.o3, 'no2': qs.no2, 'so2': qs.so2, 'pm25': qs.pm25, 'pm10': qs.pm10}
     else:
@@ -20,7 +20,7 @@ def hourly_data_1(name, days):
 
 @hourly_data.route('/<pollutant>/<name>/<days>')
 def hourly_data_2(pollutant, name, days):
-    queryset = Data.query.join(Site).filter(Site.site_code == name.upper()).order_by(Data.id.desc()).limit(days)
+    queryset = Data.query.join(Site).filter(Site.site_code == name.upper()).order_by(Data.id.desc()).limit(days*24)
     if hasattr(queryset.first(), pollutant.lower()):
         return jsonify({'site': name.upper(), 'parameter': parameters.get(pollutant.lower()),
                         'data': [{'time': a.time, 'value': getattr(a, pollutant.lower(), None)} for a in queryset]})
@@ -30,7 +30,7 @@ def hourly_data_2(pollutant, name, days):
 
 @hourly_data.route('/<pollutant>/<name>/<days>')
 def hourly_data_2(pollutant, name, days):
-    queryset = Data.query.join(Site).filter(Site.site_code == name.upper()).order_by(Data.id.desc()).limit(days)
+    queryset = Data.query.join(Site).filter(Site.site_code == name.upper()).order_by(Data.id.desc()).limit(days*24)
     if hasattr(queryset.first(), pollutant.lower()):
         return jsonify({'site': name.upper(), 'parameter': parameters.get(pollutant.lower()),
                         'data': [{'time': a.time, 'value': getattr(a, pollutant.lower(), None)} for a in queryset]})
