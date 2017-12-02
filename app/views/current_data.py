@@ -1,6 +1,6 @@
 from flask import jsonify, Blueprint
 from app.models import Site, Current
-from app.data.site_info import site_codes, get_info, site_list
+from app.data.site_info import site_codes, get_info, site_list, site_names
 
 
 current_data = Blueprint('current_data', __name__, url_prefix='/current-data')
@@ -10,7 +10,6 @@ parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2':
 
 
 def make_site_dict(site_code, current_data_dict):
-    site_names = {i[1]: i[0] for i in site_codes.items()}
     site_name = site_names.get(site_code)
     site_dict = {}
     site_info = get_info(site_name)

@@ -189,6 +189,8 @@ site_codes = {'Swansea Roadside': 'SWA1', 'Bath Roadside': 'BATH', 'London Harin
               'Sheffield Barnsley Road': 'SHBR', 'Glasgow Great Western Road': 'GGWR', 'Ladybower': 'LB',
               'Cardiff Centre': 'CARD'}
 
+site_names = {i[1]: i[0] for i in site_codes.items()}
+
 site_list = [
     'Aberdeen',
     'Aberdeen Union Street Roadside',
