@@ -22,6 +22,17 @@ def hourly_data_new1(site_code, days):
     else:
         return jsonify({'message': 'no data'})
 
+@hourly_data.route('/<site_code>/<days>')
+def hourly_data_new1(site_code, days):
+    qs = Data.query.join(Site).filter(Site.site_code == site_code.upper()).order_by(Data.id.desc()).limit(days).all()
+    if qs:
+        data_keys = ['o3', 'no2', 'so2', 'pm10', 'pm25']
+        data_list = [{'time': a.time, 'values': {b: getattr(a, b) for a in qs for b in data_keys}} for a in qs]
+        all_data = {site_code.upper(): make_site_dict(site_code.upper(), data_list)}
+        return jsonify(all_data)
+    else:
+        return jsonify({'message': 'no data'})
+
 
 @hourly_data.route('/<name>/<pollutant>/<days>')
 def hourly_data_2(name, pollutant, days):
@@ -31,8 +42,3 @@ def hourly_data_2(name, pollutant, days):
                         'data': [{'time': a.time, 'value': getattr(a, pollutant.lower(), None)} for a in queryset]})
     else:
         return jsonify({'message': 'no data'})
-
-
-@hourly_data.route('/pollutants')
-def pollutants():
-    return jsonify({b: a for a, b in parameters.items()})
