@@ -16,7 +16,9 @@ def hourly_data_new1(site_code, days):
     if qs:
 
         times = [a.time for a in qs]
-        data_dict = {a.time: {'no2': a.no2} for a in qs}
+        data_keys = ['time', 'o3', 'no2', 'so2', 'pm10', 'pm25']
+        data_dict = {b: getattr(a, b) for a in qs for b in data_keys}
+        #data_dict = {'time': a.time, 'no2': a.no2, 'pm10': a.pm10 for a in qs}
         aq_data = {a: {} for a in times}
         for a in times:
             aq_data[a] = {}
