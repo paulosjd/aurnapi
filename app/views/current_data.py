@@ -9,13 +9,13 @@ parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2':
               'pm25': 'PM2.5 particles, µg/m-3', 'pm10': 'PM10 particles, µg/m-3'}
 
 
-def make_site_dict(site_code, current_data_dict):
+def make_site_dict(site_code, aq_values):
     site_name = site_names.get(site_code)
     site_dict = {}
     site_info = get_info(site_name)
     del site_info['site_code']
     site_dict['info'] = site_info
-    site_dict['latest_data'] = current_data_dict
+    site_dict['latest_data'] = aq_values
     return site_dict
 
 
