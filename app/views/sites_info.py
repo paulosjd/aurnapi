@@ -1,13 +1,23 @@
 from flask import jsonify, Blueprint
-from app.models import Site, Data
+from app.models import Site
+from app.data.site_info import get_info
 
 
-sites_info = Blueprint('Site', __name__)
+sites_info = Blueprint('Site', __name__, url_prefix='/info')
 
 
 @sites_info.route('/site-list/')
 def site_list():
     return jsonify({a.name: a.site_code for a in Site.query.all()})
+
+
+# to do: make possible to filter this list by below (e.g. site regions etc.) - then remove the below endpoints if redundant
+@sites_info.route('/all-sites/')
+def all_sites_info():
+    d = {a.name: get_info(a.name) for a in Site.query.all()}
+    for k, v in d.items():
+        del v['name']
+    return jsonify(d)
 
 
 @sites_info.route('/site-regions')
@@ -40,18 +50,3 @@ def site_row(site_code):
         return jsonify(None)
 
 
-@sites_info.route('/site-geo')
-def site_geo():
-    return jsonify({a.name: a.lat + ", " + a.long for a in Site.query.all()})
-
-
-@sites_info.route('/site-url')
-def site_url():
-    site_urls = Site.query.all()
-    return jsonify({a.name: a.url for a in site_urls})
-
-
-@sites_info.route('/site-maps')
-def site_maps():
-    map_urls = Site.query.all()
-    return jsonify({a.name: a.map_url for a in map_urls})
