@@ -19,23 +19,17 @@ def all_sites_info():
     return jsonify(info)
 
 
-@sites_info.route('/<region>')
-def info_by_region():
-    info = {a.name: get_info(a.name) for a in Site.query.all()}
-    if info:
-        for k, v in info.items():
+@sites_info.route('/<region_or_environ>')
+def sites_info_filter(region_or_environ):
+    region_info = {a.name: get_info(a.name) for a in Site.query.filter_by(region=region_or_environ)}
+    environ_info = {a.name: get_info(a.name) for a in Site.query.filter_by(environ=region_or_environ)}
+    if region_info:
+        for k, v in region_info.items():
             del v['name']
-        return jsonify(info)
-    else:
-        return jsonify({'message': 'no data'})
-
-
-@sites_info.route('/<environ>')
-def info_by_environment_type():
-    info = {a.name: get_info(a.name) for a in Site.query.all()}
-    if info:
-        for k, v in info.items():
+        return jsonify(region_info)
+    elif environ_info:
+        for k, v in environ_info.items():
             del v['name']
-        return jsonify(info)
+        return jsonify(environ_info)
     else:
         return jsonify({'message': 'no data'})
