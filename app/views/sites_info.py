@@ -1,8 +1,9 @@
 from flask import jsonify, Blueprint
-from app.models import Site, Data
+from app.models import Site
+from app.data.site_info import get_info
 
 
-sites_info = Blueprint('Site', __name__)
+sites_info = Blueprint('Site', __name__, url_prefix='/info')
 
 
 @sites_info.route('/site-list/')
@@ -10,48 +11,25 @@ def site_list():
     return jsonify({a.name: a.site_code for a in Site.query.all()})
 
 
-@sites_info.route('/site-regions')
-@sites_info.route('/site-regions/<region>')
-def site_regions(region=None):
-    if region:
-        return jsonify({a.name: a.site_code for a in Site.query.filter_by(region=region).all()})
+@sites_info.route('/all-sites')
+def all_sites_info():
+    info = {a.name: get_info(a.name) for a in Site.query.all()}
+    for k, v in info.items():
+        del v['name']
+    return jsonify(info)
+
+
+@sites_info.route('/<region_or_environ>')
+def sites_info_filter(region_or_environ):
+    region_info = {a.name: get_info(a.name) for a in Site.query.filter_by(region=region_or_environ)}
+    environ_info = {a.name: get_info(a.name) for a in Site.query.filter_by(environ=region_or_environ)}
+    if region_info:
+        for k, v in region_info.items():
+            del v['name']
+        return jsonify(region_info)
+    elif environ_info:
+        for k, v in environ_info.items():
+            del v['name']
+        return jsonify(environ_info)
     else:
-        return jsonify(list(set([a.region for a in Site.query.all()])))
-
-
-@sites_info.route('/site-environments')
-@sites_info.route('/site-environments/<environ>')
-def site_environs(environ=None):
-    if environ:
-        return jsonify({a.name: a.site_code for a in Site.query.filter_by(environ=environ).all()})
-    else:
-        return jsonify(list(set([a.environ for a in Site.query.all()])))
-
-
-@sites_info.route('/site-info/<site_code>')
-def site_row(site_code):
-    site = Site.query.filter_by(site_code=site_code.upper()).first()
-    try:
-        site_dict = {'site name': site.name, 'region': site.region, 'site environment': site.environ,
-                 'site url': site.url,
-                 'map url': site.map_url, 'latitude': site.lat, 'longitude': site.long}
-        return jsonify(site_dict)
-    except AttributeError:
-        return jsonify(None)
-
-
-@sites_info.route('/site-geo')
-def site_geo():
-    return jsonify({a.name: a.lat + ", " + a.long for a in Site.query.all()})
-
-
-@sites_info.route('/site-url')
-def site_url():
-    site_urls = Site.query.all()
-    return jsonify({a.name: a.url for a in site_urls})
-
-
-@sites_info.route('/site-maps')
-def site_maps():
-    map_urls = Site.query.all()
-    return jsonify({a.name: a.map_url for a in map_urls})
+        return jsonify({'message': 'no data'})
