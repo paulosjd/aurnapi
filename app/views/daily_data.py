@@ -3,13 +3,13 @@ from app.models import Data, Site
 from app.views.current_data import make_site_dict
 
 
-hourly_data = Blueprint('hourly_data', __name__, url_prefix='/data')
+daily_data = Blueprint('daily-data', __name__, url_prefix='/daily-means')
 
 parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2': 'sulfur dioxide, µg/m-3',
               'pm25': 'PM2.5 particles, µg/m-3', 'pm10': 'PM10 particles, µg/m-3'}
 
 
-@hourly_data.route('/<site_code>/<days>')
+@daily_data.route('/<site_code>/<days>')
 def site_aq_values(site_code, days):
     qs = Data.query.join(Site).filter(Site.site_code == site_code.upper()).order_by(Data.id.desc()).limit(days).all()
     if qs:
@@ -21,7 +21,7 @@ def site_aq_values(site_code, days):
         return jsonify({'message': 'no data'})
 
 
-@hourly_data.route('/<sc1>/<sc2>/<days>')
+@daily_data.route('/<sc1>/<sc2>/<days>')
 def two_sites_aq_values(sc1, sc2, days):
     qs1 = Data.query.join(Site).filter(Site.site_code == sc1.upper()).order_by(Data.id.desc()).limit(days).all()
     qs2 = Data.query.join(Site).filter(Site.site_code == sc2.upper()).order_by(Data.id.desc()).limit(days).all()
@@ -36,8 +36,8 @@ def two_sites_aq_values(sc1, sc2, days):
         return jsonify({'message': 'no data'})
 
 
-@hourly_data.route('/<name>/<pollutant>/<days>')
-def hourly_data_2(name, pollutant, days):
+@daily_data.route('/<name>/<pollutant>/<days>')
+def daily_data_2(name, pollutant, days):
     queryset = Data.query.join(Site).filter(Site.site_code == name.upper()).order_by(Data.id.desc()).limit(days*24)
     if hasattr(queryset.first(), pollutant.lower()):
         return jsonify({'site': name.upper(), 'parameter': parameters.get(pollutant.lower()),
