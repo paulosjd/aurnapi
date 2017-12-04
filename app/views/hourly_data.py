@@ -9,8 +9,6 @@ parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2':
               'pm25': 'PM2.5 particles, µg/m-3', 'pm10': 'PM10 particles, µg/m-3'}
 
 
-# to do: @hourly_data.route('/<site_code1>/<site_code2>/<days>')
-
 @hourly_data.route('/<site_code>/<days>')
 def site_aq_values(site_code, days):
     qs = Data.query.join(Site).filter(Site.site_code == site_code.upper()).order_by(Data.id.desc()).limit(days).all()
