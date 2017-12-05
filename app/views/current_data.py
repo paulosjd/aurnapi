@@ -26,4 +26,3 @@ def all_recent_data():
     for a in site_codes_list:
         all_data[a] = make_site_dict(a, get_current(a))
     return jsonify(all_data)
-
