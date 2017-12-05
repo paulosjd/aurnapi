@@ -31,7 +31,7 @@ data for a specified number of previous days, monitoring site and pollutant labe
 
 **/current-data/all-sites**
 
-
+latest air quality data along with site information for each monitoring site
 
 **/site-info/{site code}**
 
