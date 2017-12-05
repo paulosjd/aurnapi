@@ -1,102 +1,41 @@
-An API for accessing air quality data, created for www.air-aware.com. The project was built using the Flask framework for Python, along with the flask-SQLAlchemy extension. 
+A REST API created to allow access to recent and historical air quality data via the website www.air-aware.com
 
-Modules in app/data create and populate a database using data scraped from a webpage. This page is updated every hour with the latest air quality measurements for over 120 sites in the UK's automatic monitoring network.
-
-The API gives access to the database. It follows REST design principles, providing data in JSON format through endpoints detailed as follows.
-
-
-      
-After cloning the repository, run the following commands from the project's root directory:
-
-    pip install --upgrade pip
-
-    pip install -r requirements.txt
-    
-
-Create and populate database
-----------------------------
-First, the Flask application factory needs to be imported and the application context pushed by running:
-
-    from app import create_app()
-
-    create_app().app_context().push()
-
-Then, through Python, create and populate a database using the create_db() and update_db() functions in app/data/hourly.py
-
-    >>> from app.data.hourly import create_db, update_db
-    >>> create_db()
-    >>> update_db()
-
-
-Configure and run the API
---------------------------
-Ensure correct settings within app/config.py and run the following command in the project directory:
-
-    python run.py
+Data on the website server is obtained by periodically scraping a government body webpage which updates every hour with the latest air quality measurements from sites in the UK's automatic monitoring network.
 
 
 API endpoints
 -------------
 
-Endpoints are relative to the base URL: http://localhost:5000
+Endpoints are relative to the base URL: http://localhost:port and provide data in JSON format.
 URLs are not case-sensitive
 
 
 **/site-list**
 
-'site code' labels used in api endpoints with the associated site name for each monitoring site
+'site code' and name of each monitoring site
+
+**/data/{site code}/{previous days}**
+
+data for a specified number of previous days and monitoring site
 
 
 **/data/pollutants**
 
-'pollutant' labels used in api endpoints with full names and units they are measured in
-**/data/{pollutant}/{site code}**
-
-hourly measurements and associated timepoints for a specified pollutant and monitoring site, e.g. /data/pm10/abd
+'pollutant' labels with full names and units of measurement
 
 
-**/data/{pollutant}/{site code}/{start date}**
-**/data/{pollutant}/{site code}/{start date}/{end date}**
+**/data/{site code}/{pollutant}/{previous days}**
 
-data filtered according to an optional start date (in format e.g. 2015-10-01)
-
-
-**/available-data/{pollutant}/{site code}**
-
-the starting date and number of available data points for a specified pollutant and monitoring site
+data for a specified number of previous days, monitoring site and pollutant label
 
 
-**/site-regions**
+**/current-data/all-sites**
 
-a list of government regions within the AURN monitoring network
-
-
-**/site-regions/{region}**
-
-a list of names and site codes for all monitoring sites within a region, specified by writing as listed in /site-regions (e.g. /site-regions/greater-london)
-
-
-**/site-environments/{environment-type}**
-
-a list of names and site codes for all monitoring sites for an environment type, specified by writing as listed in /site-regions (e.g. /site-environments/urban-traffic)
-
-
-**/site-geo**
-
-geographical coordinates of all sites within the AURN network
-
-
-**/site-url**
-
-official webpage URL providing individual site information for all sites
-
-
-**/site-maps**
-
-google maps URLs for all sites 
 
 
 **/site-info/{site code}**
 
 the name, region, environment type, official webpage URL, google maps URL, latitude and longitude for a specified site
+
+
 

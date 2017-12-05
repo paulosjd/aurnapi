@@ -5,9 +5,6 @@ from app.data.site_info import site_codes, get_info, site_list, site_names
 
 current_data = Blueprint('current_data', __name__, url_prefix='/current-data')
 
-parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2': 'sulfur dioxide, µg/m-3',
-              'pm25': 'PM2.5 particles, µg/m-3', 'pm10': 'PM10 particles, µg/m-3'}
-
 
 def make_site_dict(site_code, aq_values):
     site_name = site_names.get(site_code)
@@ -29,6 +26,3 @@ def all_recent_data():
     for a in site_codes_list:
         all_data[a] = make_site_dict(a, get_current(a))
     return jsonify(all_data)
-    #catch exceptions e.g. no site name
-
-# create as above but filter by region/type
