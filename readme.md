@@ -38,4 +38,17 @@ latest air quality data along with site information for each monitoring site
 the name, region, environment type, official webpage URL, google maps URL, latitude and longitude for a specified site
 
 
+Install
+-------
+
+Assuming Python 3.x and pip is installed, clone the repository and run the following commands from the project's root directory:
+
+    pip install --upgrade pip
+
+    pip install -r requirements.txt
+
+
+
+
+
 
