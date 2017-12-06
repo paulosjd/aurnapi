@@ -48,6 +48,22 @@ Assuming Python 3.x and pip is installed, clone the repository and run the follo
     pip install -r requirements.txt
 
 
+Create and populate database
+----------------------------
+Before running commands in a Python interpreter, the Flask application factory needs to be imported and the application context pushed by running:
+
+    from app import create_app()
+
+    create_app().app_context().push()
+
+Create and populate a database using the create_db() and update_db() functions within app/data/hourly.py
+
+
+Configure and run the API
+--------------------------
+Once a populated database has been obtained and correct settings within app.config.py have been specified, run the following command within the project directory to make database queries:
+
+    python run.py runserver
 
 
 
