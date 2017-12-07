@@ -41,7 +41,7 @@ latest air quality data along with site information for each monitoring site
 
 **/site-info/{site code}**
 
-the name, region, environment type, govt. body webpage URL providing additional site information, google maps URL, latitude and longitude for a specified site
+the site name, region, environment type, latitude, longitude and official webpage URL for additional site information
 
 
 Install
