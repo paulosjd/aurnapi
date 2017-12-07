@@ -20,6 +20,11 @@ URLs are not case-sensitive
 data for a specified number of previous days and monitoring site
 
 
+**/data/{site code 1}/{site code 2}/{days}**
+
+data from two monitoring sites for a number of previous days
+
+
 **/data/pollutants**
 
 'pollutant' labels with full names and units of measurement
