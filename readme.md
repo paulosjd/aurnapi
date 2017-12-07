@@ -1,7 +1,8 @@
 A REST API created to allow access to recent and historical air quality data via the website www.air-aware.com
 
-Data on the website server is obtained by periodically scraping a government body webpage which updates every hour with the latest air quality measurements from sites in the UK's automatic monitoring network.
+Data on the website server is obtained by periodically scraping a webpage which updates every hour with current air quality measurements from sites in the UK's automatic monitoring network.
 
+# To do: mention SQLAlchemy as the ORM, how models linked via FK and how can access .. by e.g Site.Data.na....
 
 API endpoints
 -------------
@@ -14,7 +15,7 @@ URLs are not case-sensitive
 
 'site code' and name of each monitoring site
 
-**/data/{site code}/{previous days}**
+**/data/{site code}/{days}**
 
 data for a specified number of previous days and monitoring site
 
@@ -24,7 +25,7 @@ data for a specified number of previous days and monitoring site
 'pollutant' labels with full names and units of measurement
 
 
-**/data/{site code}/{pollutant}/{previous days}**
+**/data/{site code}/{pollutant}/{days}**
 
 data for a specified number of previous days, monitoring site and pollutant label
 
@@ -35,7 +36,7 @@ latest air quality data along with site information for each monitoring site
 
 **/site-info/{site code}**
 
-the name, region, environment type, official webpage URL, google maps URL, latitude and longitude for a specified site
+the name, region, environment type, govt. body webpage URL providing additional site information, google maps URL, latitude and longitude for a specified site
 
 
 Install
@@ -50,13 +51,22 @@ Assuming Python 3.x and pip is installed, clone the repository and run the follo
 
 Create and populate database
 ----------------------------
-Before running commands in a Python interpreter, the Flask application factory needs to be imported and the application context pushed by running:
+The Flask application factory needs to be imported and the application context pushed by running:
 
     from app import create_app()
 
     create_app().app_context().push()
 
-Create and populate a database using the create_db() and update_db() functions within app/data/hourly.py
+Create and populate a database using the create_db() and update_db() functions.
+
+    from app.data.hourly import create_db, update_db
+
+    create_db()
+
+    update_db()
+
+The create_db() function creates the table within a specified database. The 'sites' table will be prepopulated using values specified in app/data/site_info.py
+The update_db() function runs the webscraping script and inserts the air quality data in the 'data' table
 
 
 Configure and run the API
