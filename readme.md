@@ -2,7 +2,7 @@ A REST API created to allow access to recent and historical air quality data via
 
 Data on the website server is obtained by periodically scraping a webpage which updates every hour with current air quality measurements from sites in the UK's automatic monitoring network.
 
-# To do: mention SQLAlchemy as the ORM, how models linked via FK and how can access .. by e.g Site.Data.na....
+The project was built using the Python web micro-framework Flask, along with the extension Flask-SQLAlchemy as the ORM.
 
 API endpoints
 -------------
@@ -76,9 +76,9 @@ The update_db() function runs the webscraping script and inserts the air quality
 
 Configure and run the API
 --------------------------
-Once a populated database has been obtained and correct settings within app.config.py have been specified, run the following command within the project directory to make database queries:
+After ensuring correct settings within app/config, the populated database can be queried by running the following command in the project directory:
 
-    python run.py runserver
+    python run.py
 
 
 
