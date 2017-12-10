@@ -2,7 +2,7 @@ A REST API created to allow access to recent and historical air quality data via
 
 Data on the website server is obtained by periodically scraping a webpage which updates every hour with current air quality measurements from sites in the UK's automatic monitoring network.
 
-The project was built using the Python web micro-framework Flask, along with the extension Flask-SQLAlchemy as the ORM.
+The project was built using the Python web micro-framework Flask, along with the extension Flask-SQLAlchemy as the ORM. The files which serve the API endpoints through specified queries are contained within app/views.
 
 API endpoints
 -------------
