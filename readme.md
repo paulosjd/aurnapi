@@ -1,8 +1,8 @@
-A REST API created to allow access to recent and historical air quality data via the website www.air-aware.com
+A REST API created to allow access to air quality data via www.air-aware.com. This service provides a convenient means for obtaining historical data sets as well as for plotting recent data using JavaScript charting libraries, e.g. www.air-aware.com/charts.
 
-Data on the website server is obtained by periodically scraping a webpage which updates every hour with current air quality measurements from sites in the UK's automatic monitoring network.
+The file app/data/hourly.py populates a database by periodically scraping a webpage which updates every hour with current air quality measurements from sites in the UK's automatic monitoring network.
 
-The project was built using the Python web micro-framework Flask, along with the extension Flask-SQLAlchemy as the ORM. The files which serve the API endpoints through specified queries are contained within app/views.
+The project was built using the Python web micro-framework Flask, along with the extension Flask-SQLAlchemy as the ORM. The files which serve the API endpoints through database queries are contained within app/views.
 
 API endpoints
 -------------
