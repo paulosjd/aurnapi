@@ -1,14 +1,13 @@
-A REST API created to allow access to air quality data via www.air-aware.com. This service provides a convenient means for obtaining historical data sets as well as for plotting recent data using JavaScript charting libraries, e.g. www.air-aware.com/charts.
+A REST API created to serve as a convenient means for accessing air quality data. With Python, the requests library and a JavaScript charting library, time series graphs can easily be created to show recent levels and historical trends etc. Examples are found at: www.air-aware.com/charts.
 
-The file app/data/hourly.py populates a database by periodically scraping a webpage which updates every hour with current air quality measurements from sites in the UK's automatic monitoring network.
+The file app/data/hourly.py populates a database by scraping a government body webpage which shows the most recent hourly air quality measurements from sites in the UK's automatic monitoring network.
 
-The project was built using the Python web micro-framework Flask, along with the extension Flask-SQLAlchemy as the ORM. The files which serve the API endpoints through database queries are contained within app/views.
+The project was built using Flask web framework for Python along with Flask-SQLAlchemy as the ORM. The files which serve the API endpoints through database queries are contained within app/views.
 
 API endpoints
 -------------
 
-Endpoints are relative to the base URL: http://localhost:port and provide data in JSON format.
-URLs are not case-sensitive
+Endpoints provide data in JSON format and are not case-sensitive
 
 
 **/site-list**
@@ -46,6 +45,12 @@ the site name, region, environment type, latitude, longitude and official webpag
 
 Install
 -------
+
+Clone this repo to your local machine. In the top level directory, create a virtual environment:
+
+    $ virtualenv flask-aws
+    $ source flask-aws/bin/activate
+    -see example http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-flask.html
 
 Assuming Python 3.x and pip is installed, clone the repository and run the following commands from the project's root directory:
 
