@@ -63,16 +63,16 @@ Create a virtual environment named aurn-venv:
 
 Activate the virtual environment:
 
-    ~$ source ~/aurn-venv/bin/activate
-    (aurn-venv) ~$
+    $ source aurn-venv/bin/activate
+    (aurn-venv) $
 
 Use *pip* to install requirements:
 
-    (aurn-venv)~$ pip install requirements.txt
+    (aurn-venv) $ pip install requirements.txt
 
 Verify that packages have been installed:
 
-    (aurn-venv)~$ pip freeze
+    (aurn-venv) $ pip freeze
     Flask==0.12
     Flask_SQLAlchemy==2.1
     pytz==2017.2
