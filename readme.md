@@ -1,4 +1,4 @@
-A REST API created to serve as a convenient means for accessing air quality data. With Python, the requests library and a JavaScript charting library, time series graphs can easily be created to show recent levels and historical trends etc. Examples are found at: www.air-aware.com/charts.
+A REST API created to serve as a convenient means for accessing air quality data. With Python, the requests library and a JavaScript charting library, time series graphs can easily be created to show recent levels and historical trends etc.
 
 The file app/data/hourly.py populates a database by scraping a government body webpage which shows the most recent hourly air quality measurements from sites in the UK's automatic monitoring network.
 
@@ -43,44 +43,65 @@ latest air quality data along with site information for each monitoring site
 the site name, region, environment type, latitude, longitude and official webpage URL for additional site information
 
 
-Install
--------
+Getting Started
+---------------
+**Prerequisites**
 
-Clone this repo to your local machine. In the top level directory, create a virtual environment:
+Python 3.4
 
-    $ virtualenv flask-aws
-    $ source flask-aws/bin/activate
-    -see example http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-flask.html
+pip
 
-Assuming Python 3.x and pip is installed, clone the repository and run the following commands from the project's root directory:
+virtualenv
 
-    pip install --upgrade pip
+**1. Clone or copy repository**
 
-    pip install -r requirements.txt
+**2. Set up Virtual Environment**
 
+Create a virtual environment named aurn-venv:
 
-Create and populate database
-----------------------------
-The Flask application factory needs to be imported and the application context pushed by running:
+    $ virtualenv aurn-venv
 
-    from app import create_app()
+Activate the virtual environment:
 
-    create_app().app_context().push()
+    ~$ source ~/aurn-venv/bin/activate
+    (aurn-venv) ~$
+
+Use *pip* to install requirements:
+
+    (aurn-venv)~$ pip install requirements.txt
+
+Verify that packages have been installed:
+
+    (aurn-venv)~$ pip freeze
+    Flask==0.12
+    Flask_SQLAlchemy==2.1
+    pytz==2017.2
+    flask-migrate==2.1.1
+    requests==2.13.0
+    beautifulsoup4==4.6.0
+
+**3. Push Flask application context**
+
+Run the following commands in Python within the virtual environment:
+
+    >>> from app import create_app()
+
+    >>> create_app().app_context().push()
+
 
 Create and populate a database using the create_db() and update_db() functions.
 
-    from app.data.hourly import create_db, update_db
+    >>> from app.data.hourly import create_db, update_db
 
-    create_db()
+    >>> create_db()
 
-    update_db()
+    >>> update_db()
 
-The create_db() function creates the table within a specified database. The 'sites' table will be prepopulated using values specified in app/data/site_info.py
-The update_db() function runs the webscraping script and inserts the air quality data in the 'data' table
+The create_db() function creates the database schema. The update_db() function runs the webscraping script and inserts the air quality data in the 'data' table. This should be set up to run on an hourly basis; n.b. the webpage https://uk-air.defra.gov.uk/latest/currentlevels updates at around 40 minutes past the hour.
 
 
-Configure and run the API
---------------------------
+**4. Push Flask application context**
+
 After ensuring correct settings within app/config, the populated database can be queried by running the following command in the project directory:
 
     python run.py
