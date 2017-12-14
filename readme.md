@@ -1,13 +1,13 @@
-A REST API created to serve as a convenient means for accessing air quality data. With Python, the requests library and a JavaScript charting library, time series graphs can easily be created to show recent levels and historical trends etc.
+A REST API which serves hourly air quality data measurements from sites within the UK's automatic monitoring network (AURN).
 
-The file app/data/hourly.py populates a database by scraping a government body webpage which shows the most recent hourly air quality measurements from sites in the UK's automatic monitoring network.
+The Python micro-framework Flask and the Flask-SQLAlchemy extension are used to serve data in JSON format according to database queries made via HTTP requests.
 
 The project was built using Flask web framework for Python along with Flask-SQLAlchemy as the ORM. The files which serve the API endpoints through database queries are contained within app/views.
 
 API endpoints
 -------------
 
-Endpoints provide data in JSON format and are not case-sensitive
+Endpoints are relative to the base URL and are not case-sensitive
 
 
 **/site-list**
