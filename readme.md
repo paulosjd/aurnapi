@@ -97,14 +97,14 @@ Create and populate a database using the create_db() and update_db() functions.
 
     >>> update_db()
 
-The create_db() function creates the database schema. The update_db() function runs the webscraping script and inserts the air quality data in the 'data' table. This should be set up to run on an hourly basis; n.b. the webpage https://uk-air.defra.gov.uk/latest/currentlevels updates at around 40 minutes past the hour.
+The create_db() function creates the database schema. The update_db() function runs the webscraping script and inserts the air quality data in the 'data' table. This should be set up to run on an hourly basis; n.b. the webpage https://uk-air.defra.gov.uk/latest/currentlevels updates at 40 minutes past the hour.
 
 
-**4. Push Flask application context**
+**4. Configure and run the API**
 
-After ensuring correct settings within app/config, the populated database can be queried by running the following command in the project directory:
+After ensuring correct settings within app/config, the database can be queried through the API after running the server:
 
-    python run.py
+    $ python run.py
 
 
 
