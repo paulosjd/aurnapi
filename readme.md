@@ -3,45 +3,6 @@ A REST API created to serve air quality data from sites within the UK's automati
 The API was created for www.air-aware.com in order to serve JSON data in response to HTTP requests. It uses the Python framework Flask along with the Flask-SQLAlchemy extension. Hourly mean air pollution measurements since September 2017 are available through the website.
 
 
-API endpoints
--------------
-
-Endpoints are relative to the base URL and are not case-sensitive
-
-
-**/site-list**
-
-'site code' and name of each monitoring site
-
-**/data/{site code}/{days}**
-
-data for a specified number of previous days and monitoring site
-
-
-**/data/{site code 1}/{site code 2}/{days}**
-
-data from two monitoring sites for a number of previous days
-
-
-**/data/pollutants**
-
-'pollutant' labels with full names and units of measurement
-
-
-**/data/{site code}/{pollutant}/{days}**
-
-data for a specified number of previous days, monitoring site and pollutant label
-
-
-**/current-data/all-sites**
-
-latest air quality data along with site information for each monitoring site
-
-**/site-info/{site code}**
-
-the site name, region, environment type, latitude, longitude and official webpage URL for additional site information
-
-
 Getting Started
 ---------------
 **Prerequisites**
@@ -106,5 +67,40 @@ After ensuring correct settings within app/config, the database can be queried t
     $ python run.py
 
 
+API endpoints
+-------------
+
+Endpoints are relative to the base URL and are not case-sensitive
 
 
+**/site-list**
+
+'site code' and name of each monitoring site
+
+**/data/{site code}/{days}**
+
+data for a specified number of previous days and monitoring site
+
+
+**/data/{site code 1}/{site code 2}/{days}**
+
+data from two monitoring sites for a number of previous days
+
+
+**/data/pollutants**
+
+'pollutant' labels with full names and units of measurement
+
+
+**/data/{site code}/{pollutant}/{days}**
+
+data for a specified number of previous days, monitoring site and pollutant label
+
+
+**/current-data/all-sites**
+
+latest air quality data along with site information for each monitoring site
+
+**/site-info/{site code}**
+
+the site name, region, environment type, latitude, longitude and official webpage URL for additional site information
