@@ -7,11 +7,7 @@ Getting Started
 ---------------
 **Prerequisites**
 
-Python 3.4
-
-pip
-
-virtualenv
+Python 3.4, pip, virtualenv
 
 **1. Clone or copy repository**
 
