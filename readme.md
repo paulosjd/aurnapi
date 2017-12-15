@@ -1,4 +1,4 @@
-A REST API which serves hourly air quality data measurements from sites within the UK's automatic monitoring network (AURN).
+A REST API which serves hourly air quality data measurements from sites within the UK's automatic monitoring network.
 
 The Python micro-framework Flask and the Flask-SQLAlchemy extension are used to serve data in JSON format according to database queries made via HTTP requests.
 
