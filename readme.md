@@ -1,7 +1,6 @@
 A REST API which serves hourly air quality data measurements from sites within the UK's automatic monitoring network.
 
-The project uses the Python framework Flask with the Flask-SQLAlchemy extension to serve JSON data in response to HTTP requests.
-
+The project was created for the webiste www.air-aware.com and the Python framework Flask along with the Flask-SQLAlchemy extension are used to serve JSON data in response to HTTP requests.
 
 
 API endpoints
