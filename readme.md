@@ -73,7 +73,7 @@ API endpoints
 Endpoints are relative to the base URL and are not case-sensitive
 
 
-**/site-list**
+**info/site-list**
 
 'site code' and name of each monitoring site
 
@@ -101,6 +101,10 @@ data for a specified number of previous days, monitoring site and pollutant labe
 
 latest air quality data along with site information for each monitoring site
 
-**/site-info/{site code}**
+**/info/all-sites**
 
-the site name, region, environment type, latitude, longitude and official webpage URL for additional site information
+information for all monitoring sites: site name, region, environment type, latitude, longitude and official webpage URL for individual sites providing additional site information
+
+**/info/{region or environment type}**
+site information for sites filtered by either region or environment type (e.g. /info/south-east or /info/urban-traffic)
+

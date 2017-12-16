@@ -44,3 +44,7 @@ def hourly_data_2(name, pollutant, days):
                         'data': [{'time': a.time, 'value': getattr(a, pollutant.lower(), None)} for a in queryset]})
     else:
         return jsonify({'message': 'no data'})
+
+@hourly_data.route('/pollutants')
+def pollutants():
+    return jsonify(parameters)
