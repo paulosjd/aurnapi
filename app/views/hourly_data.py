@@ -1,7 +1,7 @@
 from flask import jsonify, Blueprint
 from app.models import Data, Site
 from app.views.current_data import make_site_dict
-from app.schemas import ma, data_schema, site_data_schema, basic_data_schema
+from app.schemas import ma, data_schema, basic_data_schema, nested_data_schema
 
 
 hourly_data = Blueprint('hourly_data', __name__, url_prefix='/data')
@@ -12,7 +12,7 @@ parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2':
 @hourly_data.route('/<site_code>/<days>')
 def site_aq_values(site_code, days):
     data = Data.query.join(Site).filter(Site.site_code == site_code.upper()).order_by(Data.id.desc()).limit(days).all()
-    return data_schema.jsonify(data)
+    return nested_data_schema.jsonify(data)
 
 
 """
