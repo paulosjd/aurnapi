@@ -18,6 +18,9 @@ class Site(db.Model):
     data = db.relationship('Data', backref='owner', lazy='dynamic')
     current = db.relationship('Current', backref='site', lazy='dynamic')
 
+    def __str__(self):
+        return self.site_code
+
 
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
