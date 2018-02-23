@@ -14,14 +14,6 @@ class BasicDataSchema(ma.ModelSchema):
 basic_schema = BasicDataSchema(many=True)
 
 
-class NestedDataSchema(ma.Schema):
-    owner = ma.String(dump_to='site name')
-    data = ma.Function(lambda x: {'ozone': x.o3, 'NO2': x.no2, 'SO2': x.so2, 'PM10': x.pm10, 'PM2.5': x.pm25,
-                                  'time': x.time})
-
-nested_schema = NestedDataSchema(many=True)
-
-
 class DataSchema(ma.Schema):
     #By default Schemas will unmarshal an input dictionary to an output dictionary whose keys are identical to the field names.
     owner = ma.String(dump_to='site code')
