@@ -1,19 +1,39 @@
 from flask import jsonify, Blueprint
 from app.models import Data, Site
 from app.views.current_data import make_site_dict
-from app.schemas import ma, data_schema, basic_data_schema, nested_data_schema
+from app.schemas import ma, data_schema, basic_schema, nested_schema, site_schema
 
 
 hourly_data = Blueprint('hourly_data', __name__, url_prefix='/data')
 
-parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2': 'sulfur dioxide, µg/m-3',
-              'pm25': 'PM2.5 particles, µg/m-3', 'pm10': 'PM10 particles, µg/m-3'}
+
 
 @hourly_data.route('/<site_code>/<days>')
-def site_aq_values(site_code, days):
+def aq_data(site_code, days):
     data = Data.query.join(Site).filter(Site.site_code == site_code.upper()).order_by(Data.id.desc()).limit(days).all()
-    return nested_data_schema.jsonify(data)
+    return data_schema.jsonify(data)
 
+
+@hourly_data.route('/site/<site_code>/<days>')
+def nest_aq_data(site_code, days):
+    data = Data.query.join(Site).filter(Site.site_code == site_code.upper()).order_by(Data.id.desc()).limit(days).all()
+    return jsonify({'site info': site_schema.dump(data[0].owner), 'aq data': data_schema.dump(data)})
+
+
+@hourly_data.route('/nested/<site_code>/<days>')
+def aq_data1(site_code, days):
+    data = Data.query.join(Site).filter(Site.site_code == site_code.upper()).order_by(Data.id.desc()).limit(days).all()
+    return nested_schema.jsonify(data)
+
+
+@hourly_data.route('/foo2/<site_code>/<days>')
+def aq_data2(site_code, days):
+    data = Data.query.join(Site).filter(Site.site_code == site_code.upper()).order_by(Data.id.desc()).limit(days).all()
+    return jsonify({'site code': site_code, 'data': basic_schema.dump(data)})
+
+
+parameters = {'o3': 'ozone, µg/m-3', 'no2': 'nitrogen dioxide, µg/m-3', 'so2': 'sulfur dioxide, µg/m-3',
+              'pm25': 'PM2.5 particles, µg/m-3', 'pm10': 'PM10 particles, µg/m-3'}
 
 """
 @hourly_data.route('/<site_code>/<days>')
@@ -26,7 +46,8 @@ def site_aq_values(site_code, days):
         return jsonify(all_data)
     else:
         return jsonify({'message': 'no data'})
-"""
+
+
 
 
 @hourly_data.route('/<sc1>/<sc2>/<days>')
@@ -56,3 +77,5 @@ def hourly_data_2(name, pollutant, days):
 @hourly_data.route('/pollutants')
 def pollutants():
     return jsonify(parameters)
+
+"""
