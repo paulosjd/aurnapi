@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
 
-
 db = SQLAlchemy()
 
 
@@ -17,6 +16,9 @@ class Site(db.Model):
     long = db.Column('longitude', db.String(50))
     data = db.relationship('Data', backref='owner', lazy='dynamic')
     current = db.relationship('Current', backref='site', lazy='dynamic')
+
+    def __str__(self):
+        return self.site_code
 
 
 class Data(db.Model):
