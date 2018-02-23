@@ -76,7 +76,7 @@
       <file leaf-file-name="schemas.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/schemas.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
+            <state relative-caret-position="-132">
               <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
@@ -533,7 +533,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-16" y="-16" width="3232" height="1732" extended-state="7" />
+    <frame x="-16" y="-16" width="3232" height="1732" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12349206" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -791,7 +791,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/schemas.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
+        <state relative-caret-position="-132">
           <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />

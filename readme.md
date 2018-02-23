@@ -35,6 +35,7 @@ Verify that packages have been installed:
     (aurn-venv) $ pip freeze
     Flask==0.12
     Flask_SQLAlchemy==2.1
+    flask-marshmallow==0.8.0
     pytz==2017.2
     flask-migrate==2.1.1
     requests==2.13.0
@@ -65,46 +66,3 @@ The create_db() function creates the database schema. The update_db() function r
 After ensuring correct settings within app/config, the database can be queried through the API after running the server:
 
     $ python run.py
-
-
-API endpoints
--------------
-
-Endpoints are relative to the base URL and are not case-sensitive
-
-
-**info/site-list**
-
-'site code' and name of each monitoring site
-
-**/data/{site code}/{days}**
-
-data for a specified number of previous days and monitoring site
-
-
-**/data/{site code 1}/{site code 2}/{days}**
-
-data from two monitoring sites for a number of previous days
-
-
-**/data/pollutants**
-
-'pollutant' labels with full names and units of measurement
-
-
-**/data/{site code}/{pollutant}/{days}**
-
-data for a specified number of previous days, monitoring site and pollutant label
-
-
-**/current-data/all-sites**
-
-latest air quality data along with site information for each monitoring site
-
-**/info/all-sites**
-
-information for all monitoring sites: site name, region, environment type, latitude, longitude and official webpage URL for individual sites providing additional site information
-
-**/info/{region or environment type}**
-site information for sites filtered by either region or environment type (e.g. /info/south-east or /info/urban-traffic)
-
