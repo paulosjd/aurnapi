@@ -1,21 +1,11 @@
 from flask_marshmallow import Marshmallow
-from app.models import Data, Site
-
+from app.models import Site
 
 ma = Marshmallow()
 
 
-class BasicDataSchema(ma.ModelSchema):
-
-    class Meta:
-        model = Data
-        exclude = ['id', 'time', 'owner']
-
-basic_schema = BasicDataSchema(many=True)
-
-
 class DataSchema(ma.Schema):
-    #By default Schemas will unmarshal an input dictionary to an output dictionary whose keys are identical to the field names.
+    # By default Schemas will unmarshal an input dict to an output dict whose keys are identical to field names.
     owner = ma.String(dump_to='site code')
     o3 = ma.String(dump_to='ozone')
     time = ma.Method('standardize_time')

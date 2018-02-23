@@ -1,6 +1,6 @@
 from flask import jsonify, Blueprint
 from app.models import Data, Site
-from app.schemas import data_schema, basic_schema, site_schema
+from app.schemas import data_schema, site_schema
 
 hourly_data = Blueprint('hourly_data', __name__, url_prefix='/data')
 

@@ -2,7 +2,6 @@ from flask import jsonify, Blueprint
 from app.models import Site, Current
 from app.data.site_info import site_codes, get_info, site_list, site_names
 
-
 current_data = Blueprint('current_data', __name__, url_prefix='/current-data')
 
 
