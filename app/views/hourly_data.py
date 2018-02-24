@@ -16,5 +16,23 @@ def nest_aq_data(site_code, days):
     data = Data.query.join(Site).filter(Site.site_code == site_code.upper()).order_by(Data.id.desc()).limit(days).all()
     return jsonify({'site info': site_schema.dump(data[0].owner), 'aq data': data_schema.dump(data)})
 
+@hourly_data.route('/bar/<site_code>/<days>')
+def hourly2_aq(site_code, days):
+    qs = Data.query.join(Site).filter(Site.site_code == site_code.upper()).order_by(Data.id.desc()).limit(days).all()
+    if qs:
+        fields = ['o3', 'no2', 'so2', 'pm10', 'pm25']
+        aq_data = [{'time': obj.time, 'values': {a: getattr(obj, a) for obj in qs for a in fields}} for obj in qs]
+        site_fields = ['name', 'site_code', 'region', 'lat', 'long']
+        all_data = {'site_info': {a: getattr(qs[0].owner, a) for a in site_fields}}
+        all_data['aq_data'] = aq_data
+        return jsonify(all_data)
+    return jsonify({'message': 'no data'})
+
+"""
+@hourly_data.route('/all-sites')
+def all_current():
+    current = Current.query.join(Site).filter(Site.site_code == site_code).first()
+    return data_schema.jsonify(current)
+    """
 
 
