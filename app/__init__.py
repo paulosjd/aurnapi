@@ -5,11 +5,9 @@ from .models import db
 def create_app():
     app = Flask(__name__)
     app.config.from_object('config.DevelopmentConfig')
-    from .views.hourly_data import hourly_data
-    from .views.current_data import current_data
-    from .views.sites_info import sites_info
+    from .data_views import hourly_data
+    from .sites_info import sites_info
     app.register_blueprint(hourly_data)
-    app.register_blueprint(current_data)
     app.register_blueprint(sites_info)
     @app.errorhandler(404)
     def not_found(error):
