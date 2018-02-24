@@ -1,4 +1,4 @@
-from app.models import db, Data, Site, Current
+from app.models import db, Data, Site
 from .site_info import site_list, get_info
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
@@ -38,7 +38,6 @@ def update_db():
         if data:
             site_data = Data(owner=site, **data)
             db.session.add(site_data)
-            Current.query.filter_by(site_id=site.id).update(data)
     db.session.commit()
 
 

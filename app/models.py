@@ -15,7 +15,6 @@ class Site(db.Model):
     lat = db.Column('latitude', db.String(50))
     long = db.Column('longitude', db.String(50))
     data = db.relationship('Data', backref='owner', lazy='dynamic')
-    current = db.relationship('Current', backref='site', lazy='dynamic')
 
     def __str__(self):
         return self.site_code
