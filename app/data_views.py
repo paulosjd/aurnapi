@@ -1,9 +1,24 @@
 from flask import jsonify, Blueprint
 from app.models import Data, Site
 from app.schemas import data_schema, site_schema
+from flask_login import current_user
 
 hourly_data = Blueprint('hourly_data', __name__, url_prefix='/data')
 
+
+@hourly_data.route("/whoami")
+def who_am_i():
+    """  Test it out:
+    $ curl localhost:5000/whoami
+    { "name": "anonymous")
+      After creating User:
+    $ curl localhost:5000/whoami -H "Authorization: abc123"
+    { "name": "Gary Larry") """
+    if current_user.is_authenticated:
+        name = current_user.name
+    else:
+        name = "anonymous"
+    return jsonify({"name": name})
 
 @hourly_data.route('/<site_code>/<num>')
 def aq_data(site_code, num):
