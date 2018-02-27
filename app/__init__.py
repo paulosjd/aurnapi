@@ -1,10 +1,13 @@
 from flask import Flask, jsonify
 from .models import db
+from flask_login import LoginManager, current_user, login_required
 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object('config.DevelopmentConfig')
+    login_manager = LoginManager()
+    login_manager.init_app(app)
     from .data_views import hourly_data
     from .sites_info import sites_info
     app.register_blueprint(hourly_data)
@@ -12,6 +15,9 @@ def create_app():
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({'message': str(error)}), 404
+    @app.errorhandler(401)
+    def unauthorized(error):
+        return jsonify({"error": "unauthorized"}), 401
     db.init_app(app)
     with app.app_context():
         return app

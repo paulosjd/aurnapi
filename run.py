@@ -20,4 +20,4 @@ if __name__ == '__main__':
             db.session.commit()
             print("Site table populated")
     else:
-        application.run()
+        application.run(debug=True)
