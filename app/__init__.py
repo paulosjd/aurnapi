@@ -9,9 +9,11 @@ def create_app():
     db.init_app(app)
     login_manager = LoginManager()
     login_manager.init_app(app)
+
     @login_manager.user_loader
     def load_user(user_id):
         return User.get(user_id)
+
     @login_manager.request_loader
     def load_user_from_request(request):
         api_key = request.headers.get('Authorization')
@@ -22,9 +24,11 @@ def create_app():
     from .sites_info import sites_info
     app.register_blueprint(hourly_data)
     app.register_blueprint(sites_info)
+
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({'message': str(error)}), 404
+
     @app.errorhandler(401)
     def unauthorized(error):
         return jsonify({"error": "unauthorized"}), 401
