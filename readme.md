@@ -45,7 +45,7 @@ Verify that packages have been installed:
 
 Run the following commands in Python within the virtual environment:
 
-    >>> from app import create_app()
+    >>> from app import create_app
 
     >>> create_app().app_context().push()
 
