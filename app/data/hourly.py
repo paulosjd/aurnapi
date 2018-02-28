@@ -28,5 +28,13 @@ def validate_data(data_dict):
         return data_dict
 
 
-
-
+def update_db():
+    page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels',
+                        headers={'User-Agent': 'Not blank'}).content
+    soup = BeautifulSoup(page, 'lxml')
+    for site in Site.query.all():
+        data = validate_data(hourly_data(soup, site.name))
+        if data:
+            site_data = Data(owner=site, **data)
+            db.session.add(site_data)
+    db.session.commit()

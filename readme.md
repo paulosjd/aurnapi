@@ -41,24 +41,14 @@ Verify that packages have been installed:
     requests==2.13.0
     beautifulsoup4==4.6.0
 
-**3. Push Flask application context**
-
-Run the following commands in Python within the virtual environment:
-
-    >>> from app import create_app
-
-    >>> create_app().app_context().push()
+**3. Create the database and add data**
 
 
-Create and populate a database using the create_db() and update_db() functions.
+    (aurn-venv) $ python3 run.py createdb
 
-    >>> from app.data.hourly import create_db, update_db
+    (aurn-venv) $ python3 run.py collectdata
 
-    >>> create_db()
-
-    >>> update_db()
-
-The create_db() function creates the database schema. The update_db() function runs the webscraping script and inserts the air quality data in the 'data' table. This should be set up to run on an hourly basis; n.b. the webpage https://uk-air.defra.gov.uk/latest/currentlevels updates at 40 minutes past the hour.
+The collectdata argument calls the update_db() function, defined in app.data.hourly. This inserts the air quality data for the most recent hour into the table 'data'. 
 
 
 **4. Configure and run the API**

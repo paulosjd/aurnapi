@@ -1,7 +1,6 @@
 from flask import jsonify, Blueprint
 from app.models import Site
-from app.data.site_info import get_info
-
+from app.data.sites import get_info
 
 sites_info = Blueprint('Site', __name__, url_prefix='/info')
 

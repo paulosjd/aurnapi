@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from .models import db, User
-from flask_login import LoginManager, current_user, login_required
+from flask_login import LoginManager
 
 
 def create_app():

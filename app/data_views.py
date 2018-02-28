@@ -1,7 +1,9 @@
 from flask import jsonify, Blueprint
+from flask_login import current_user
+from flask_restplus import Api, Resource
 from app.models import Data, Site
 from app.schemas import data_schema, site_schema
-from flask_login import current_user
+
 
 hourly_data = Blueprint('hourly_data', __name__, url_prefix='/data')
 
