@@ -1,9 +1,7 @@
 from flask import jsonify, Blueprint
 from flask_login import current_user
-from flask_restplus import Api, Resource
 from app.models import Data, Site
 from app.schemas import data_schema, site_schema
-
 
 hourly_data = Blueprint('hourly_data', __name__, url_prefix='/data')
 
@@ -21,6 +19,8 @@ def who_am_i():
     else:
         name = "anonymous"
     return jsonify({"name": name})
+
+
 
 @hourly_data.route('/<site_code>/<num>')
 def aq_data(site_code, num):
@@ -44,6 +44,7 @@ def hourly_aq(site_code, num):
         all_data = {'site_info': {a: getattr(qs[0].owner, a) for a in site_fields}, 'aq_data': aq_data}
         return jsonify(all_data)
     return jsonify({'message': 'no data'})
+
 
 """
 @hourly_data.route('/all-sites')

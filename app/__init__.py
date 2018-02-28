@@ -1,11 +1,30 @@
 from flask import Flask, jsonify
-from .models import db, User
 from flask_login import LoginManager
+from apispec import APISpec
+from .models import db, User
+from .schemas import DataSchema
+from flask_apispec.extension import FlaskApiSpec
+
 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object('config.DevelopmentConfig')
+    from apispec import APISpec
+
+    spec = APISpec(
+        title='Gisty',
+        version='1.0.0',
+        info=dict(
+            description='A minimal gist API'
+        ),
+        plugins=[
+            'apispec.ext.flask',
+            'apispec.ext.marshmallow'
+        ]
+    )
+    spec.definition('Gist', schema=DataSchema)
+    print(spec.to_dict())
     db.init_app(app)
     login_manager = LoginManager()
     login_manager.init_app(app)
