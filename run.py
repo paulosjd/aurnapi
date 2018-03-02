@@ -6,11 +6,11 @@ from app import create_app
 from app.data.sites import create_db
 from app.data.hourly import update_db
 from app.data_views import hourly_data
-from app.sites_info import sites_info
+from app.site_views import site_views
 
 application = create_app()
 application.register_blueprint(hourly_data)
-application.register_blueprint(sites_info)
+application.register_blueprint(site_views)
 
 login_manager = LoginManager()
 login_manager.init_app(application)
@@ -37,6 +37,7 @@ def not_found(error):
 @application.errorhandler(401)
 def unauthorized(error):
     return jsonify({"error": "unauthorized"}), 401
+
 
 if __name__ == '__main__':
     if "createdb" in sys.argv:

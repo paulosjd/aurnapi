@@ -1,3 +1,4 @@
+from flask import url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
@@ -23,6 +24,10 @@ class Site(db.Model):
     long = db.Column('longitude', db.String(50))
     hourly = db.relationship('HourlyData', backref='owner', lazy='dynamic')
 
+    @property
+    def url(self):
+        return url_for("get_site", id=self.id)
+
     def __str__(self):
         return self.site_code
 
@@ -37,5 +42,5 @@ class DataMixin(object):
 
 class HourlyData(DataMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    time = db.Column(db.DateTime, nullable=False)
+    time = db.Column(db.String(20), nullable=False)
     site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), nullable=False)

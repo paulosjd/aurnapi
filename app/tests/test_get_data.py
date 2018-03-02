@@ -1,4 +1,4 @@
-from app.data.hourly import hourly_data, validate_data
+from app.data.hourly import get_hourly_data, validate_data
 from bs4 import BeautifulSoup
 import requests
 import unittest
@@ -10,7 +10,7 @@ class TestGetData(unittest.TestCase):
         self.page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels',
                                  headers={'User-Agent': 'Not blank'}).content
         self.soup = BeautifulSoup(self.page, 'lxml')
-        self.hourly_data_output = hourly_data(self.soup, 'Aberdeen')
+        self.hourly_data_output = get_hourly_data(self.soup, 'Aberdeen')
         self.keys = ['ozone', 'NO2', 'SO2', 'PM25', 'PM10', 'time']
 
     def test_hourly_data_1(self):

@@ -21,12 +21,12 @@ data_schema = DataSchema(many=True)
 
 
 class SiteSchema(ma.ModelSchema):
-
     data = ma.Nested(DataSchema)
 
     class Meta:
         model = Site
-        exclude = ['id', 'url', 'map_url', 'data', 'current']
+        exclude = ['id', 'url', 'map_url', 'hourly']
 
 site_schema = SiteSchema()
+sites_schema = SiteSchema(many=True)
 
