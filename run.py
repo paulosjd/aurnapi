@@ -1,23 +1,49 @@
 import sys
+from flask import jsonify
+from flask_login import LoginManager
+from app.models import User
 from app import create_app
-from app.models import db, Site
-from app.data.site_info import get_info, site_list
+from app.data.sites import create_db
+from app.data.hourly import update_db
+from app.data_views import hourly_data
+from app.sites_info import sites_info
 
 application = create_app()
+application.register_blueprint(hourly_data)
+application.register_blueprint(sites_info)
 
+login_manager = LoginManager()
+login_manager.init_app(application)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
+
+
+@login_manager.request_loader
+def load_user_from_request(request):
+    api_key = request.headers.get('Authorization')
+    if not api_key:
+        return None
+    return User.query.filter_by(api_key=api_key).first()
+
+
+@application.errorhandler(404)
+def not_found(error):
+    return jsonify({'message': str(error)}), 404
+
+
+@application.errorhandler(401)
+def unauthorized(error):
+    return jsonify({"error": "unauthorized"}), 401
 
 if __name__ == '__main__':
     if "createdb" in sys.argv:
         with application.app_context():
-            db.create_all()
-        print("Database created!")
-    elif "populatedb" in sys.argv:
+            create_db()
+    elif "collectdata" in sys.argv:
         with application.app_context():
-            empty = {'o3': '', 'no2': '', 'so2': '', 'pm25': '', 'pm10': '', 'time': ''}
-            for site in site_list:
-                site_info = Site(**get_info(site))
-                db.session.add(site_info)
-            db.session.commit()
-            print("Site table populated")
+            update_db()
     else:
-        application.run()
+        application.run(debug=True)

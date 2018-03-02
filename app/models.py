@@ -1,6 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 
 db = SQLAlchemy()
+
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), nullable=False)
+    api_key = db.Column(db.String(64), unique=True, index=True)
 
 
 class Site(db.Model):
@@ -14,18 +21,21 @@ class Site(db.Model):
     map_url = db.Column(db.String(250))
     lat = db.Column('latitude', db.String(50))
     long = db.Column('longitude', db.String(50))
-    data = db.relationship('Data', backref='owner', lazy='dynamic')
+    hourly = db.relationship('HourlyData', backref='owner', lazy='dynamic')
 
     def __str__(self):
         return self.site_code
 
 
-class Data(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), nullable=False)
+class DataMixin(object):
     o3 = db.Column(db.String(10), nullable=False)
     no2 = db.Column(db.String(10), nullable=False)
     so2 = db.Column(db.String(10), nullable=False)
     pm25 = db.Column(db.String(10), nullable=False)
     pm10 = db.Column(db.String(10), nullable=False)
-    time = db.Column(db.String(50), nullable=False)
+
+
+class HourlyData(DataMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    time = db.Column(db.DateTime, nullable=False)
+    site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), nullable=False)
