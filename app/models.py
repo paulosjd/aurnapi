@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
-from sqlalchemy.ext.declarative import declared_attr
 
 db = SQLAlchemy()
 
@@ -22,7 +21,7 @@ class Site(db.Model):
     map_url = db.Column(db.String(250))
     lat = db.Column('latitude', db.String(50))
     long = db.Column('longitude', db.String(50))
-    data = db.relationship('Data', backref='owner', lazy='dynamic')
+    hourly = db.relationship('HourlyData', backref='owner', lazy='dynamic')
 
     def __str__(self):
         return self.site_code
@@ -36,10 +35,7 @@ class DataMixin(object):
     pm10 = db.Column(db.String(10), nullable=False)
 
 
-class Data(DataMixin, db.Model):
+class HourlyData(DataMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    time = db.Column(db.DateTime, nullable=False)
     site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), nullable=False)
-
-
-class MonthlyAvg(DataMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)

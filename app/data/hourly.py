@@ -1,11 +1,11 @@
-from app.models import db, Data, Site
+from app.models import db, HourlyData, Site
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import requests
 import pytz
 
 
-def hourly_data(soup, site):
+def get_hourly_data(soup, site):
     if soup.find_all('a', string=site):
         site_link = soup.find_all('a', string=site)[0]
         row = site_link.findParent('td').findParent('tr').findAll('td')
@@ -33,8 +33,8 @@ def update_db():
                         headers={'User-Agent': 'Not blank'}).content
     soup = BeautifulSoup(page, 'lxml')
     for site in Site.query.all():
-        data = validate_data(hourly_data(soup, site.name))
+        data = validate_data(get_hourly_data(soup, site.name))
         if data:
-            site_data = Data(owner=site, **data)
+            site_data = HourlyData(owner=site, **data)
             db.session.add(site_data)
     db.session.commit()
