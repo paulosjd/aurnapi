@@ -21,11 +21,12 @@ def who_am_i():
     return jsonify({"name": name})
 
 
-
 @hourly_data.route('/<site_code>/<num>')
 def aq_data(site_code, num):
     data = Data.query.join(Site).filter(Site.site_code == site_code.upper()).order_by(Data.id.desc()).limit(num).all()
     return data_schema.jsonify(data)
+
+
 
 
 @hourly_data.route('/site/<site_code>/<num>')

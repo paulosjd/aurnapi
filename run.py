@@ -1,31 +1,17 @@
 import sys
-from flask import Flask, jsonify
+from flask import jsonify
 from flask_login import LoginManager
-from apispec import APISpec
-from app.models import db, User
-from app.schemas import DataSchema
-from flask_apispec.extension import FlaskApiSpec
+from app.models import User
 from app import create_app
 from app.data.sites import create_db
 from app.data.hourly import update_db
+from app.data_views import hourly_data
+from app.sites_info import sites_info
 
 application = create_app()
+application.register_blueprint(hourly_data)
+application.register_blueprint(sites_info)
 
-from apispec import APISpec
-
-spec = APISpec(
-    title='Gisty',
-    version='1.0.0',
-    info=dict(
-        description='A minimal gist API'
-    ),
-    plugins=[
-        'apispec.ext.flask',
-        'apispec.ext.marshmallow'
-    ]
-)
-spec.definition('Gist', schema=DataSchema)
-print(spec.to_dict())
 login_manager = LoginManager()
 login_manager.init_app(application)
 
@@ -41,13 +27,6 @@ def load_user_from_request(request):
     if not api_key:
         return None
     return User.query.filter_by(api_key=api_key).first()
-
-
-from app.data_views import hourly_data
-from app.sites_info import sites_info
-
-application.register_blueprint(hourly_data)
-application.register_blueprint(sites_info)
 
 
 @application.errorhandler(404)

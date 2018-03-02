@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from sqlalchemy.ext.declarative import declared_attr
 
 db = SQLAlchemy()
 
@@ -27,12 +28,18 @@ class Site(db.Model):
         return self.site_code
 
 
-class Data(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), nullable=False)
+class DataMixin(object):
     o3 = db.Column(db.String(10), nullable=False)
     no2 = db.Column(db.String(10), nullable=False)
     so2 = db.Column(db.String(10), nullable=False)
     pm25 = db.Column(db.String(10), nullable=False)
     pm10 = db.Column(db.String(10), nullable=False)
-    time = db.Column(db.String(50), nullable=False)
+
+
+class Data(DataMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), nullable=False)
+
+
+class MonthlyAvg(DataMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
