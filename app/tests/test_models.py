@@ -1,6 +1,6 @@
 import unittest
 from app import create_test_app
-from app.models import db, HourlyData
+from app.models import db, HourlyData, Site
 
 
 class TestCase(unittest.TestCase):
@@ -13,7 +13,8 @@ class TestCase(unittest.TestCase):
 
 
     def test_db_entry(self):
-        d = HourlyData(site_code='ABD', ozone='10', no2='20', so2='30', pm25='40', pm10='50', time='10/09/2017 15:00')
+        s = Site(name='Aberdeen')
+        d = HourlyData(owner=s, o3='10', no2='20', so2='30', pm25='40', pm10='50', time='10/09/2017 15:00')
         db.session.add(d)
         db.session.commit()
         self.assertGreater(d.id, 0)

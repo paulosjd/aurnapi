@@ -18,7 +18,7 @@ class TestGetData(unittest.TestCase):
 
     # test that last list item is a datetime string with the correct format
     def test_hourly_data_2(self):
-        self.to_datetime = datetime.strptime(self.hourly_data_output['time'], '%d/%m/%Y %H:%M:%S')
+        self.to_datetime = datetime.strptime(self.hourly_data_output['time'], '%d/%m/%Y %H:%M')
         self.assertIsInstance(self.to_datetime, datetime)
 
     # test that the list of values is returned unaltered if the site time is up-to-date

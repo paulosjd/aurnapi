@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, url_for
+from flask_login import login_required
 from app.models import Site, db
 from app.schemas import site_schema, sites_schema
-from flask_login import login_required
 
 site_views = Blueprint('Site', __name__, url_prefix='/sites')
 
@@ -27,7 +27,7 @@ def site_views_filter(region):
 @site_views.route("/create", methods=["POST"])
 @login_required
 def create_site():
-    site, errors = site_schema.load(request.form)
+    site, errors = site_schema.load(request.get_json())
     if errors:
         resp = jsonify(errors)
         resp.status_code = 400
@@ -38,7 +38,7 @@ def create_site():
 
     resp = jsonify({"message": "created"})
     resp.status_code = 201
-    location = url_for("site_detail", id=site.id)
+    location = url_for("Site.site_detail", id=site.id)
     resp.headers["Location"] = location
     return resp
 
@@ -47,7 +47,8 @@ def create_site():
 @login_required
 def edit_site(id):
     site = Site.query.filter(Site.id==id).first_or_404()
-    site, errors = site_schema.load(request.form, instance=site)
+    # instance tells Marshmallow to edit existing entry instead of creating new one
+    site, errors = site_schema.load(request.get_json(), instance=site)
     if errors:
         resp = jsonify(errors)
         resp.status_code = 400
@@ -58,7 +59,7 @@ def edit_site(id):
 
     resp = jsonify({"message": "updated"})
     resp.status_code = 201
-    location = url_for("site_detail", id=site.id)
+    location = url_for("Site.site_detail", id=site.id)
     resp.headers["Location"] = location
     return resp
 

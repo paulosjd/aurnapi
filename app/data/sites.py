@@ -11,13 +11,13 @@ def get_info(site):
     site_code = site_codes.get(site)
     region = regions.get(site)
     environ = environs.get(site)
-    url = 'https://uk-air.defra.gov.uk/networks/site-info?site_id=' + site_codes.get(site)
+    defra_url = 'https://uk-air.defra.gov.uk/networks/site-info?site_id=' + site_codes.get(site)
     geo = site_geo.get(site)
     map_url = 'https://maps.google.co.uk/?q=' + ', '.join(geo).replace(' ', '')
     lat = geo[0]
     long = geo[1]
-    return {'name': site, 'site_code': site_code, 'region': region, 'environ': environ, 'url': url, 'map_url': map_url,
-            'lat': lat, 'long': long}
+    return {'name': site, 'site_code': site_code, 'region': region, 'environ': environ, 'defra_url': defra_url,
+            'map_url': map_url, 'lat': lat, 'long': long}
 
 
 site_geo = {

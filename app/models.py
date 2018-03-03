@@ -18,15 +18,11 @@ class Site(db.Model):
     site_code = db.Column(db.String(10), unique=True)
     region = db.Column(db.String(100))
     environ = db.Column('environment', db.String(100))
-    url = db.Column(db.String(250))
+    defra_url = db.Column(db.String(250))
     map_url = db.Column(db.String(250))
     lat = db.Column('latitude', db.String(50))
     long = db.Column('longitude', db.String(50))
     hourly = db.relationship('HourlyData', backref='owner', lazy='dynamic')
-
-    @property
-    def url(self):
-        return url_for("get_site", id=self.id)
 
     def __str__(self):
         return self.site_code
