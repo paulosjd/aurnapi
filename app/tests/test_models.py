@@ -14,7 +14,7 @@ class TestCase(unittest.TestCase):
 
     def test_db_entry(self):
         s = Site(name='Aberdeen')
-        d = HourlyData(owner=s, o3='10', no2='20', so2='30', pm25='40', pm10='50', time='10/09/2017 15:00')
+        d = HourlyData(owner=s, ozone='10', no2='20', so2='30', pm25='40', pm10='50', time='10/09/2017 15:00')
         db.session.add(d)
         db.session.commit()
         self.assertGreater(d.id, 0)

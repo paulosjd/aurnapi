@@ -36,6 +36,8 @@ Verify that packages have been installed:
     Flask_Login==0.4.0
     flask_marshmallow==0.8.0
     Flask_SQLAlchemy==2.1
+    marshmallow==2.14.0
+    marshmallow-sqlalchemy==0.13.2
     pytz==2017.3
     requests==2.13.0
     beautifulsoup4==4.6.0
@@ -47,11 +49,11 @@ Verify that packages have been installed:
 
     (aurn-venv) $ python3 run.py collectdata
 
-The collectdata command allows calling of the update_db() function (defined in app.data.hourly). This inserts the air quality data for the most recent hour into the table 'data'. 
+The collectdata command provides a convenient way to call the update_db() function (defined in app.data.hourly). This inserts the air quality data for the most recent hour into the table 'data'. 
 
 
 **4. Configure and run the API**
 
-After ensuring correct settings within app/config, the database can be queried through the API after running the server:
+After ensuring correct settings, the resources can be accessed through the API after running the server:
 
     $ python run.py

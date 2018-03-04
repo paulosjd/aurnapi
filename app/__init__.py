@@ -1,6 +1,5 @@
 from flask import Flask
 from .models import db, User
-from .schemas import DataSchema
 
 
 def create_app():

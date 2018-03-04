@@ -1,15 +1,10 @@
-from flask import Blueprint, request, jsonify, url_for
+from flask import Blueprint, request, jsonify
 from flask_login import login_required
 from app.models import HourlyData, Site, db
-from app.schemas import many_data_schema, data_schema, site_schema
+from app.schemas import many_data_schema, data_schema, hourlydata_schema, site_schema
 
 hourly_data = Blueprint('hourly_data', __name__, url_prefix='/data')
 
-"""
-make yaml dict and copy in
-:type: 'str' * 6
-:param: 'integer of the measurement value', 'time in format %d/%m/%Y %H:%M'
-"""
 
 @hourly_data.route('/<site_code>/<num>')
 def nest_aq_data(site_code, num):
@@ -24,9 +19,7 @@ def create_hourly(site_code):
     site = Site.query.filter(Site.site_code == site_code).first()
     data, errors = data_schema.load(request.get_json())
     if errors:
-        resp = jsonify(errors)
-        resp.status_code = 400
-        return resp
+        return jsonify(errors), 400
 
     db.session.add(HourlyData(**data, owner=site))
     db.session.commit()
@@ -38,30 +31,23 @@ def create_hourly(site_code):
 
 @hourly_data.route("/<int:id>", methods=["POST"])
 @login_required
-def edit_site(id):
-    site = Site.query.filter(Site.id==id).first_or_404()
-    # instance tells Marshmallow to edit existing entry instead of creating new one
-    site, errors = site_schema.load(request.get_json(), instance=site)
+def edit_hourly(id):
+    entry = HourlyData.query.filter(HourlyData.id==id).first_or_404()
+    data, errors = hourlydata_schema.load(request.get_json(), instance=entry)
     if errors:
-        resp = jsonify(errors)
-        resp.status_code = 400
-        return resp
+        return jsonify(errors), 400
 
-    db.session.add(site)
+    db.session.add(data)
     db.session.commit()
 
-    resp = jsonify({"message": "updated"})
-    resp.status_code = 201
-    location = url_for("Site.site_detail", id=site.id)
-    resp.headers["Location"] = location
-    return resp
+    return jsonify({"message": "updated"}), 201
 
 
 @hourly_data.route("/<int:id>", methods=["DELETE"])
 @login_required
-def remove_site(id):
-    site = Site.query.filter(Site.id == id).first_or_404()
-    db.session.delete(site)
+def remove_hourly(id):
+    data = HourlyData.query.filter(HourlyData.id == id).first_or_404()
+    db.session.delete(data)
     db.session.commit()
     return jsonify({"message": "deleted"})
 
@@ -73,16 +59,4 @@ def aq_data(site_code, num):
         HourlyData.id.desc()).limit(num).all()
     return many_data_schema.jsonify(data)
 
-
-@hourly_data.route('/bar/<site_code>/<num>')
-def hourly_aq(site_code, num):
-    qs = HourlyData.query.join(Site).filter(Site.site_code == site_code.upper()).order_by(
-        HourlyData.id.desc()).limit(num).all()
-    if qs:
-        fields = ['o3', 'no2', 'so2', 'pm10', 'pm25']
-        aq_data = [{'time': obj.time, 'values': {a: getattr(obj, a) for obj in qs for a in fields}} for obj in qs]
-        site_fields = ['name', 'site_code', 'region', 'lat', 'long']
-        all_data = {'site_info': {a: getattr(qs[0].owner, a) for a in site_fields}, 'aq_data': aq_data}
-        return jsonify(all_data)
-    return jsonify({'message': 'no data'})
 """

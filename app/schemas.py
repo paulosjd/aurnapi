@@ -1,41 +1,56 @@
+from marshmallow import post_dump
 from flask_marshmallow import Marshmallow
-from marshmallow_sqlalchemy import field_for, ModelConverter
-from app.models import Site
+from marshmallow_sqlalchemy import field_for
+from app.models import HourlyData, Site, User
 
 ma = Marshmallow()
 
 
-class DataSchema(ma.Schema):
-    # By default Schemas will unmarshal an input dict to an output dict whose keys are identical to field names.
-    #owner = field_for(Site, 'site_code')
-    #owner= ModelConverter
-    o3 = ma.String(dump_to='ozone')
+class HourlyDataSchema(ma.Schema):
+    id = ma.Integer(dump_only=True)
     time = ma.Method(serialize='standardize_time')
 
-
-    def standardize_time(self, obj):
+    @staticmethod
+    def standardize_time(obj):
         std_time = '{}-{}-{} {}'.format(*obj.time.split(' ')[0].split('/')[::-1], obj.time.split(' ')[1])
         return std_time
 
     class Meta:
-        additional = ('no2', 'so2', 'pm25', 'pm10')
+        additional = ('ozone', 'no2', 'so2', 'pm25', 'pm10')
+
+data_schema = HourlyDataSchema()
+many_data_schema = HourlyDataSchema(many=True)
 
 
-data_schema = DataSchema()
-many_data_schema = DataSchema(many=True)
-
-
-class SiteSchema(ma.ModelSchema):
-    data = ma.Nested(DataSchema)
-    lat = ma.String(dump_to='latitude')
-    long = ma.String(dump_to='longitude')
-    environ = ma.String(dump_to='type')
+class SiteSchema(ma.Schema):
+    id = ma.Integer(dump_only=True)
+    data = ma.Nested(HourlyDataSchema, allow_none=True, dump_only=True)
     url = ma.URLFor('Site.site_detail', id='<id>')
+    user = field_for(User, 'name', dump_only=True)
 
     class Meta:
-        model = Site
-        exclude = ['id', 'hourly']
+        additional = ('name', 'site_code', 'region', 'type', 'latitude', 'longitude', 'defra_url', 'map_url')
+
+    @post_dump
+    def clean_missing(self, data):
+        ret = data.copy()
+        for key in filter(lambda key: data[key] is None, data):
+            del ret[key]
+        return ret
 
 site_schema = SiteSchema()
 sites_schema = SiteSchema(exclude=['defra_url', 'map_url'], many=True)
 
+
+class SiteModelSchema(ma.ModelSchema):
+    class Meta:
+        model = Site
+
+site_model_schema = SiteModelSchema()
+
+
+class DataModelSchema(ma.ModelSchema):
+    class Meta:
+        model = HourlyData
+
+hourlydata_schema = DataModelSchema()
