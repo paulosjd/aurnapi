@@ -36,7 +36,5 @@ def update_db():
             site_data = HourlyData(**data, owner=site)
             db.session.add(site_data)
             if site_data.high_pm10 is True:
-                db.session.add(Exceedence(site_entry=data_entry=site_data))
-
-
+                db.session.add(Exceedence(site=site, data_entry=site_data))
     db.session.commit()

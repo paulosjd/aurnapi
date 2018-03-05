@@ -32,10 +32,8 @@ def create_site():
     data, errors = site_schema.load(request.get_json())
     if errors:
         return jsonify(errors), 400
-
     db.session.add(Site(**data, user=user))
     db.session.commit()
-
     return jsonify({"message": "site created"}), 201
 
 
@@ -46,10 +44,8 @@ def edit_site(id):
     site, errors = site_model_schema.load(request.get_json(), instance=site)
     if errors:
         return jsonify(errors), 400
-
     db.session.add(site)
     db.session.commit()
-
     return jsonify({"message": "site edited"}), 201
 
 

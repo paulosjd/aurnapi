@@ -48,6 +48,7 @@ class DataMixin(object):
 
 
 class HourlyData(DataMixin, db.Model):
+    __tablename__ = 'hourlydata'
     id = db.Column(db.Integer, primary_key=True)
     time = db.Column(db.String(20), nullable=False)
     site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), nullable=False)
@@ -55,10 +56,14 @@ class HourlyData(DataMixin, db.Model):
 
     @property
     def high_pm10(self):
-        if self.pm10 > 25:
-            return True
+        try:
+            if int(self.pm10) > 50:
+                return True
+        except ValueError:
+            return
 
 
 class Exceedence(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    entry_id = db.Column(db.Integer, db.ForeignKey('hourlydata.id'), nullable=False)
+    site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), nullable=False)
+    hourly_data_id = db.Column(db.Integer, db.ForeignKey('hourlydata.id'), nullable=False)

@@ -1,6 +1,7 @@
 import sys
 from flask import jsonify
 from flask_login import LoginManager
+from flasgger import Swagger
 from app.models import User
 from app import create_app
 from app.data.seed_sites import create_db
@@ -15,6 +16,7 @@ application.register_blueprint(site_views)
 login_manager = LoginManager()
 login_manager.init_app(application)
 
+swagger = Swagger(application)
 
 @login_manager.user_loader
 def load_user(user_id):
