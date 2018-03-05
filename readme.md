@@ -1,6 +1,6 @@
 A prototype API for hourly mean air pollution data obtained by periodic scraping of a government agency webpage.
  
-The API serves data in JSON format and supports basic HTTP methods and CRUD operations. It was built using Flask, Flask-Login, Flask-SQLAlchemy and Marshmallow.
+The API serves data in JSON format and supports basic HTTP methods and CRUD operations. It was built using Flask, Flask-Login, Flask-SQLAlchemy and Marshmallow. Swagger UI documentation is generated using Flasgger (http://127.0.0.1:5000/apidocs/).
 
 
 
@@ -36,6 +36,7 @@ Verify that packages have been installed:
     Flask_Login==0.4.0
     flask_marshmallow==0.8.0
     Flask_SQLAlchemy==2.1
+    flasgger==0.8.1
     marshmallow==2.14.0
     marshmallow-sqlalchemy==0.13.2
     pytz==2017.3
