@@ -21,12 +21,19 @@ class Site(db.Model):
     site_code = db.Column(db.String(10), unique=True)
     region = db.Column(db.String(100))
     type = db.Column(db.String(100))
-    defra_url = db.Column(db.String(250))
-    map_url = db.Column(db.String(250))
     latitude = db.Column(db.String(50))
     longitude = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     hourly_data = db.relationship('HourlyData', backref='owner', lazy='dynamic')
+    exceedence = db.relationship('Exceedence', backref='site', lazy='dynamic')
+
+    @property
+    def defra_url(self):
+        return 'https://uk-air.defra.gov.uk/networks/site-info?site_id=' + self.site_code
+
+    @property
+    def map_url(self):
+        return 'https://maps.google.co.uk/?q=' + self.latitude + self.longitude
 
     def __str__(self):
         return self.site_code
@@ -44,6 +51,7 @@ class HourlyData(DataMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     time = db.Column(db.String(20), nullable=False)
     site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), nullable=False)
+    exceedence = db.relationship('Exceedence', backref='data_entry', lazy='dynamic')
 
     @property
     def high_pm10(self):
@@ -51,6 +59,6 @@ class HourlyData(DataMixin, db.Model):
             return True
 
 
-#class Exceedence(db.Model):
- #   id = db.Column(db.Integer, primary_key=True)
-  #  entry_id = db.Column(db.Integer, db.ForeignKey('hourlydata.id'), nullable=False)
+class Exceedence(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    entry_id = db.Column(db.Integer, db.ForeignKey('hourlydata.id'), nullable=False)

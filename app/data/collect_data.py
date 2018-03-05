@@ -1,9 +1,9 @@
-from app.models import db, HourlyData, Site
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import requests
 import pytz
-from app.data.sites import site_list
+from app.data.seed_sites import site_list
+from app.models import db, Exceedence, HourlyData, Site
 
 
 def get_hourly_data(soup, site):
@@ -33,8 +33,10 @@ def update_db():
     for site in Site.query.filter(Site.name.in_(site_list)):
         data = validate_data(get_hourly_data(soup, site.name))
         if data:
-            site_data = HourlyData(owner=site, **data)
+            site_data = HourlyData(**data, owner=site)
             db.session.add(site_data)
-            #if site_data.high_no2 is True:
+            if site_data.high_pm10 is True:
+                db.session.add(Exceedence(site_entry=data_entry=site_data))
+
 
     db.session.commit()

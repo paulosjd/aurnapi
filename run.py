@@ -3,8 +3,8 @@ from flask import jsonify
 from flask_login import LoginManager
 from app.models import User
 from app import create_app
-from app.data.sites import create_db
-from app.data.hourly import update_db
+from app.data.seed_sites import create_db
+from app.data.collect_data import update_db
 from app.data_views import hourly_data
 from app.site_views import site_views
 

@@ -1,4 +1,5 @@
-from app.data.hourly import get_hourly_data, validate_data
+from app.data.collect_data import get_hourly_data, validate_data
+
 from bs4 import BeautifulSoup
 import requests
 import unittest
