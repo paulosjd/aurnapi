@@ -1,0 +1,7 @@
+    Metadata from all sites
+    ---
+    tags:
+      - Monitoring Sites
+    responses:
+      200:
+        description: A list all site objects

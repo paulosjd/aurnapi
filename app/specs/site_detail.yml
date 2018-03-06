@@ -1,0 +1,12 @@
+    Metadata from site specified by id
+    ---
+    tags:
+      - Monitoring Sites
+    parameters:
+      - name: id
+        in: path
+        type: string
+        enum: ['1', '2', '3']
+        required: true
+        description: Site id for site object
+        default: all

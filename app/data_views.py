@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required
+from flasgger.utils import swag_from
 from app.models import HourlyData, Site, db
 from app.schemas import many_data_schema, data_schema, hourlydata_schema, site_schema
 
@@ -7,23 +8,8 @@ hourly_data = Blueprint('hourly_data', __name__, url_prefix='/data')
 
 
 @hourly_data.route('/<site_code>/<number>')
-def nest_aq_data(site_code, number):
-    """
-    ---
-    parameters:
-      - name: site_code
-        in: path
-        type: string
-        enum: ['ABD', 'MY1', 'BRS8']
-        required: true
-        default: all
-      - name: number
-        in: path
-        type: string
-        enum: ['1', '2', '3']
-        required: true
-        default: all
-    """
+@swag_from('specs/get_aq_data.yml')
+def get_aq_data(site_code, number):
     data = HourlyData.query.join(Site).filter(Site.site_code == site_code.upper()).order_by(
         HourlyData.id.desc()).limit(number).all()
     return jsonify({'site info': site_schema.dump(data[0].owner), 'aq data': many_data_schema.dump(data)})
