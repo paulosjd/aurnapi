@@ -17,17 +17,8 @@ def get_aq_data(site_code, number):
 
 @hourly_data.route("/<site_code>", methods=["POST"])
 @login_required
+@swag_from('specs/create_hourly.yml')
 def create_hourly(site_code):
-    """
-    ---
-    parameters:
-      - name: site_code
-        in: path
-        type: string
-        enum: ['ABD', 'MY1', 'BRS8']
-        required: true
-        default: all
-    """
     site = Site.query.filter(Site.site_code == site_code).first()
     data, errors = data_schema.load(request.get_json())
     if errors:

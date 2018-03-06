@@ -1,12 +1,10 @@
-    Recent air quality from site specified by site code
+    Create monitoring site from json body
     ---
     tags:
       - Monitoring Sites
     parameters:
-      - name: site_code
-        in: path
-        type: string
-        enum: ['ABD', 'MY1', 'BRS8']
+      - name: json body
+        in: body
+        type: body
         required: true
-        description: Site code representing a monitoring site
         default: all
