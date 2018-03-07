@@ -1,5 +1,6 @@
 from app.models import db, Site
 
+
 def create_db():
     db.create_all()
     for site in site_list:
@@ -7,18 +8,21 @@ def create_db():
         db.session.add(site_info)
     db.session.commit()
 
+
 def get_info(site):
     site_code = site_codes.get(site)
     region = regions.get(site)
-    environ = environs.get(site)
-    url = 'https://uk-air.defra.gov.uk/networks/site-info?site_id=' + site_codes.get(site)
+    environ = site_environs.get(site)
     geo = site_geo.get(site)
-    map_url = 'https://maps.google.co.uk/?q=' + ', '.join(geo).replace(' ', '')
     lat = geo[0]
     long = geo[1]
-    return {'name': site, 'site_code': site_code, 'region': region, 'environ': environ, 'url': url, 'map_url': map_url,
-            'lat': lat, 'long': long}
-
+    return {'name': site,
+            'site_code': site_code,
+            'region': region,
+            'type': environ,
+            'latitude': lat,
+            'longitude': long,
+            }
 
 site_geo = {
     'Aberdeen': ['57.157360', '-2.094278'],
@@ -326,7 +330,7 @@ site_list = [
     'York Fishergate'
 ]
 
-environs = {
+site_environs = {
     'Aberdeen': 'urban-background',
     'Aberdeen Union Street Roadside': 'urban-traffic',
     'Aberdeen Wellington Road': 'urban-traffic',

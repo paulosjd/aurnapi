@@ -1,0 +1,17 @@
+    Create data entry for a site specified by site code
+    ---
+    tags:
+      - Hourly Data
+    parameters:
+      - name: site_code
+        in: path
+        type: string
+        enum: ['ABD', 'MY1', 'BRS8']
+        required: true
+        description: Site code representing a monitoring site
+        default: all
+      - name: json body
+        in: body
+        type: body
+        required: true
+        default: all

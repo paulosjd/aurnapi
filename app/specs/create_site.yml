@@ -1,0 +1,10 @@
+    Create monitoring site from json body
+    ---
+    tags:
+      - Monitoring Sites
+    parameters:
+      - name: json body
+        in: body
+        type: body
+        required: true
+        default: all

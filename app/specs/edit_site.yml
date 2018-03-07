@@ -1,0 +1,17 @@
+    Edit information for a site specified by id
+    ---
+    tags:
+      - Monitoring Sites
+    parameters:
+      - name: id
+        in: path
+        type: string
+        enum: ['1', '2', '3']
+        required: true
+        description: id representing a monitoring site
+        default: all
+      - name: json body
+        in: body
+        type: body
+        required: true
+        default: all

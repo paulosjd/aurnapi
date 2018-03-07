@@ -1,0 +1,19 @@
+    Recent air quality from site specified by site code
+    ---
+    tags:
+      - Hourly Data
+    parameters:
+      - name: site_code
+        in: path
+        type: string
+        enum: ['ABD', 'MY1', 'BRS8']
+        required: true
+        description: Site code representing a monitoring site
+        default: all
+      - name: number
+        in: path
+        type: string
+        enum: ['1', '2', '3']
+        required: true
+        description: Number of most recent entries
+        default: all

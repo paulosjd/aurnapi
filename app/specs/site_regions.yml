@@ -1,0 +1,27 @@
+    Metadata from all sites filtered by region
+    ---
+    tags:
+      - Monitoring Sites
+    parameters:
+      - name: region
+        in: path
+        type: string
+        enum: ['central-scotland',
+               'east-midlands',
+               'eastern',
+               'greater-london',
+               'highlands',
+               'north-east',
+               'north-east-scotland',
+               'north-wales',
+               'north-west',
+               'northern-ireland',
+               'scottish-borders',
+               'south-east',
+               'south-wales',
+               'south-west',
+               'west-midlands',
+               'yorkshire']
+        required: true
+        description: Site id for site object
+        default: all

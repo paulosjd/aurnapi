@@ -1,21 +1,19 @@
-from app.models import db, HourlyData, Site
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import requests
 import pytz
+from app.data.seed_sites import site_list
+from app.models import db, Exceedence, HourlyData, Site
 
 
 def get_hourly_data(soup, site):
     if soup.find_all('a', string=site):
         site_link = soup.find_all('a', string=site)[0]
         row = site_link.findParent('td').findParent('tr').findAll('td')
-        o3 = row[1].text.replace('\xa0', ' ').split(' ')[0]
-        no2 = row[2].text.replace('\xa0', ' ').split(' ')[0]
-        so2 = row[3].text.replace('\xa0', ' ').split(' ')[0]
-        pm25 = row[4].text.replace('\xa0', ' ').split(' ')[0]
-        pm10 = row[5].text.replace('\xa0', ' ').split(' ')[0]
-        time = row[6].text[:10] + ' ' + row[6].text[10:]
-        return {'o3': o3, 'no2': no2, 'so2': so2, 'pm25': pm25, 'pm10': pm10, 'time': time}
+        aq_values = [row[n].text.replace('\xa0', ' ').split(' ')[0] for n in range(1,6)]
+        hourly_data = dict(zip(['ozone', 'no2', 'so2', 'pm25', 'pm10'], aq_values))
+        hourly_data['time'] = row[6].text[:10] + ' ' + row[6].text[10:]
+        return hourly_data
 
 
 def validate_data(data_dict):
@@ -23,7 +21,7 @@ def validate_data(data_dict):
     hourly_dt = datetime.strftime(loc_dt.replace(microsecond=0, second=0, minute=0), "%d/%m/%Y %H:%M")
     if data_dict and data_dict['time'] != hourly_dt:
         na_values = ['n/a'] * 5 + [hourly_dt]
-        return dict(zip(['o3', 'no2', 'so2', 'pm25', 'pm10', 'time'], na_values))
+        return dict(zip(['ozone', 'no2', 'so2', 'pm25', 'pm10', 'time'], na_values))
     else:
         return data_dict
 
@@ -32,9 +30,11 @@ def update_db():
     page = requests.get('https://uk-air.defra.gov.uk/latest/currentlevels',
                         headers={'User-Agent': 'Not blank'}).content
     soup = BeautifulSoup(page, 'lxml')
-    for site in Site.query.all():
+    for site in Site.query.filter(Site.name.in_(site_list)):
         data = validate_data(get_hourly_data(soup, site.name))
         if data:
-            site_data = HourlyData(owner=site, **data)
+            site_data = HourlyData(**data, owner=site)
             db.session.add(site_data)
+            if site_data.high_pm10 is True:
+                db.session.add(Exceedence(site=site, data_entry=site_data))
     db.session.commit()
