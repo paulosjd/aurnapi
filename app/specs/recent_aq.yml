@@ -1,0 +1,7 @@
+    Most recent data for each monitoring site
+    ---
+    tags:
+      - Hourly Data
+    responses:
+      200:
+        description: Most recent data for each site

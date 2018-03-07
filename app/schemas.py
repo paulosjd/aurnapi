@@ -8,6 +8,8 @@ ma = Marshmallow()
 
 class HourlyDataSchema(ma.Schema):
     id = ma.Integer(dump_only=True)
+    site_name = ma.Function(lambda obj: obj.owner.name)
+    site_code = ma.Function(lambda obj: obj.owner.site_code)
     time = ma.Method(serialize='standardize_time')
 
     @staticmethod
@@ -18,8 +20,9 @@ class HourlyDataSchema(ma.Schema):
     class Meta:
         additional = ('ozone', 'no2', 'so2', 'pm25', 'pm10')
 
-data_schema = HourlyDataSchema()
-many_data_schema = HourlyDataSchema(many=True)
+data_schema = HourlyDataSchema(exclude=['site_name', 'site_code'])
+many_data_schema = HourlyDataSchema(many=True, exclude=['site_name', 'site_code'])
+current_hour_schema = HourlyDataSchema(many=True, exclude=['id', 'ozone', 'so2'])
 
 
 class SiteSchema(ma.Schema):

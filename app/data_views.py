@@ -2,9 +2,16 @@ from flask import Blueprint, request, jsonify
 from flask_login import login_required
 from flasgger.utils import swag_from
 from app.models import HourlyData, Site, db
-from app.schemas import many_data_schema, data_schema, hourlydata_schema, site_schema
+from app.schemas import current_hour_schema, many_data_schema, data_schema, hourlydata_schema, site_schema
 
 hourly_data = Blueprint('hourly_data', __name__, url_prefix='/data')
+
+
+@hourly_data.route('/')
+@swag_from('specs/recent_aq.yml')
+def recent_aq():
+    data = HourlyData.query.group_by(HourlyData.site_id)
+    return current_hour_schema.jsonify(data)
 
 
 @hourly_data.route('/<site_code>/<number>')
