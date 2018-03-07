@@ -32,6 +32,7 @@ def create_hourly(site_code):
 
 @hourly_data.route("/<int:id>", methods=["POST"])
 @login_required
+@swag_from('specs/edit_hourly.yml')
 def edit_hourly(id):
     entry = HourlyData.query.filter(HourlyData.id==id).first_or_404()
     data, errors = hourlydata_schema.load(request.get_json(), instance=entry)

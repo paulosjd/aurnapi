@@ -24,7 +24,7 @@ def site_detail(id):
 @site_views.route('/regions/<region>')
 @swag_from('specs/site_regions.yml')
 def site_regions(region):
-    sites = Site.query.filter(Site.region == region).first_or_404()
+    sites = Site.query.filter(Site.region == region).all()
     return sites_schema.jsonify(sites)
 
 
@@ -44,6 +44,7 @@ def create_site():
 
 @site_views.route("/<int:id>", methods=["POST"])
 @login_required
+@swag_from('specs/edit_site.yml')
 def edit_site(id):
     site = Site.query.filter(Site.id == id).first_or_404()
     site, errors = site_model_schema.load(request.get_json(), instance=site)

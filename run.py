@@ -16,8 +16,6 @@ application.register_blueprint(site_views)
 login_manager = LoginManager()
 login_manager.init_app(application)
 
-swagger = Swagger(application)
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.get(user_id)
@@ -39,6 +37,23 @@ def not_found(error):
 @application.errorhandler(401)
 def unauthorized(error):
     return jsonify({"error": "unauthorized"}), 401
+
+swagger_config = {
+    "headers": [
+    ],
+    "specs": [
+        {
+            "endpoint": 'apispec',
+            "route": '/apispec.json',
+            "rule_filter": lambda rule: True,  # all in
+        }
+    ],
+    "static_url_path": "/flasgger_static",
+    "swagger_ui": True,
+    "specs_route": "/docs/"
+}
+
+swagger = Swagger(application, config=swagger_config)
 
 
 if __name__ == '__main__':

@@ -1,12 +1,11 @@
-A prototype API for hourly mean air pollution data obtained by periodic scraping of a government agency webpage.
+A prototype API for serving recent and historical air pollution measurements from sites within an automated monitoring network.
  
-The API serves data in JSON format and supports basic HTTP methods and CRUD operations. It was built using Flask, Flask-Login, Flask-SQLAlchemy and Marshmallow. Swagger UI documentation is generated using Flasgger (http://127.0.0.1:5000/apidocs/).
+The API serves data in JSON format and supports basic HTTP methods and CRUD operations. It was built using Flask, Flask-Login, Flask-SQLAlchemy and [Marshmallow](http://marshmallow.readthedocs.io/). 
 
-
+Swagger UI documentation is generated from .yml files using [Flasgger](https://github.com/rochacbruno/flasgger) and is available at http://127.0.0.1:5000/docs/
 
 Getting Started
 ---------------
-
 
 **Prerequisites**
 
@@ -45,13 +44,11 @@ Verify that packages have been installed:
 
 **3. Create the database and add data**
 
-
     (aurn-venv) $ python3 run.py createdb
 
     (aurn-venv) $ python3 run.py collectdata
 
-The collectdata command provides a convenient way to call the update_db() function (defined in app.data.hourly). This inserts the air quality data for the most recent hour into the table 'data'. 
-
+The collectdata command provides a convenient way to update the database with air pollution values scraped from the goverment agency webpage, updated on an hourly basis.  
 
 **4. Configure and run the API**
 
