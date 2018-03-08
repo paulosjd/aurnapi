@@ -1,7 +1,6 @@
 from marshmallow import post_dump
 from flask_marshmallow import Marshmallow
-from marshmallow_sqlalchemy import field_for
-from app.models import HourlyData, Site, User
+from app.models import HourlyData, Site
 
 ma = Marshmallow()
 
@@ -29,7 +28,7 @@ class SiteSchema(ma.Schema):
     id = ma.Integer(dump_only=True)
     data = ma.Nested(HourlyDataSchema, allow_none=True, dump_only=True)
     url = ma.URLFor('Site.site_detail', id='<id>')
-    user = field_for(User, 'name', dump_only=True)
+    user = ma.Function(lambda obj: obj.user.name)
 
     class Meta:
         additional = ('name', 'site_code', 'region', 'type', 'latitude', 'longitude', 'defra_url', 'map_url')

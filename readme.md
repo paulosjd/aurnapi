@@ -31,16 +31,16 @@ Use *pip* to install requirements:
 Verify that packages have been installed:
 
     (aurn-venv) $ pip freeze
+    beautifulsoup4==4.6.0
     Flask==0.12
     Flask_Login==0.4.0
     flask_marshmallow==0.8.0
     Flask_SQLAlchemy==2.1
     flasgger==0.8.1
     marshmallow==2.14.0
-    marshmallow-sqlalchemy==0.13.2
     pytz==2017.3
     requests==2.13.0
-    beautifulsoup4==4.6.0
+
 
 **3. Create the database and add data**
 
