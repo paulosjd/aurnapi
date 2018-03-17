@@ -56,3 +56,4 @@ class DataModelSchema(ma.ModelSchema):
         model = HourlyData
 
 hourlydata_schema = DataModelSchema()
+
