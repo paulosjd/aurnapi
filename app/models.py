@@ -54,6 +54,21 @@ class HourlyData(DataMixin, db.Model):
     site_id = db.Column(db.Integer, db.ForeignKey('sites.id'), nullable=False)
     exceedence = db.relationship('Exceedence', backref='data_entry', lazy='dynamic')
 
+    @classmethod
+    def recent(cls):
+        year_clauses = []
+        month_clauses = []
+        month = datetime.today().month
+        year = datetime.today().year
+        year_clauses.append(cls.time.ilike('%{}%'.format(year)))
+        if month < 4:
+            year_clauses.append(cls.time.ilike('%{}%'.format(year - 1)))
+            for i in range(4 - month):
+                month_clauses.append(cls.time.ilike('%/{}/%'.format(12 - i)))
+        for i in range (1, month + 1):
+            month_clauses.append(cls.time.ilike('%/{}/%'.format(str(i).zfill(2))))
+        return cls.query.filter(and_(or_(*month_clauses), or_(*year_clauses)))
+
     @property
     def high_pm10(self):
         try:
