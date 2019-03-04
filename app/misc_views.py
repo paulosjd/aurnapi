@@ -14,8 +14,7 @@ misc_data = Blueprint('misc_data', __name__, url_prefix='/stats')
 @misc_data.route('/highest/<pollutant>/<int:num>')
 def highest(pollutant=None, num=None):
     field = getattr(HourlyData, pollutant) or HourlyData.pm10
-    data = HourlyData.query.filter(
-        and_(field != '', HourlyData.time >= datetime.today() - timedelta(days=120)))
+    data = HourlyData.recent().filter(field != '')
     data = data.order_by(desc(cast(field, Integer))).limit(num or 10)
     return current_hour_schema.jsonify(data)
 
@@ -23,8 +22,7 @@ def highest(pollutant=None, num=None):
 @misc_data.route('/highest-sites/<pollutant>/<int:num>')
 def highest_sites(pollutant=None, num=None):
     field = getattr(HourlyData, pollutant) or HourlyData.pm10
-    data = HourlyData.query.join(Site).filter(
-        and_(field != '', HourlyData.time >= datetime.today() - timedelta(days=120)))
+    data = HourlyData.recent().join(Site).filter(field != '')
     data = data.order_by(desc(cast(field, Integer))).limit(num or 500)
     grouped = {}
     for a in data:
