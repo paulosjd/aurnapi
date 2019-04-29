@@ -1,8 +1,8 @@
-A prototype API for serving recent and historical air pollution measurements from sites within an automated monitoring network.
+The application collects and stores recent and historical air pollution measurements from sites within an automated monitoring network.
+It serves data in JSON format and supports basic HTTP methods.
  
-The API serves data in JSON format and supports basic HTTP methods and CRUD operations. It was built using Flask, Flask-Login, Flask-SQLAlchemy and [Marshmallow](http://marshmallow.readthedocs.io/). 
-
-Swagger UI documentation is generated from .yml files using [Flasgger](https://github.com/rochacbruno/flasgger) and is available at http://127.0.0.1:5000/docs/
+Requirements include Flask, Flask-Login, Flask-SQLAlchemy and [Marshmallow](http://marshmallow.readthedocs.io/). 
+Swagger UI documentation is generated from .yml files using [Flasgger](https://github.com/rochacbruno/flasgger).
 
 Getting Started
 ---------------
