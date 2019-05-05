@@ -1,5 +1,5 @@
 The application collects and stores recent and historical air pollution measurements from sites within an automated monitoring network.
-Serves data in JSON format and supports basic HTTP methods. Provides data for this React [demo app](https://ukair.paulja.me/) .
+REST API supports basic HTTP methods and the data is consumed by a React [demo app](https://ukair.paulja.me/) .
  
 Requirements include Flask, Flask-Login, Flask-SQLAlchemy and [Marshmallow](http://marshmallow.readthedocs.io/). 
 Swagger UI documentation is generated from .yml files using [Flasgger](https://github.com/rochacbruno/flasgger).  
